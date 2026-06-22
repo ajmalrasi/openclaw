@@ -1,0 +1,16 @@
+# OpenClaw — the one shared local-LLM model alias for all of my apps.
+#
+# Apps never name a raw Ollama model (qwen3.5:4b, etc.) directly. They all ask
+# for "openclaw", and this file decides what that actually is. Swap the FROM
+# line, re-run ./install.sh, and every app moves together — with one copy of the
+# weights resident in RAM instead of each app loading its own.
+#
+# Current pick: qwen2.5:3b-instruct.
+#   - non-reasoning (no <think> blocks) -> ~2-3s replies on the Jetson, vs
+#     130s+ for qwen3.5:4b which blew past every client timeout.
+#   - ~2.2 GB resident -> leaves real headroom on the 8 GB Orin Nano, so it
+#     stays loaded (OLLAMA_KEEP_ALIVE=-1) instead of thrashing in/out of RAM.
+FROM qwen2.5:3b-instruct
+
+# Match the server runtime (-c 4096). Keep callers' temperature/prompt theirs.
+PARAMETER num_ctx 4096

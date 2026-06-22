@@ -1,0 +1,24 @@
+# Shared local-LLM service. App-agnostic on purpose: every app on this host is a
+# *client* of this one Ollama daemon (port 11434) and shares the one resident
+# model. No app should run its own Ollama.
+#
+# Install to ~/.config/systemd/user/openclaw.service (install.sh does this).
+[Unit]
+Description=OpenClaw shared local LLM (Ollama, LAN-bound, preloads the openclaw model)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+Environment=OLLAMA_HOST=0.0.0.0:11434
+Environment=OLLAMA_MODELS=%h/.ollama/models
+Environment=OLLAMA_MAX_LOADED_MODELS=1
+Environment=OLLAMA_NUM_PARALLEL=1
+Environment=OLLAMA_KEEP_ALIVE=-1
+ExecStart=%h/.local/ollama/bin/ollama serve
+ExecStartPost=/bin/bash %h/.local/bin/openclaw-warmup.sh
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=default.target
