@@ -5,15 +5,20 @@
 # line, re-run ./install.sh, and every app moves together — with one copy of the
 # weights resident in RAM instead of each app loading its own.
 #
-# Current pick: qwen3:4b (Q4_K_M, ~2.5 GB). Reasoning model — callers should
-# send "think": false per-request (Ollama has no Modelfile-level switch yet;
-# see FOR-AGENTS.md).
+# Current pick: qwen3:4b (Q4_K_M). Reasoning model — callers should send
+# "think": false per-request (Ollama has no Modelfile-level switch yet; see
+# FOR-AGENTS.md).
 #
-# NOTE (2026-07-04): on this Jetson, qwen3:4b currently OOMs on load
-# (cudaMalloc ~2.5 GB fails). The largest model observed to load here is
-# ~1.9 GB. This is set as the default by explicit operator decision; getting
-# it to actually load needs a memory-reservation fix on the host (device-tree
-# carveouts / CMA), not a Modelfile change.
+# WHY num_gpu (2026-07-04): this Jetson's CUDA/ggml build fails any *single*
+# cudaMalloc larger than ~1.9 GiB, even with 5+ GiB reported free (it's an
+# allocator limit, NOT out-of-memory — not fixable with more RAM/CMA). A full
+# 36-layer offload of qwen3:4b needs one ~2.3 GiB weight buffer and OOMs.
+# Capping GPU layers keeps that single buffer under the limit; the remaining
+# layers run on CPU. 24/36 measured to load; tune up toward the ceiling for
+# more speed, down if a load OOMs.
+#
+# NOTE: failed loads leak GPU memory that only a *reboot* clears (a service
+# restart is not enough). If loads start OOMing after a bad attempt, reboot.
 FROM qwen3:4b
 
 # Qwen3 non-thinking sampling params.
@@ -21,6 +26,10 @@ PARAMETER temperature 0.7
 PARAMETER top_p 0.8
 PARAMETER top_k 20
 PARAMETER min_p 0
+
+# Cap GPU layers so the single weight buffer stays under the ~1.9 GiB
+# cudaMalloc ceiling; rest run on CPU. See WHY above.
+PARAMETER num_gpu 24
 
 # Match the server runtime (-c 4096). Keep callers' prompt theirs.
 PARAMETER num_ctx 4096
