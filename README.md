@@ -37,8 +37,9 @@ so it is **not** a submodule — it's a standalone service plus a config contrac
 
 `qwen3:4b-instruct-2507` (see [`Modelfile`](./Modelfile)) — the **instruct
 (non-reasoning)** Qwen3 4B, Q4_K_M. No `<think>` blocks, so callers need no
-special flags. ~8–9 tok/s on the Jetson (see the Modelfile for why `num_gpu`
-is capped and why the GUI is disabled).
+special flags. Full GPU offload (all 36 layers, ~3.1 GiB VRAM) at ~15–18 tok/s
+— which only fits because the **desktop GUI is disabled** (`multi-user.target`);
+see the Modelfile for the full story.
 
 To change the model for **every** app at once: edit `FROM` in the `Modelfile`,
 then re-run `./install.sh` on the host. Nothing in any app changes.

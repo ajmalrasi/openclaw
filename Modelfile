@@ -11,17 +11,19 @@
 # (The base qwen3:4b is a hybrid whose template hard-codes a <think> opener
 # and can't be turned off via Ollama's chatml template — avoid it here.)
 #
-# WHY num_gpu (2026-07-04): this Jetson's CUDA/ggml build fails any *single*
-# cudaMalloc larger than ~1.9 GiB, even with 5+ GiB reported free (it's an
-# allocator limit, NOT out-of-memory — not fixable with more RAM/CMA). A full
-# 36-layer offload of this 4B model needs one ~2.3 GiB weight buffer and OOMs.
-# Capping GPU layers keeps that single buffer under the limit; the remaining
-# layers run on CPU (~8-9 tok/s at 24/36). Tune up toward the ceiling for more
-# speed, down if a load OOMs.
+# WHY num_gpu=36 / full offload (2026-07-04): all 36 layers fit on the GPU
+# (~3.1 GiB VRAM incl. KV) ONLY because the desktop GUI is disabled
+# (multi-user.target). With GNOME/Xorg running, their GPU context stole enough
+# memory that the ~2.3 GiB weight buffer couldn't allocate and every 4B model
+# OOM'd — it looked like a hard ~1.9 GiB single-alloc ceiling but was really
+# the desktop competing for GPU memory. Headless, full offload works and runs
+# ~15-18 tok/s (vs ~8 tok/s when 12 layers were forced onto the CPU at 24/36).
+#
+# If the GUI is ever re-enabled (graphical.target), full offload will OOM
+# again — drop num_gpu to ~24 as a fallback, or keep it headless.
 #
 # NOTE: failed loads leak GPU memory that only a *reboot* clears (a service
 # restart is not enough). If loads start OOMing after a bad attempt, reboot.
-# The GUI is disabled (multi-user.target) to free GPU/RAM for the model.
 FROM qwen3:4b-instruct-2507-q4_K_M
 
 # Qwen3-Instruct recommended sampling params.
@@ -30,9 +32,8 @@ PARAMETER top_p 0.8
 PARAMETER top_k 20
 PARAMETER min_p 0
 
-# Cap GPU layers so the single weight buffer stays under the ~1.9 GiB
-# cudaMalloc ceiling; rest run on CPU. See WHY above.
-PARAMETER num_gpu 24
+# Full GPU offload (all 36 layers). Works because the GUI is disabled; see WHY.
+PARAMETER num_gpu 36
 
 # Match the server runtime (-c 4096). Keep callers' prompt theirs.
 PARAMETER num_ctx 4096

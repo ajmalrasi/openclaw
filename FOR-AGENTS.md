@@ -38,9 +38,9 @@ curl -s http://192.168.3.30:11434/v1/chat/completions \
 - It's an Ollama model **alias**, currently → `qwen3:4b-instruct-2507`, the
   **instruct (non-reasoning)** Qwen3 4B. No `<think>` blocks, no per-request
   flags needed — just send messages and read the reply.
-- Runs at ~8–9 tok/s on the Jetson (GPU layers capped via `num_gpu` to dodge a
-  ~1.9 GiB single-alloc limit; rest on CPU — see the repo Modelfile). Usable,
-  but **not** GPT-4 class and not instant.
+- Runs ~15–18 tok/s on the Jetson (full GPU offload; fits only because the
+  desktop GUI is disabled — see the repo Modelfile). Usable, but **not** GPT-4
+  class and not instant.
 - Design for it: keep prompts tight and explicit; if you need strict JSON, say
   *"return ONLY a JSON array, no prose, no code fences"* and parse tolerantly.
 - It can be slow/unreachable under memory pressure. Treat every call as
