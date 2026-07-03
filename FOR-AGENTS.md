@@ -12,6 +12,7 @@ different model cause RAM thrash and timeouts for everyone.
 - **API:** OpenAI-compatible `POST /v1/chat/completions` (native `/api/*` also works)
 - **Model name:** `openclaw` ← always use this literal string
 - **Auth:** none by default (no API key)
+- **Always send `"think": false`** — see below, this is required now, not optional.
 
 ## How to integrate
 
@@ -22,21 +23,36 @@ OPENCLAW_BASE_URL=http://host.docker.internal:11434   # or the LAN URL
 OPENCLAW_MODEL=openclaw
 ```
 
-Call it like any OpenAI chat endpoint:
+Call it like any OpenAI chat endpoint — **and always send `"think": false`**,
+see below for why:
 
 ```bash
 curl -s http://192.168.3.30:11434/v1/chat/completions \
   -H 'Content-Type: application/json' \
-  -d '{"model":"openclaw","stream":false,
+  -d '{"model":"openclaw","stream":false,"think":false,
        "messages":[{"role":"system","content":"..."},
                    {"role":"user","content":"..."}]}'
 # response: data.choices[0].message.content
 ```
 
+Or via native `/api/chat`, same field:
+
+```bash
+curl -s http://192.168.3.30:11434/api/chat \
+  -d '{"model":"openclaw","stream":false,"think":false,
+       "messages":[{"role":"user","content":"..."}]}'
+```
+
 ## What `openclaw` is (and isn't)
 
-- It's an Ollama model **alias**, currently → `qwen2.5:3b-instruct`. A small (3B),
-  **non-reasoning** model. Fast (~2–3 s warm) but **not** GPT-4 class.
+- It's an Ollama model **alias**, currently → `qwen3:4b`, a 4B **hybrid
+  reasoning** model. It defaults to emitting a `<think>...</think>` block
+  before every answer, which is why **every caller must pass `"think":
+  false`** — Ollama has no Modelfile-level way to disable thinking by default
+  yet (open upstream: ollama/ollama#14617, #14809), so this can't be baked
+  into the alias itself. Forget the flag and a reply can take 130s+ and blow
+  past your timeout.
+- Fast (~2–3 s warm) with thinking off, but **not** GPT-4 class.
 - Design for it: keep prompts tight and explicit; if you need strict JSON, say
   *"return ONLY a JSON array, no prose, no code fences"* and parse tolerantly.
 - It can be slow/unreachable under memory pressure. Treat every call as

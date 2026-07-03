@@ -5,12 +5,22 @@
 # line, re-run ./install.sh, and every app moves together — with one copy of the
 # weights resident in RAM instead of each app loading its own.
 #
-# Current pick: qwen2.5:3b-instruct.
-#   - non-reasoning (no <think> blocks) -> ~2-3s replies on the Jetson, vs
-#     130s+ for qwen3.5:4b which blew past every client timeout.
-#   - ~2.2 GB resident -> leaves real headroom on the 8 GB Orin Nano, so it
-#     stays loaded (OLLAMA_KEEP_ALIVE=-1) instead of thrashing in/out of RAM.
-FROM qwen2.5:3b-instruct
+# Current pick: qwen3:4b (Q4_K_M, ~2.5 GB). Reasoning model — callers should
+# send "think": false per-request (Ollama has no Modelfile-level switch yet;
+# see FOR-AGENTS.md).
+#
+# NOTE (2026-07-04): on this Jetson, qwen3:4b currently OOMs on load
+# (cudaMalloc ~2.5 GB fails). The largest model observed to load here is
+# ~1.9 GB. This is set as the default by explicit operator decision; getting
+# it to actually load needs a memory-reservation fix on the host (device-tree
+# carveouts / CMA), not a Modelfile change.
+FROM qwen3:4b
 
-# Match the server runtime (-c 4096). Keep callers' temperature/prompt theirs.
+# Qwen3 non-thinking sampling params.
+PARAMETER temperature 0.7
+PARAMETER top_p 0.8
+PARAMETER top_k 20
+PARAMETER min_p 0
+
+# Match the server runtime (-c 4096). Keep callers' prompt theirs.
 PARAMETER num_ctx 4096
