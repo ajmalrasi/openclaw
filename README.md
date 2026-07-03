@@ -19,7 +19,6 @@ shared, pinned model = warm replies and headroom to spare.
 | Base URL   | `http://<host>:11434`              |
 | API        | OpenAI-compatible `/v1/chat/completions` (also native `/api/*`) |
 | Model name | `openclaw`                         |
-| Request field | `"think": false` — **required**, see below |
 
 From inside a container on the same host, reach it at
 `http://host.docker.internal:11434`.
@@ -36,14 +35,10 @@ so it is **not** a submodule — it's a standalone service plus a config contrac
 
 ## What `openclaw` currently is
 
-`qwen3:4b` (see [`Modelfile`](./Modelfile)) — a hybrid reasoning model,
-~2.5 GB (Q4_K_M), ~2–3 s warm replies on the Jetson **with thinking off**.
-
-Thinking is not off by default: Ollama has no Modelfile-level switch for
-reasoning models yet (open upstream: ollama/ollama#14617, #14809), so every
-caller must send `"think": false` in the request or it emits a full `<think>`
-block and can take 130s+. See [`FOR-AGENTS.md`](./FOR-AGENTS.md) for the exact
-request shape.
+`qwen3:4b-instruct-2507` (see [`Modelfile`](./Modelfile)) — the **instruct
+(non-reasoning)** Qwen3 4B, Q4_K_M. No `<think>` blocks, so callers need no
+special flags. ~8–9 tok/s on the Jetson (see the Modelfile for why `num_gpu`
+is capped and why the GUI is disabled).
 
 To change the model for **every** app at once: edit `FROM` in the `Modelfile`,
 then re-run `./install.sh` on the host. Nothing in any app changes.
