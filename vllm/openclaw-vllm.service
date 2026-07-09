@@ -10,8 +10,8 @@
 # kernels run correctly on this GPU at ~96 tok/s (2.4x Ollama's 40.5). Full
 # story: ../TRTLLM_MIGRATION.md and ../BENCHMARKS.md.
 #
-# The Jetson stays on Ollama (see openclaw.service) — vLLM doesn't target its
-# iGPU. So this repo now carries TWO backends; each host runs one.
+# The Jetson is still on Ollama (see openclaw.service) for now; migrating it to
+# vLLM is planned. So this repo currently carries TWO backends; each host runs one.
 #
 # Runs the vLLM container in the foreground under systemd (Type=simple): systemd
 # tracks the `docker run` client and forwards SIGTERM on stop. Requires the

@@ -30,7 +30,8 @@ streaming client (tokens ÷ time-between-first-and-last token, so TTFT excluded)
 - 8 GB serving flags that matter: `--max-num-seqs 1` (single-user; caps the
   huge float32 logits buffer over Qwen's 152k vocab that OOMs vLLM's memory
   profiling) and `--enforce-eager` (skip CUDA graphs to save VRAM).
-- The Jetson is unchanged — still Ollama at ~16 tok/s (vLLM doesn't target its iGPU).
+- The Jetson is still on Ollama at ~16 tok/s **for now**; migrating it to vLLM is
+  the next step (pending an aarch64/JetPack vLLM build + engine benchmarking).
 
 Notes:
 - The RTX 3070 Ti has dedicated VRAM independent of system RAM; the Jetson's

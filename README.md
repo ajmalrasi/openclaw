@@ -46,9 +46,10 @@ serving engine differs per hardware:
 | `jetson-orin` | Ollama | `qwen3:4b-instruct-2507` Q4_K_M (see [`Modelfile`](./Modelfile)) | ~16 tok/s |
 | `beast` (RTX 3070 Ti laptop) | **vLLM** | `Eslzzyl/Qwen3-4B-Instruct-2507-AWQ` (INT4 AWQ) | **~96 tok/s** |
 
-`beast` moved off Ollama to vLLM for a 2.4x speedup (correct output, same API).
-TensorRT-LLM was evaluated and rejected — its pytorch backend can't serve a
-working quantized model on this consumer Ampere GPU. See
+`beast` moved off Ollama to vLLM for a 2.4x speedup (correct output, same API);
+moving the Jetson to vLLM as well is the next step. TensorRT-LLM was evaluated
+and rejected — its pytorch backend can't serve a working quantized model on this
+consumer Ampere GPU. See
 [TRTLLM_MIGRATION.md](./TRTLLM_MIGRATION.md) and [BENCHMARKS.md](./BENCHMARKS.md).
 
 To change the model for **every** app on a host at once: on Ollama hosts edit
