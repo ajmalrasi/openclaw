@@ -1,0 +1,46 @@
+# OpenClaw backend for `beast` (RTX 3070 Ti Laptop, 8 GB, Ampere sm86).
+# vLLM serving an INT4-AWQ Qwen3-4B behind the exact OpenClaw contract:
+# OpenAI API on :11434, model name "openclaw". A drop-in replacement for the
+# Ollama openclaw service on this host — apps need no change.
+#
+# WHY vLLM here (not Ollama, not TensorRT-LLM): on consumer Ampere the modern
+# TensorRT-LLM pytorch backend cannot serve a working quantized model — INT4
+# (W4A16-AWQ) loads fast but miscomputes into garbage, INT8 (W8A8) is
+# "unsupported quant mode", and FP8/FP4 need newer GPUs. vLLM's Marlin AWQ
+# kernels run correctly on this GPU at ~96 tok/s (2.4x Ollama's 40.5). Full
+# story: ../TRTLLM_MIGRATION.md and ../BENCHMARKS.md.
+#
+# The Jetson stays on Ollama (see openclaw.service) — vLLM doesn't target its
+# iGPU. So this repo now carries TWO backends; each host runs one.
+#
+# Runs the vLLM container in the foreground under systemd (Type=simple): systemd
+# tracks the `docker run` client and forwards SIGTERM on stop. Requires the
+# invoking user to be in the `docker` group.
+#
+# Install to ~/.config/systemd/user/openclaw-vllm.service (install-vllm.sh does
+# this). Needs lingering so it runs without an active login:
+#   loginctl enable-linger "$USER"
+
+[Unit]
+Description=OpenClaw shared local LLM (vLLM, INT4-AWQ Qwen3-4B, LAN :11434)
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Swap OPENCLAW_MODEL to change the model for every app at once (mirrors the
+# Modelfile's role on the Ollama hosts). Must be an AWQ / compressed-tensors
+# checkpoint that fits ~8 GB.
+Environment=OPENCLAW_MODEL=Eslzzyl/Qwen3-4B-Instruct-2507-AWQ
+Environment=OPENCLAW_PORT=11434
+Environment=VLLM_IMAGE=vllm/vllm-openai:latest
+# Clear any stale container left by a hard crash before (re)starting.
+ExecStartPre=-/usr/bin/docker rm -f openclaw-vllm
+ExecStart=/usr/bin/docker run --rm --name openclaw-vllm --gpus all --ipc=host -p ${OPENCLAW_PORT}:8000 -v %h/.cache/huggingface:/root/.cache/huggingface ${VLLM_IMAGE} --model ${OPENCLAW_MODEL} --served-model-name openclaw --quantization awq_marlin --max-model-len 4096 --gpu-memory-utilization 0.92 --max-num-seqs 1 --enforce-eager
+ExecStop=/usr/bin/docker stop openclaw-vllm
+ExecStopPost=-/usr/bin/docker rm -f openclaw-vllm
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

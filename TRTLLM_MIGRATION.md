@@ -1,11 +1,46 @@
-# TensorRT-LLM migration (WIP, not yet cut over)
+# TensorRT-LLM migration — RESOLVED via vLLM (not TensorRT-LLM)
 
-Goal: replace Ollama with TensorRT-LLM as the `openclaw` backend on `beast`
+Goal: replace Ollama with a faster `openclaw` backend on `beast`
 (RTX 3070 Ti Laptop, 8GB VRAM, Ampere/compute 8.6, driver 580.126.20, CUDA 13.0).
 Reachable at `192.168.3.226` for SSH continuation.
 
 Ollama baseline to beat (see [BENCHMARKS.md](./BENCHMARKS.md)): **~40.5 tok/s**
 generation on `qwen3:4b-instruct-2507-q4_K_M`.
+
+## OUTCOME (2026-07-09): TensorRT-LLM abandoned, **vLLM won**
+
+TensorRT-LLM's modern `trtllm-serve` pytorch backend **cannot serve a working
+quantized model on this consumer Ampere GPU**, proven three ways:
+
+- **INT4 (W4A16-AWQ)** — loads and runs fast (~100 tok/s) but **miscomputes into
+  garbage** (repetition + random Chinese). Not a calibration problem: happens
+  with 8, 128, and 512 calibration samples, and with the ModelOpt-native
+  checkpoint the backend *does* correctly detect (`Setting quant_algo=W4A16_AWQ`).
+  It's a W4A16 kernel-correctness bug on sm86.
+- **INT8 (W8A8-SQ)** — backend refuses to load it: `ValueError: unsupported
+  quant mode: [14]`.
+- **FP8 / FP4** — need Hopper/Ada (≥8.9) / Blackwell (10.0); this GPU is 8.6.
+- **BF16** — OOMs (weights ~7.15 GB on a 7.66 GB-usable GPU).
+
+**vLLM serves the same INT4-AWQ correctly** at **~96 tok/s** (2.4x Ollama),
+coherent output, TTFT ~0.03 s — using vLLM's Marlin AWQ kernels, which are built
+for exactly this GPU. It loads an **existing community AWQ checkpoint**
+(`Eslzzyl/Qwen3-4B-Instruct-2507-AWQ`, already in the HF cache) — no
+self-quantizing, no ModelOpt. The cutover is wired up in
+[`install-vllm.sh`](./install-vllm.sh) + [`vllm/openclaw-vllm.service`](./vllm/openclaw-vllm.service).
+
+**Key lesson:** the initial instinct — "just download a ready-made AWQ model" —
+was right; the missing piece was the *engine* (vLLM), not the checkpoint. The
+whole ModelOpt self-quantize effort below was needed only to *prove* the TRT-LLM
+pytorch backend is a dead end on consumer Ampere. Serving quirks on 8 GB:
+`--max-num-seqs 1` (single-user; shrinks the float32 logits buffer over Qwen's
+152k vocab that otherwise OOMs during vLLM's memory profiling) and
+`--enforce-eager` (skip CUDA graphs to save VRAM).
+
+Everything below is the original TensorRT-LLM investigation, kept as the record
+of why TRT-LLM was ruled out. Not the path we shipped.
+
+---
 
 ## State as of 2026-07-09 ~03:20 IST
 

@@ -35,12 +35,12 @@ curl -s http://192.168.3.30:11434/v1/chat/completions \
 
 ## What `openclaw` is (and isn't)
 
-- It's an Ollama model **alias**, currently → `qwen3:4b-instruct-2507`, the
-  **instruct (non-reasoning)** Qwen3 4B. No `<think>` blocks, no per-request
-  flags needed — just send messages and read the reply.
-- Runs ~15–18 tok/s on the Jetson (full GPU offload; fits only because the
-  desktop GUI is disabled — see the repo Modelfile). Usable, but **not** GPT-4
-  class and not instant.
+- It's the **instruct (non-reasoning)** Qwen3 4B. No `<think>` blocks, no
+  per-request flags needed — just send messages and read the reply. The name
+  `openclaw` and the API are the same everywhere; the serving engine depends on
+  the host (Jetson → Ollama; `beast` laptop → vLLM). You never need to care which.
+- Speed depends on the host: ~15–18 tok/s on the Jetson, ~96 tok/s on `beast`
+  (vLLM + INT4-AWQ). Either way it's **not** GPT-4 class — design accordingly.
 - Design for it: keep prompts tight and explicit; if you need strict JSON, say
   *"return ONLY a JSON array, no prose, no code fences"* and parse tolerantly.
 - It can be slow/unreachable under memory pressure. Treat every call as

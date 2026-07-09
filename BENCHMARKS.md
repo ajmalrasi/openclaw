@@ -12,6 +12,26 @@ and dark reactions." (~1750-2000 output tokens per run).
 | `beast` (laptop) | RTX 3070 Ti Laptop (8 GB dedicated VRAM) | 92% (near-full) | **~40.5 tok/s** (40.5 / 40.7 / 40.5) | ~590-820 tok/s | ~1.6 s |
 | `jetson-orin` | Orin iGPU (7.4 GB unified memory) | 55% reported / 36-37 layers actually offloaded | **~16.0 tok/s** (16.0 / 16.0 / 16.0) | ~116-216 tok/s | ~0.6 s |
 
+## 2026-07-09 — backend swap on `beast`: Ollama → vLLM (INT4-AWQ)
+
+After ruling out TensorRT-LLM (see [TRTLLM_MIGRATION.md](./TRTLLM_MIGRATION.md)),
+`beast` moved to **vLLM** serving `Eslzzyl/Qwen3-4B-Instruct-2507-AWQ` (INT4 AWQ,
+Marlin kernels). Same photosynthesis prompt; generation tok/s measured from a
+streaming client (tokens ÷ time-between-first-and-last token, so TTFT excluded).
+
+| Host | Backend | Model / quant | Generation | Output | vs Ollama |
+|------|---------|---------------|------------|--------|-----------|
+| `beast` | Ollama | qwen3:4b-instruct-2507 Q4_K_M | ~40.5 tok/s | ✅ correct | 1.0x |
+| `beast` | TensorRT-LLM (pytorch) | INT4 W4A16-AWQ | ~100 tok/s | ❌ garbage (kernel bug) | — |
+| `beast` | TensorRT-LLM (pytorch) | INT8 W8A8-SQ | — | ❌ won't load | — |
+| **`beast`** | **vLLM** | **INT4 AWQ (Marlin)** | **~96 tok/s** (100.7 / 95.6 / 92.4) | ✅ correct | **2.4x** |
+
+- vLLM TTFT is ~0.03 s (instant) after the model is resident.
+- 8 GB serving flags that matter: `--max-num-seqs 1` (single-user; caps the
+  huge float32 logits buffer over Qwen's 152k vocab that OOMs vLLM's memory
+  profiling) and `--enforce-eager` (skip CUDA graphs to save VRAM).
+- The Jetson is unchanged — still Ollama at ~16 tok/s (vLLM doesn't target its iGPU).
+
 Notes:
 - The RTX 3070 Ti has dedicated VRAM independent of system RAM; the Jetson's
   GPU and CPU share one 7.4 GB pool, so other resident services (openclaw
