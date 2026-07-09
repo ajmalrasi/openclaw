@@ -4,7 +4,7 @@ A single local-LLM daemon + a single resident model per host, owned in one
 place. Every app (life_os, etc.) is a **client** that points at it. No app ships
 or runs its own LLM server, and no app names a raw model — they all ask for
 **`openclaw`**, and this repo decides what that is. The serving engine is an
-implementation detail (Ollama on the Jetson, vLLM on `beast`); the API and model
+implementation detail (MLC-LLM on the Jetson, vLLM on `beast`); the API and model
 name are identical everywhere.
 
 ## Why this exists
@@ -19,8 +19,12 @@ shared, pinned model = warm replies and headroom to spare.
 | Setting    | Value                              |
 |------------|------------------------------------|
 | Base URL   | `http://<host>:11434`              |
-| API        | OpenAI-compatible `/v1/chat/completions` (also native `/api/*`) |
+| API        | OpenAI-compatible `/v1/chat/completions` |
 | Model name | `openclaw`                         |
+
+> **Use the OpenAI `/v1/*` API only.** The current engines (MLC-LLM, vLLM) do
+> **not** serve Ollama-native `/api/generate` / `/api/chat` — those return 404.
+> Apps that used raw `/api/*` must switch to `/v1/chat/completions`.
 
 From inside a container on the same host, reach it at
 `http://host.docker.internal:11434`.
@@ -37,34 +41,45 @@ so it is **not** a submodule — it's a standalone service plus a config contrac
 
 ## What `openclaw` currently is
 
-The **instruct (non-reasoning)** Qwen3 4B — no `<think>` blocks, so callers need
-no special flags. The *contract above is identical on every host*; only the
-serving engine differs per hardware:
+Qwen3 4B. The *API and model name are identical on every host*; the engine,
+quant, and exact variant differ per hardware:
 
-| Host | Backend | What / quant | Speed |
-|------|---------|--------------|-------|
-| `jetson-orin` | Ollama | `qwen3:4b-instruct-2507` Q4_K_M (see [`Modelfile`](./Modelfile)) | ~16 tok/s |
-| `beast` (RTX 3070 Ti laptop) | **vLLM** | `Eslzzyl/Qwen3-4B-Instruct-2507-AWQ` (INT4 AWQ) | **~96 tok/s** |
+| Host | Backend | What / quant | Speed | Context |
+|------|---------|--------------|-------|---------|
+| `jetson-orin` | **MLC-LLM** (TVM) | `Qwen3-4B` q4f16 (thinking variant) | **~23–25 tok/s** | 4096 |
+| `beast` (RTX 3070 Ti laptop) | **vLLM** | `Eslzzyl/Qwen3-4B-Instruct-2507-AWQ` (INT4 AWQ) | **~96 tok/s** | — |
 
-`beast` moved off Ollama to vLLM for a 2.4x speedup (correct output, same API);
-moving the Jetson to vLLM as well is the next step. TensorRT-LLM was evaluated
-and rejected — its pytorch backend can't serve a working quantized model on this
-consumer Ampere GPU. See
-[TRTLLM_MIGRATION.md](./TRTLLM_MIGRATION.md) and [BENCHMARKS.md](./BENCHMARKS.md).
+> **Per-host variant divergence (known):** `beast` runs the **Instruct-2507**
+> (non-reasoning) model — no `<think>` blocks. The Jetson runs the **original
+> Qwen3-4B thinking** model, so its replies contain a `<think>…</think>` block
+> before the answer (strip it client-side if needed). Reason: no working MLC
+> build of Instruct-2507 exists; matching it means compiling from the FP16 base.
+> See [MLC_MIGRATION.md](./MLC_MIGRATION.md).
 
-To change the model for **every** app on a host at once: on Ollama hosts edit
-`FROM` in the `Modelfile` and re-run `./install.sh`; on vLLM hosts edit
-`OPENCLAW_MODEL` in [`vllm/openclaw-vllm.service`](./vllm/openclaw-vllm.service)
-and re-run `./install-vllm.sh`. Nothing in any app changes either way.
+`beast` moved off Ollama to vLLM for a 2.4x speedup. **The Jetson moved off
+Ollama to MLC-LLM** for ~1.5x (25 vs 16 tok/s) — vLLM was tried first and
+**cannot run on the Orin Nano's unified-memory iGPU** (NVML + contiguous-KV
+walls); MLC's TVM-compiled kernels sidestep both. TensorRT-LLM was also rejected.
+See [MLC_MIGRATION.md](./MLC_MIGRATION.md), [TRTLLM_MIGRATION.md](./TRTLLM_MIGRATION.md),
+[BENCHMARKS.md](./BENCHMARKS.md).
+
+To change the model for **every** app on a host at once: on the MLC host edit
+`MODEL`/`CTXS` in [`mlc/openclaw-mlc-run.sh`](./mlc/openclaw-mlc-run.sh) and
+restart `openclaw-mlc.service`; on vLLM hosts edit `OPENCLAW_MODEL` in
+[`vllm/openclaw-vllm.service`](./vllm/openclaw-vllm.service) and re-run
+`./install-vllm.sh`. Nothing in any app changes either way.
 
 ## Install / update
 
-**Ollama host** (Jetson) — Ollama must already be installed (e.g.
-`~/.local/ollama/bin/ollama`):
+**MLC host** (Jetson) — Docker with the NVIDIA runtime, JetPack 6.2 (L4T r36.4),
+user-service linger enabled. Full details in [MLC_RUNBOOK.md](./MLC_RUNBOOK.md):
 
 ```bash
-./install.sh            # create/refresh the openclaw alias + warmup script
-./install.sh --service  # also install & start the systemd user service
+# copy the unit + wrapper into place, then:
+cp mlc/openclaw-mlc-run.sh ~/.local/bin/ && chmod +x ~/.local/bin/openclaw-mlc-run.sh
+cp mlc/openclaw-mlc.service ~/.config/systemd/user/
+systemctl --user daemon-reload
+systemctl --user enable --now openclaw-mlc.service   # serves :11434, auto-starts at boot
 ```
 
 **vLLM host** (beast) — Docker with the NVIDIA runtime, user in the `docker`
@@ -74,26 +89,30 @@ group. Retires the Ollama backend on :11434 and installs the vLLM user service:
 ./install-vllm.sh       # pull image if needed, stop Ollama, start vLLM on :11434
 ```
 
+> `install.sh` / `Modelfile` are the retired **Ollama** provisioner, kept for
+> reference only — no host runs Ollama anymore.
+
 ## Files
 
-- `Modelfile` — defines the `openclaw` model alias (Ollama hosts).
-- `systemd/openclaw.service` — the shared Ollama user service (LAN-bound on
-  :11434, `OLLAMA_KEEP_ALIVE=-1`, preloads `openclaw` at boot).
-- `bin/openclaw-warmup.sh` — pins the model resident right after start (Ollama).
-- `install.sh` — idempotent Ollama provisioner.
+- `mlc/openclaw-mlc.service` — the **MLC-LLM user service** (Jetson): OpenAI API
+  on :11434, model name `openclaw`, auto-starts at boot.
+- `mlc/openclaw-mlc-run.sh` — wrapper it runs: starts the MLC container, tries
+  4096 context and falls back if memory is too tight to generate.
+- `MLC_RUNBOOK.md` — how to run/tune/manage MLC; `MLC_MIGRATION.md` — why MLC
+  (and why vLLM can't run on the Jetson).
 - `vllm/openclaw-vllm.service` — the vLLM user service (beast): OpenAI API on
   :11434, model name `openclaw`, INT4-AWQ Qwen3-4B.
 - `install-vllm.sh` — idempotent vLLM provisioner (retires Ollama on :11434).
 - `TRTLLM_MIGRATION.md` — why TensorRT-LLM was rejected; `BENCHMARKS.md` — numbers.
+- `Modelfile`, `install.sh`, `systemd/openclaw.service`, `bin/openclaw-warmup.sh`
+  — **retired** Ollama provisioner, kept for reference only.
 
-## Migration note (Jetson, 2026-06-22)
+## Migration note (Jetson, 2026-07-09)
 
-Replaces the old app-specific `lifeos-ollama.service` (which preloaded
-`qwen3.5:4b`). To cut over:
+The Jetson moved **Ollama → MLC-LLM** (~16 → ~25 tok/s). Ollama was fully removed
+(binary, models, unit files, image). vLLM was evaluated first and cannot run on
+the Orin Nano — see [MLC_MIGRATION.md](./MLC_MIGRATION.md) for the full story and
+[MLC_RUNBOOK.md](./MLC_RUNBOOK.md) for operations.
 
-```bash
-systemctl --user disable --now lifeos-ollama.service
-./install.sh --service
-```
-
-Both bind the same port (11434), so run only one at a time.
+_(Earlier, 2026-06-22: replaced the app-specific `lifeos-ollama.service` with the
+shared Ollama `openclaw.service`, since also retired.)_

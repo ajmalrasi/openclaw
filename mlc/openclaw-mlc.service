@@ -1,0 +1,27 @@
+# OpenClaw shared local LLM — MLC-LLM (TVM), Qwen3-4B q4f16, LAN-bound on :11434.
+# Replaces the retired Ollama openclaw.service. App-agnostic: every app on this
+# host is a client of this one endpoint and asks for model "openclaw" (MLC
+# ignores the requested name and serves the single loaded model).
+# Starts at boot via linger; wrapper falls back to smaller context if the
+# 4096-token KV cannot be allocated on fragmented memory.
+#
+# Install to ~/.config/systemd/user/openclaw-mlc.service, then:
+#   systemctl --user daemon-reload
+#   systemctl --user enable --now openclaw-mlc.service
+#   loginctl enable-linger ajmalrasi   # (once, needs sudo) so it starts at boot
+[Unit]
+Description=OpenClaw shared local LLM (MLC-LLM, Qwen3-4B q4f16, :11434)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStartPre=-/usr/bin/docker rm -f openclaw-mlc
+ExecStart=/home/ajmalrasi/.local/bin/openclaw-mlc-run.sh
+ExecStop=-/usr/bin/docker stop openclaw-mlc
+Restart=always
+RestartSec=5
+TimeoutStartSec=900
+
+[Install]
+WantedBy=default.target
