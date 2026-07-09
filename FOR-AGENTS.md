@@ -36,16 +36,16 @@ curl -s http://192.168.3.30:11434/v1/chat/completions \
 
 ## What `openclaw` is (and isn't)
 
-- It's **Qwen3 4B**. The name `openclaw` and the API are the same everywhere; the
-  serving engine depends on the host (Jetson → **MLC-LLM**; `beast` laptop →
-  vLLM). You never need to care which.
-- **⚠️ `<think>` blocks:** the Jetson (`192.168.3.30`, the LAN default) runs the
-  **thinking** variant, so replies begin with a `<think>…</think>` block before
-  the real answer. **Strip it** before using the output (take everything after
-  the last `</think>`). `beast` runs the non-thinking Instruct model and does
-  not. Write parsing that tolerates both.
-- Speed depends on the host: **~23–25 tok/s** on the Jetson (MLC), ~96 tok/s on
+- It's the **instruct (non-reasoning)** Qwen3-4B (Instruct-2507) — **no
+  `<think>` blocks**, no per-request flags needed, just send messages and read
+  the reply. The name `openclaw` and the API are the same everywhere; the serving
+  engine depends on the host (Jetson → **MLC-LLM**; `beast` laptop → vLLM). You
+  never need to care which.
+- Speed depends on the host: **~22 tok/s** on the Jetson (MLC), ~96 tok/s on
   `beast` (vLLM + INT4-AWQ). Either way it's **not** GPT-4 class — design accordingly.
+- Keep prompts within **~2048 tokens** total on the Jetson (its current context
+  window); it can be slow/unreachable under memory pressure, so treat every call
+  as best-effort with a timeout and fallback.
 - Design for it: keep prompts tight and explicit; if you need strict JSON, say
   *"return ONLY a JSON array, no prose, no code fences"* and parse tolerantly.
 - It can be slow/unreachable under memory pressure. Treat every call as

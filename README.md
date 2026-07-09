@@ -46,15 +46,17 @@ quant, and exact variant differ per hardware:
 
 | Host | Backend | What / quant | Speed | Context |
 |------|---------|--------------|-------|---------|
-| `jetson-orin` | **MLC-LLM** (TVM) | `Qwen3-4B` q4f16 (thinking variant) | **~23–25 tok/s** | 4096 |
+| `jetson-orin` | **MLC-LLM** (TVM) | `FutureProofHomes/Qwen3-4B-Instruct-2507-q4f16_2-MLC` (non-reasoning) | **~22 tok/s** | 2048 |
 | `beast` (RTX 3070 Ti laptop) | **vLLM** | `Eslzzyl/Qwen3-4B-Instruct-2507-AWQ` (INT4 AWQ) | **~96 tok/s** | — |
 
-> **Per-host variant divergence (known):** `beast` runs the **Instruct-2507**
-> (non-reasoning) model — no `<think>` blocks. The Jetson runs the **original
-> Qwen3-4B thinking** model, so its replies contain a `<think>…</think>` block
-> before the answer (strip it client-side if needed). Reason: no working MLC
-> build of Instruct-2507 exists; matching it means compiling from the FP16 base.
-> See [MLC_MIGRATION.md](./MLC_MIGRATION.md).
+Both hosts run **Instruct-2507 (non-reasoning)** — no `<think>` blocks anywhere.
+
+> **Jetson caveat:** the only *working* prebuilt MLC of Instruct-2507 is the
+> heavier `q4f16_2` quant (~2.7 GB params), which caps context at **2048** and
+> needs **clean memory to load** (loads fine at boot; a mid-session restart on a
+> busy box may fail — clear cache in jtop or reboot). A lighter `q4f16_1` build
+> (compiled from the FP16 base) would restore up to 4096 and more headroom — see
+> [MLC_MIGRATION.md](./MLC_MIGRATION.md).
 
 `beast` moved off Ollama to vLLM for a 2.4x speedup. **The Jetson moved off
 Ollama to MLC-LLM** for ~1.5x (25 vs 16 tok/s) — vLLM was tried first and

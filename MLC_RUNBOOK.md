@@ -6,7 +6,10 @@ Orin Nano. Background & rationale: [MLC_MIGRATION.md](MLC_MIGRATION.md).
 - **Host:** `ajmalrasi@192.168.3.30` (JetPack 6.2 / L4T r36.4.7, sm87, 7.4 GB)
 - **Endpoint:** `http://192.168.3.30:11434/v1` (OpenAI-compatible)
 - **Image:** `dustynv/mlc:0.20.0-r36.4.0`
-- **Model:** `HF://mlc-ai/Qwen3-4B-q4f16_1-MLC` (JIT-compiled for sm87, cached)
+- **Model:** `HF://FutureProofHomes/Qwen3-4B-Instruct-2507-q4f16_2-MLC`
+  (non-reasoning, JIT-compiled for sm87, cached). Context **2048** — this
+  `q4f16_2` quant's params are ~2.7 GB, so 4096 won't fit with generation
+  headroom, and it needs clean memory to load.
 
 ---
 
@@ -19,15 +22,16 @@ docker run -d --name openclaw-mlc \
   -v /home/ajmalrasi/.cache/huggingface:/root/.cache/huggingface \
   -v /home/ajmalrasi/.cache/mlc_llm:/root/.cache/mlc_llm \
   dustynv/mlc:0.20.0-r36.4.0 \
-  mlc_llm serve HF://mlc-ai/Qwen3-4B-q4f16_1-MLC \
+  mlc_llm serve HF://FutureProofHomes/Qwen3-4B-Instruct-2507-q4f16_2-MLC \
     --mode interactive \
-    --overrides "context_window_size=4096;prefill_chunk_size=512" \
+    --overrides "context_window_size=2048;prefill_chunk_size=512" \
     --host 0.0.0.0 --port 8000
 ```
 
-First run downloads the model (~2.3 GB) and **JIT-compiles the sm87 kernel
+First run downloads the model (~2.7 GB) and **JIT-compiles the sm87 kernel
 library** (a few minutes); both are cached in the mounted volumes, so restarts
-are fast.
+are fast. **Note:** MLC compiles the lib per `context_window_size`, so changing
+context triggers a fresh ~3 min compile.
 
 ### Parameter reference
 
@@ -40,7 +44,7 @@ are fast.
 | `-v …/mlc_llm` | Persist the **JIT-compiled** `.so` (avoids recompiling every start). |
 | `mlc_llm serve HF://…` | Serve model straight from HF; MLC compiles for the local GPU. |
 | `--mode interactive` | Single-user (batch size 1), modest KV. Use `local`/`server` for more batching (more memory). |
-| `context_window_size=4096` | KV cache span. **~0.28 MB/token**, so 4096 ≈ 1.15 GB contiguous. Lower it if it OOMs on fragmented memory. |
+| `context_window_size=2048` | KV cache span. **~0.28 MB/token**. Kept at 2048 because the `q4f16_2` params (~2.7 GB) leave little room; lower it if it OOMs on fragmented memory. |
 | `prefill_chunk_size=512` | Caps the temp buffer during prefill (smaller = less memory). |
 | `--host 0.0.0.0` | Listen on all interfaces (LAN). |
 
@@ -58,12 +62,11 @@ login). Files (also mirrored in this repo under [`mlc/`](mlc/)):
 - Unit:    `~/.config/systemd/user/openclaw-mlc.service`
 - Wrapper: `~/.local/bin/openclaw-mlc-run.sh`
 
-The wrapper starts at **4096** and automatically **falls back** to
-`3072 → 2048 → 1024` if the context can't be served. Its readiness check does a
-**real 1-token generation**, not just a `/v1/models` ping — so it also catches
-the "serves but can't *generate*" case (4096's KV allocates at startup, but the
-per-request working memory OOMs on tight/fragmented memory). On fresh/clean
-memory it gets the full 4096.
+The wrapper starts at **2048** (the reliable ceiling for the heavier `q4f16_2`
+model) and falls back to `1024` if needed. Its readiness check does a **real
+1-token generation** (90 s timeout for cold starts), not just a `/v1/models`
+ping — so it also catches a "serves but can't *generate*" case. Override the
+context list with `OPENCLAW_CTXS` (e.g. a lighter model could use `4096 2048`).
 
 ### Manage
 
@@ -101,9 +104,8 @@ curl -s http://192.168.3.30:11434/v1/chat/completions \
 curl -s http://192.168.3.30:11434/v1/models
 ```
 
-**Note:** this model (`Qwen3-4B`) is a *thinking* model — replies contain a
-`<think>…</think>` block before the answer. To suppress it, strip that block
-client-side, or switch to a non-thinking model (see MLC_MIGRATION.md).
+**Note:** this is the **non-reasoning** Instruct-2507 model — replies have **no
+`<think>` block**, just the answer.
 
 **Ollama-native `/api/*` endpoints are NOT served** — only OpenAI `/v1/*`.
 
@@ -125,8 +127,10 @@ problem is almost always **memory pressure / fragmentation** — clearing cache 
 **jtop** (or a reboot) frees it, and restarting the service lets it grab a clean
 context. Do not reach for `cma=`.
 
-**Memory reality:** at 4096 context the model uses ~5 GB (params 2.1 + KV 1.15 +
-CUDA context + temp), leaving only ~2 GB headroom on this 7.4 GB box. That's
-enough on clean memory but tight — if other containers grow or memory fragments,
-4096 generation can OOM and the wrapper will fall back to 3072/2048. If you want
-a rock-solid margin over max context, set `OPENCLAW_CTXS=2048` in the unit.
+**Memory reality:** the `q4f16_2` Instruct-2507 uses ~5 GB at 2048 context
+(params 2.7 + KV 0.6 + CUDA context + temp), leaving ~2 GB headroom on this 7.4 GB
+box. The 2.7 GB params need **clean, low-fragmentation memory to load** — at boot
+it's fine, but a mid-session restart on a busy/fragmented box can fail the param
+load (clear cache in jtop or reboot). A lighter `q4f16_1` build (compiled from the
+FP16 base) would load in ~2.1 GB and allow higher context — the more robust
+long-term option.

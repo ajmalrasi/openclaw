@@ -8,8 +8,12 @@
 # Deploy to: ~/.local/bin/openclaw-mlc-run.sh  (chmod +x)
 set -u
 IMAGE="dustynv/mlc:0.20.0-r36.4.0"
-MODEL="HF://mlc-ai/Qwen3-4B-q4f16_1-MLC"
-CTXS="${OPENCLAW_CTXS:-4096 3072 2048 1024}"
+# Non-reasoning Instruct-2507 (no <think> blocks), matches beast. q4f16_2 quant.
+MODEL="HF://FutureProofHomes/Qwen3-4B-Instruct-2507-q4f16_2-MLC"
+# q4f16_2 Instruct-2507 params are heavier (~2.7GB), so 4096 KV won't fit with
+# generation headroom on 7.4GB — 2048 is the reliable ceiling. MLC recompiles the
+# lib per context, so we don't waste cycles probing 4096/3072.
+CTXS="${OPENCLAW_CTXS:-2048 1024}"
 GEN='{"model":"openclaw","messages":[{"role":"user","content":"hi"}],"max_tokens":1,"stream":false}'
 docker rm -f openclaw-mlc >/dev/null 2>&1
 for CTX in $CTXS; do
@@ -30,7 +34,7 @@ for CTX in $CTXS; do
     sleep 6
   done
   if $up; then
-    gcode=$(curl -s -o /dev/null -w "%{http_code}" -m 40 -H "Content-Type: application/json" \
+    gcode=$(curl -s -o /dev/null -w "%{http_code}" -m 90 -H "Content-Type: application/json" \
       -d "$GEN" http://localhost:11434/v1/chat/completions 2>/dev/null)
     if [ "$gcode" = "200" ]; then
       echo "[openclaw-mlc] SERVING+GENERATING at context $CTX"

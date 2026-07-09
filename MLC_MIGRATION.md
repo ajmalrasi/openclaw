@@ -122,28 +122,39 @@ Per-token KV cost for Qwen3-4B q4f16 ≈ **0.28 MB/token**, so:
 | Host | Engine | Model / quant | tok/s | Context |
 |---|---|---|---|---|
 | jetson-orin | Ollama (llama.cpp) | qwen3:4b-instruct-2507 Q4_K_M | ~16 | 4096 |
-| **jetson-orin** | **MLC-LLM (TVM)** | Qwen3-4B q4f16_1 | **~25** | up to 4096 |
+| **jetson-orin** | **MLC-LLM (TVM)** | Qwen3-4B-Instruct-2507 q4f16_2 (shipped) | **~22** | 2048 |
+| jetson-orin | MLC-LLM (TVM) | Qwen3-4B q4f16_1 (thinking, engine ref) | ~25 | up to 4096 |
 | beast (RTX 3070 Ti) | vLLM | Qwen3-4B-Instruct-2507 AWQ | ~96 | — |
 
 Measured end-to-end (`completion_tokens / wall_time`), 200–300 token gens,
 `--mode interactive`. Stable across runs (25.2 / 25.3 / 25.4 / 24.6).
 
-**Caveat:** the MLC model is the *original* Qwen3-4B (**hybrid-thinking**, emits
-`<think>`), so 25 tok/s is decode speed *including* thinking tokens. Raw engine
-speed is a genuine ~1.5× over Ollama; time-to-final-answer depends on thinking
-overhead. Ollama ran the non-thinking Instruct-2507.
+Speeds above were measured on `mlc-ai/Qwen3-4B-q4f16_1` (the model first brought
+up). The shipped model is now the non-reasoning **Instruct-2507 `q4f16_2`**
+(~22 tok/s, 2048 ctx) — see the model note below.
 
 ---
 
 ## Model note
 
-- Serving **`mlc-ai/Qwen3-4B-q4f16_1-MLC`** (official MLC repo, JIT-compiled for
-  sm87 on first run; lib cached in `~/.cache/mlc_llm`).
-- This is the **original** Qwen3-4B, not `Instruct-2507` (what beast/Ollama use).
-  All community MLC builds of `Qwen3-4B-Instruct-2507` are broken (missing
-  `ndarray-cache.json`, packaged by a newer MLC). To match beast exactly you'd
-  compile 2507 from the FP16 base (`mlc_llm convert_weight` + `gen_config` +
-  `compile`) — deferred by choice.
+- **Shipped:** **`FutureProofHomes/Qwen3-4B-Instruct-2507-q4f16_2-MLC`** — the
+  non-reasoning Instruct-2507 (no `<think>`), matching beast. JIT-compiled for
+  sm87; lib cached in `~/.cache/mlc_llm`. Serves at **2048 context, ~22 tok/s**.
+- Getting a working non-reasoning prebuilt was painful: most community MLC builds
+  of `Qwen3-4B-Instruct-2507` (`emb1ter`, `yusakuno1`) are **broken** — missing
+  `ndarray-cache.json` (packaged by a newer MLC our r36.4.0 container can't read).
+  `FutureProofHomes` is the one that works, but it's the heavier `q4f16_2` quant.
+- **`q4f16_2` trade-off:** params are ~2.7 GB (vs ~2.1 GB for `q4f16_1`), so it
+  caps context at 2048 and needs **clean memory to load** (fine at boot; a
+  mid-session restart on a fragmented box can fail the param load — jtop-clear or
+  reboot). We first ran the *original thinking* `mlc-ai/Qwen3-4B-q4f16_1` (2.1 GB,
+  4096 ctx, ~25 tok/s) but its `<think>` blocks caused app-side issues.
+- **More robust path (not yet done):** compile `Qwen3-4B-Instruct-2507` at
+  `q4f16_1` from the FP16 base (`mlc_llm convert_weight` + `gen_config` +
+  `compile`, needs `--runtime nvidia`). That yields the ~2.1 GB footprint →
+  higher context + reliable loading, non-reasoning. ~30 min one-off.
+- Qwen3.5-4B (Mar 2026) exists but has **no MLC build**, may not compile on this
+  MLC version, and may be vision-language — not pursued.
 
 ## API compatibility
 
