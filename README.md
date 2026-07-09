@@ -1,9 +1,11 @@
 # OpenClaw — one shared local LLM for all my apps
 
-A single Ollama daemon + a single resident model, owned in one place. Every app
-(life_os, etc.) is a **client** that points at it. No app ships or runs its own
-Ollama, and no app names a raw model — they all ask for **`openclaw`**, and this
-repo decides what that is.
+A single local-LLM daemon + a single resident model per host, owned in one
+place. Every app (life_os, etc.) is a **client** that points at it. No app ships
+or runs its own LLM server, and no app names a raw model — they all ask for
+**`openclaw`**, and this repo decides what that is. The serving engine is an
+implementation detail (Ollama on the Jetson, vLLM on `beast`); the API and model
+name are identical everywhere.
 
 ## Why this exists
 
