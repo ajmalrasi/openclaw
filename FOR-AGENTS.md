@@ -43,7 +43,7 @@ curl -s http://192.168.3.30:11434/v1/chat/completions \
   never need to care which.
 - Speed depends on the host: **~22 tok/s** on the Jetson (MLC), ~96 tok/s on
   `beast` (vLLM + INT4-AWQ). Either way it's **not** GPT-4 class — design accordingly.
-- Keep prompts within **~2048 tokens** total on the Jetson (its current context
+- Keep prompts within **~4096 tokens** total on the Jetson (its current context
   window); it can be slow/unreachable under memory pressure, so treat every call
   as best-effort with a timeout and fallback.
 - Design for it: keep prompts tight and explicit; if you need strict JSON, say

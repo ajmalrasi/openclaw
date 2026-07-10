@@ -46,17 +46,18 @@ quant, and exact variant differ per hardware:
 
 | Host | Backend | What / quant | Speed | Context |
 |------|---------|--------------|-------|---------|
-| `jetson-orin` | **MLC-LLM** (TVM) | `FutureProofHomes/Qwen3-4B-Instruct-2507-q4f16_2-MLC` (non-reasoning) | **~22 tok/s** | 2048 |
+| `jetson-orin` | **MLC-LLM** (TVM) | `FutureProofHomes/Qwen3-4B-Instruct-2507-q4f16_2-MLC` (non-reasoning) | **~22 tok/s** | 4096 |
 | `beast` (RTX 3070 Ti laptop) | **vLLM** | `Eslzzyl/Qwen3-4B-Instruct-2507-AWQ` (INT4 AWQ) | **~96 tok/s** | — |
 
 Both hosts run **Instruct-2507 (non-reasoning)** — no `<think>` blocks anywhere.
 
 > **Jetson caveat:** the only *working* prebuilt MLC of Instruct-2507 is the
-> heavier `q4f16_2` quant (~2.7 GB params), which caps context at **2048** and
-> needs **clean memory to load** (loads fine at boot; a mid-session restart on a
-> busy box may fail — clear cache in jtop or reboot). A lighter `q4f16_1` build
-> (compiled from the FP16 base) would restore up to 4096 and more headroom — see
-> [MLC_MIGRATION.md](./MLC_MIGRATION.md).
+> heavier `q4f16_2` quant (~2.7 GB params). A 4096 KV cache (~3.73 GB resident)
+> fits on the 8 GB board only from **clean memory** — the Tegra CUDA allocator
+> won't reclaim page cache, so the startup wrapper drops caches, forces
+> `max_total_seq_length=4096`, and uses `prefill_chunk_size=256` to make room
+> (falling back to 2048 if 4096 ever won't allocate). One-time setup of the
+> cache-drop helper: run [mlc/enable-4k-jetson.sh](./mlc/enable-4k-jetson.sh).
 
 `beast` moved off Ollama to vLLM for a 2.4x speedup. **The Jetson moved off
 Ollama to MLC-LLM** for ~1.5x (25 vs 16 tok/s) — vLLM was tried first and
