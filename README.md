@@ -41,15 +41,16 @@ so it is **not** a submodule — it's a standalone service plus a config contrac
 
 ## What `openclaw` currently is
 
-Qwen3 4B. The *API and model name are identical on every host*; the engine,
-quant, and exact variant differ per hardware:
+A non-thinking Qwen 4B model. The *API and model name are identical on every
+host*; the engine, generation, quant, and exact variant differ per hardware:
 
 | Host | Backend | What / quant | Speed | Context |
 |------|---------|--------------|-------|---------|
 | `jetson-orin` | **MLC-LLM** (TVM) | `FutureProofHomes/Qwen3-4B-Instruct-2507-q4f16_2-MLC` (non-reasoning) | **~22 tok/s** | 4096 |
-| `beast` (RTX 3070 Ti laptop) | **vLLM** | `Eslzzyl/Qwen3-4B-Instruct-2507-AWQ` (INT4 AWQ) | **~96 tok/s** | — |
+| `beast` (RTX 3070 Ti laptop) | **vLLM** | `QuantTrio/Qwen3.5-4B-AWQ` (INT4 AWQ, language-only, thinking disabled) | benchmark pending | 4096 |
 
-Both hosts run **Instruct-2507 (non-reasoning)** — no `<think>` blocks anywhere.
+Both hosts return direct responses with no `<think>` blocks. On `beast`, vLLM
+sets `enable_thinking=false` as a server-wide chat-template default.
 
 > **Jetson caveat:** the only *working* prebuilt MLC of Instruct-2507 is the
 > heavier `q4f16_2` quant (~2.7 GB params). A 4096 KV cache (~3.73 GB resident)
@@ -104,7 +105,7 @@ group. Retires the Ollama backend on :11434 and installs the vLLM user service:
 - `MLC_RUNBOOK.md` — how to run/tune/manage MLC; `MLC_MIGRATION.md` — why MLC
   (and why vLLM can't run on the Jetson).
 - `vllm/openclaw-vllm.service` — the vLLM user service (beast): OpenAI API on
-  :11434, model name `openclaw`, INT4-AWQ Qwen3-4B.
+  :11434, model name `openclaw`, language-only INT4-AWQ Qwen3.5-4B.
 - `install-vllm.sh` — idempotent vLLM provisioner (retires Ollama on :11434).
 - `TRTLLM_MIGRATION.md` — why TensorRT-LLM was rejected; `BENCHMARKS.md` — numbers.
 - `Modelfile`, `install.sh`, `systemd/openclaw.service`, `bin/openclaw-warmup.sh`

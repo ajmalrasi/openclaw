@@ -1,5 +1,5 @@
 # OpenClaw backend for `beast` (RTX 3070 Ti Laptop, 8 GB, Ampere sm86).
-# vLLM serving an INT4-AWQ Qwen3-4B behind the exact OpenClaw contract:
+# vLLM serving language-only INT4-AWQ Qwen3.5-4B behind the OpenClaw contract:
 # OpenAI API on :11434, model name "openclaw". A drop-in replacement for the
 # Ollama openclaw service on this host — apps need no change.
 #
@@ -22,7 +22,7 @@
 #   loginctl enable-linger "$USER"
 
 [Unit]
-Description=OpenClaw shared local LLM (vLLM, INT4-AWQ Qwen3-4B, LAN :11434)
+Description=OpenClaw shared local LLM (vLLM, INT4-AWQ Qwen3.5-4B, LAN :11434)
 After=network-online.target docker.service
 Wants=network-online.target
 
@@ -31,12 +31,12 @@ Type=simple
 # Swap OPENCLAW_MODEL to change the model for every app at once (mirrors the
 # Modelfile's role on the Ollama hosts). Must be an AWQ / compressed-tensors
 # checkpoint that fits ~8 GB.
-Environment=OPENCLAW_MODEL=Eslzzyl/Qwen3-4B-Instruct-2507-AWQ
+Environment=OPENCLAW_MODEL=QuantTrio/Qwen3.5-4B-AWQ
 Environment=OPENCLAW_PORT=11434
 Environment=VLLM_IMAGE=vllm/vllm-openai:latest
 # Clear any stale container left by a hard crash before (re)starting.
 ExecStartPre=-/usr/bin/docker rm -f openclaw-vllm
-ExecStart=/usr/bin/docker run --rm --name openclaw-vllm --gpus all --ipc=host -p ${OPENCLAW_PORT}:8000 -v %h/.cache/huggingface:/root/.cache/huggingface ${VLLM_IMAGE} --model ${OPENCLAW_MODEL} --served-model-name openclaw --quantization awq_marlin --max-model-len 4096 --gpu-memory-utilization 0.92 --max-num-seqs 1 --enforce-eager
+ExecStart=/usr/bin/docker run --rm --name openclaw-vllm --gpus all --ipc=host -p ${OPENCLAW_PORT}:8000 -v %h/.cache/huggingface:/root/.cache/huggingface ${VLLM_IMAGE} --model ${OPENCLAW_MODEL} --served-model-name openclaw --language-model-only --default-chat-template-kwargs '{"enable_thinking":false}' --max-model-len 4096 --gpu-memory-utilization 0.92 --max-num-seqs 4 --enforce-eager
 ExecStop=/usr/bin/docker stop openclaw-vllm
 ExecStopPost=-/usr/bin/docker rm -f openclaw-vllm
 Restart=always
