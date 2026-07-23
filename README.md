@@ -47,7 +47,7 @@ host*; the engine, generation, quant, and exact variant differ per hardware:
 | Host | Backend | What / quant | Speed | Context |
 |------|---------|--------------|-------|---------|
 | `jetson-orin` | **MLC-LLM** (TVM) | `FutureProofHomes/Qwen3-4B-Instruct-2507-q4f16_2-MLC` (non-reasoning) | **~22 tok/s** | 4096 |
-| `beast` (RTX 3070 Ti laptop) | **vLLM** | `QuantTrio/Qwen3.5-4B-AWQ` (INT4 AWQ, language-only, thinking disabled) | benchmark pending | 4096 |
+| `beast` (RTX 3070 Ti laptop) | **vLLM** | `QuantTrio/Qwen3.5-4B-AWQ` (INT4 AWQ, language-only, thinking disabled) | **~51 tok/s** single request; **156 tok/s** batched ×4 | 4096 |
 
 Both hosts return direct responses with no `<think>` blocks. On `beast`, vLLM
 sets `enable_thinking=false` as a server-wide chat-template default.

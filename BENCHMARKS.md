@@ -81,9 +81,30 @@ returned `READY` exactly, with no `<think>` block and a null reasoning field.
 - Reported maximum concurrency at the configured 4,096-token context: 9.09x
 - Serving concurrency remains capped at the validated `--max-num-seqs 4`
 
-The performance figures above describe the previous Qwen3-4B Instruct-2507 AWQ
-checkpoint and remain as the pre-switch baseline. Qwen3.5 performance
-benchmarking is still pending.
+The same 10-warmup, 500-request benchmark was repeated after the switch. The
+requested workload remained 512 input and 128 output tokens; Qwen3.5's tokenizer
+produced 262,203 total input tokens across the 500 requests.
+
+| Metric | Sequential (`max-concurrency=1`) | Batched (`max-concurrency=4`) | Batching gain |
+|--------|----------------------------------:|------------------------------:|--------------:|
+| Successful requests | 500 / 500 | 500 / 500 | no failures |
+| Benchmark duration | 1,352.67 s | 410.90 s | **3.29x faster** |
+| Request throughput | 0.37 req/s | 1.22 req/s | **3.30x** |
+| Output throughput | 47.31 tok/s | 155.76 tok/s | **3.29x** |
+| Peak output throughput | 57 tok/s | 208 tok/s | **3.65x** |
+| Total token throughput | 241.16 tok/s | 793.88 tok/s | **3.29x** |
+| Mean TTFT | 191.77 ms | 619.75 ms | 3.23x higher |
+| Median TTFT | 191.42 ms | 682.14 ms | 3.56x higher |
+| P99 TTFT | 207.46 ms | 750.19 ms | 3.62x higher |
+| Mean TPOT | 19.78 ms | 21.00 ms | 6.2% higher |
+| P99 TPOT | 20.49 ms | 23.10 ms | 12.7% higher |
+| Mean ITL | 19.62 ms | 20.84 ms | 6.2% higher |
+| P99 ITL | 21.05 ms | 21.96 ms | 4.3% higher |
+
+Compared with the previous Qwen3-4B Instruct-2507 AWQ baseline, Qwen3.5 is about
+42% slower in sequential output throughput (47.31 vs 81.35 tok/s) and 39% slower
+when continuously batched four ways (155.76 vs 257.38 tok/s). Its active
+single-request decode cadence is about 50.6 tok/s (`1000 / mean TPOT`).
 
 Notes:
 - The RTX 3070 Ti has dedicated VRAM independent of system RAM; the Jetson's

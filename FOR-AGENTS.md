@@ -42,9 +42,10 @@ curl -s http://192.168.3.30:11434/v1/chat/completions \
   thinking disabled server-wide. The name `openclaw` and API are the same
   everywhere; the serving engine depends on the host (Jetson → **MLC-LLM**;
   `beast` laptop → vLLM).
-- Speed depends on the host: **~22 tok/s** on the Jetson (MLC); the new
-  Qwen3.5 model on `beast` is awaiting its post-switch benchmark. Either way
-  it's **not** GPT-4 class — design accordingly.
+- Speed depends on the host: **~22 tok/s** on the Jetson (MLC); Qwen3.5 on
+  `beast` decodes at **~51 tok/s** for one active request and delivers ~156
+  aggregate tok/s with four-way continuous batching. Either way it's **not**
+  GPT-4 class — design accordingly.
 - Keep prompts within **~4096 tokens** total on the Jetson (its current context
   window); it can be slow/unreachable under memory pressure, so treat every call
   as best-effort with a timeout and fallback.
