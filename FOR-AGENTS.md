@@ -8,11 +8,13 @@ different model cause RAM thrash and timeouts for everyone.
 
 ## The contract (all you depend on)
 
-- **Base URL:** `http://192.168.3.30:11434` (LAN) · `http://host.docker.internal:11434` (from a container on the host)
+- **Base URL:** `http://192.168.3.30:11434` (LAN) · `http://host.docker.internal:11434` (from a container on the host) · `http://127.0.0.1:11434` (through the EC2 SSH tunnel) · `https://98-80-123-250.sslip.io` (public EC2)
 - **API:** OpenAI-compatible `POST /v1/chat/completions` **only** — Ollama-native
   `/api/generate` and `/api/chat` are **gone** (return 404). Use `/v1/*`.
 - **Model name:** `openclaw` ← always use this literal string
-- **Auth:** none by default (no API key)
+- **Auth:** none on the Jetson/`beast` LAN endpoints; both the EC2 SSH-tunnel
+  and public HTTPS endpoints require `Authorization: Bearer <key>` (see
+  `EC2_RUNBOOK.md`)
 
 ## How to integrate
 
@@ -36,19 +38,20 @@ curl -s http://192.168.3.30:11434/v1/chat/completions \
 
 ## What `openclaw` is (and isn't)
 
-- It is a **non-thinking Qwen 4B model** — **no `<think>` blocks** and no
+- It is a **non-thinking Qwen model** — **no `<think>` blocks** and no
   per-request flags needed; just send messages and read the reply. The Jetson
-  runs Qwen3-4B Instruct-2507, while `beast` runs language-only Qwen3.5-4B with
-  thinking disabled server-wide. The name `openclaw` and API are the same
-  everywhere; the serving engine depends on the host (Jetson → **MLC-LLM**;
-  `beast` laptop → vLLM).
+  runs Qwen3-4B Instruct-2507, `beast` runs language-only Qwen3.5-4B, and the
+  EC2 L4 host runs language-only Qwen3.5-9B. Thinking is disabled server-wide.
+  The name `openclaw` and API are the same everywhere; the serving engine
+  depends on the host (Jetson → **MLC-LLM**; `beast` and EC2 → vLLM).
 - Speed depends on the host: **~22 tok/s** on the Jetson (MLC); Qwen3.5 on
   `beast` decodes at **~51 tok/s** for one active request and delivers ~156
-  aggregate tok/s with four-way continuous batching. Either way it's **not**
-  GPT-4 class — design accordingly.
+  aggregate tok/s with four-way continuous batching; the EC2 9B BF16 model
+  measured **~15.5 tok/s** in a short single-request calibration. These are not
+  apples-to-apples model comparisons. None is GPT-4 class — design accordingly.
 - Keep prompts within **~4096 tokens** total on the Jetson (its current context
-  window); it can be slow/unreachable under memory pressure, so treat every call
-  as best-effort with a timeout and fallback.
+  window). The EC2 service is configured for 16,384 tokens. A client should
+  still set a timeout and fallback appropriate to the host and workload.
 - Design for it: keep prompts tight and explicit; if you need strict JSON, say
   *"return ONLY a JSON array, no prose, no code fences"* and parse tolerantly.
 - It can be slow/unreachable under memory pressure. Treat every call as
@@ -59,8 +62,10 @@ curl -s http://192.168.3.30:11434/v1/chat/completions \
 
 This repo owns the service. To swap the model: on the Jetson edit `MODEL` in
 [`mlc/openclaw-mlc-run.sh`](./mlc/openclaw-mlc-run.sh) and restart
-`openclaw-mlc.service`; on `beast` edit the vLLM service. See
-[`MLC_RUNBOOK.md`](./MLC_RUNBOOK.md).
+`openclaw-mlc.service`; on `beast` edit the vLLM user service; on EC2 edit
+[`vllm/openclaw-vllm-ec2.service`](./vllm/openclaw-vllm-ec2.service) and rerun
+`./install-vllm-ec2.sh`. See [`MLC_RUNBOOK.md`](./MLC_RUNBOOK.md) and
+[`EC2_RUNBOOK.md`](./EC2_RUNBOOK.md).
 
 Do **not** solve a model-quality problem by spinning up your own model in your
 app — raise it against this repo so the change is shared.

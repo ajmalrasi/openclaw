@@ -1,5 +1,43 @@
 # Benchmarks
 
+## 2026-08-05 — AWS EC2 g6.xlarge / Qwen3.5-9B
+
+The EC2 host serves `Qwen/Qwen3.5-9B` with vLLM 0.18.1 on an NVIDIA L4. The
+weights are BF16, the KV cache is FP8, the configured context is 16,384 tokens,
+and the service caps continuous batching at four sequences. Thinking is
+disabled server-wide and the public model name remains `openclaw`.
+
+A short calibration used two warmups followed by five random requests, each
+with 512 requested input tokens and 128 output tokens, concurrency one, an
+unlimited offered request rate, and EOS ignored.
+
+| Metric | EC2 L4 / Qwen3.5-9B |
+|--------|---------------------:|
+| Successful requests | 5 / 5 |
+| Benchmark duration | 41.27 s |
+| Request throughput | 0.12 req/s |
+| Output throughput | **15.51 tok/s** |
+| Peak output throughput | 16 tok/s |
+| Total token throughput | 77.55 tok/s |
+| Mean / median / P99 TTFT | 214.43 / 216.05 / 217.38 ms |
+| Mean / P99 TPOT | 63.30 / 63.32 ms |
+| Mean / P99 ITL | 62.80 / 63.55 ms |
+
+Runtime footprint:
+
+- Model loading used 16.8 GiB of VRAM.
+- vLLM allocated 3.69 GiB to the paged KV cache (60,192-token capacity).
+- The server reserved about 22,272 MiB according to `nvidia-smi`.
+- vLLM reported theoretical 12x concurrency at the 16,384-token context; the
+  service remains deliberately capped at four sequences.
+
+The planned 10-warmup, 500-request sequential and four-way tests were stopped
+before completion to avoid paying for a long EC2 benchmark, so no partial score
+is reported. The 15.51 tok/s calibration is not an apples-to-apples model
+comparison with `beast` or `jetson-orin`: EC2 is serving a 9B BF16 model, while
+those hosts serve quantized 4B models. It describes this endpoint's observed
+single-request speed, not relative GPU capability.
+
 Same `openclaw` model (`qwen3:4b-instruct-2507-q4_K_M`, Q4_K_M) served via Ollama,
 measured with the `/api/chat` `eval_count`/`eval_duration` fields (`stream: false`).
 3 runs each, prompt: "Explain how photosynthesis works in detail, covering light

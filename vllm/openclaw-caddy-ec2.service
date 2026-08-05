@@ -1,0 +1,22 @@
+# Public TLS frontend for the EC2 OpenClaw vLLM service.
+# Caddy obtains and renews the certificate automatically and exposes only
+# /v1/*. vLLM validates Authorization: Bearer <key> behind this proxy.
+
+[Unit]
+Description=OpenClaw EC2 HTTPS frontend (Caddy)
+After=network-online.target docker.service openclaw-vllm-ec2.service
+Wants=network-online.target openclaw-vllm-ec2.service
+Requires=docker.service
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/openclaw-vllm-ec2.env
+ExecStartPre=-/usr/bin/docker rm -f openclaw-ec2-caddy
+ExecStart=/usr/bin/docker run --rm --name openclaw-ec2-caddy --network host -e OPENCLAW_PUBLIC_HOST=${OPENCLAW_PUBLIC_HOST} -v /etc/openclaw/Caddyfile:/etc/caddy/Caddyfile:ro -v /var/lib/openclaw-caddy/data:/data -v /var/lib/openclaw-caddy/config:/config caddy:2.10.2
+ExecStop=/usr/bin/docker stop -t 30 openclaw-ec2-caddy
+ExecStopPost=-/usr/bin/docker rm -f openclaw-ec2-caddy
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,13 @@
+{$OPENCLAW_PUBLIC_HOST} {
+	@openai_api path /v1/*
+	handle @openai_api {
+		reverse_proxy 127.0.0.1:11434 {
+			# Send streaming chat chunks immediately instead of buffering them.
+			flush_interval -1
+		}
+	}
+
+	handle {
+		respond "Not Found" 404
+	}
+}

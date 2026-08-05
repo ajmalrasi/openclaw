@@ -1,0 +1,27 @@
+# OpenClaw backend for AWS EC2 g6.xlarge (NVIDIA L4, 24 GB VRAM).
+#
+# Serves Qwen3.5-9B through the OpenAI-compatible API with the shared model name
+# "openclaw". The host port is deliberately bound to loopback; connect through
+# an SSH tunnel instead of exposing the unauthenticated vLLM API to the internet.
+#
+# Install with ../install-vllm-ec2.sh. This is a system service (not a user
+# service), so it starts after Docker whenever the EC2 instance boots.
+
+[Unit]
+Description=OpenClaw shared LLM on EC2 (vLLM, Qwen3.5-9B, loopback :11434)
+After=network-online.target docker.service
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/openclaw-vllm-ec2.env
+ExecStartPre=-/usr/bin/docker rm -f openclaw-ec2-vllm
+ExecStart=/usr/bin/docker run --rm --name openclaw-ec2-vllm --gpus all --ipc=host -p 127.0.0.1:11434:8000 -v /home/ubuntu/.cache/huggingface:/root/.cache/huggingface vllm/vllm-openai:v0.18.1 --model Qwen/Qwen3.5-9B --served-model-name openclaw --api-key ${VLLM_API_KEY} --language-model-only --default-chat-template-kwargs '{"enable_thinking":false}' --dtype bfloat16 --kv-cache-dtype fp8 --max-model-len 16384 --gpu-memory-utilization 0.95 --max-num-seqs 4 --enforce-eager
+ExecStop=/usr/bin/docker stop -t 30 openclaw-ec2-vllm
+ExecStopPost=-/usr/bin/docker rm -f openclaw-ec2-vllm
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -4,8 +4,8 @@ A single local-LLM daemon + a single resident model per host, owned in one
 place. Every app (life_os, etc.) is a **client** that points at it. No app ships
 or runs its own LLM server, and no app names a raw model — they all ask for
 **`openclaw`**, and this repo decides what that is. The serving engine is an
-implementation detail (MLC-LLM on the Jetson, vLLM on `beast`); the API and model
-name are identical everywhere.
+implementation detail (MLC-LLM on the Jetson, vLLM on `beast` and EC2); the API
+and model name are identical everywhere.
 
 ## Why this exists
 
@@ -48,9 +48,21 @@ host*; the engine, generation, quant, and exact variant differ per hardware:
 |------|---------|--------------|-------|---------|
 | `jetson-orin` | **MLC-LLM** (TVM) | `FutureProofHomes/Qwen3-4B-Instruct-2507-q4f16_2-MLC` (non-reasoning) | **~22 tok/s** | 4096 |
 | `beast` (RTX 3070 Ti laptop) | **vLLM** | `QuantTrio/Qwen3.5-4B-AWQ` (INT4 AWQ, language-only, thinking disabled) | **~51 tok/s** single request; **156 tok/s** batched ×4 | 4096 |
+| `aws-g6` (EC2 g6.xlarge, NVIDIA L4) | **vLLM** | `Qwen/Qwen3.5-9B` (BF16 weights, FP8 KV cache, language-only, thinking disabled) | **~15.5 tok/s** single-request calibration | 16384 |
 
-Both hosts return direct responses with no `<think>` blocks. On `beast`, vLLM
-sets `enable_thinking=false` as a server-wide chat-template default.
+All hosts return direct responses with no `<think>` blocks. On the vLLM hosts,
+`enable_thinking=false` is a server-wide chat-template default.
+
+The EC2 vLLM port is bound only to `127.0.0.1`. It is available either through
+an SSH tunnel or through its Caddy HTTPS frontend. vLLM requires the same bearer
+key on both routes. For tunnel-only access:
+
+```bash
+ssh -i ~/.ssh/id_ed25519 -N \
+  -L 11434:127.0.0.1:11434 ubuntu@<ec2-public-ip>
+# Base URL from this machine: http://127.0.0.1:11434/v1
+# Model: openclaw
+```
 
 > **Jetson caveat:** the only *working* prebuilt MLC of Instruct-2507 is the
 > heavier `q4f16_2` quant (~2.7 GB params). A 4096 KV cache (~3.73 GB resident)
@@ -93,6 +105,18 @@ group. Retires the Ollama backend on :11434 and installs the vLLM user service:
 ./install-vllm.sh       # pull image if needed, stop Ollama, start vLLM on :11434
 ```
 
+**vLLM host** (AWS EC2 g6.xlarge) — Ubuntu, Docker with the NVIDIA runtime, and
+an NVIDIA L4. Installs a system service that starts after Docker at every boot.
+Unlike the LAN hosts, its API listens only on loopback and is reached through
+the SSH tunnel shown above:
+
+```bash
+./install-vllm-ec2.sh   # pinned vLLM image + Qwen3.5-9B, starts automatically
+sudo systemctl status openclaw-vllm-ec2.service
+sudo systemctl status openclaw-caddy-ec2.service
+sudo journalctl -u openclaw-vllm-ec2.service -f
+```
+
 > `install.sh` / `Modelfile` are the retired **Ollama** provisioner, kept for
 > reference only — no host runs Ollama anymore.
 
@@ -107,6 +131,14 @@ group. Retires the Ollama backend on :11434 and installs the vLLM user service:
 - `vllm/openclaw-vllm.service` — the vLLM user service (beast): OpenAI API on
   :11434, model name `openclaw`, language-only INT4-AWQ Qwen3.5-4B.
 - `install-vllm.sh` — idempotent vLLM provisioner (retires Ollama on :11434).
+- `vllm/openclaw-vllm-ec2.service` — boot-persistent EC2 system service: pinned
+  vLLM container, loopback-only API, Qwen3.5-9B on the NVIDIA L4.
+- `install-vllm-ec2.sh` — installs/enables that EC2 service and verifies its GPU.
+- `vllm/openclaw-caddy-ec2.service` and `vllm/Caddyfile.ec2` — automatic HTTPS
+  frontend for the EC2 OpenAI API; only `/v1/*` is public and vLLM checks its
+  bearer key.
+- `EC2_RUNBOOK.md` — AWS SSO, SSH tunnel, service operations, storage, and
+  stop/start instructions for the g6.xlarge host.
 - `TRTLLM_MIGRATION.md` — why TensorRT-LLM was rejected; `BENCHMARKS.md` — numbers.
 - `Modelfile`, `install.sh`, `systemd/openclaw.service`, `bin/openclaw-warmup.sh`
   — **retired** Ollama provisioner, kept for reference only.
