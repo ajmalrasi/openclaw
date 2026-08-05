@@ -1,8 +1,8 @@
 # AWS EC2 vLLM runbook
 
 The AWS OpenClaw host is an EC2 `g6.xlarge` in `us-east-1`, backed by an NVIDIA
-L4 with 24 GB VRAM. It serves `Qwen/Qwen3.5-9B` as the shared model name
-`openclaw` through vLLM's OpenAI-compatible API.
+L4 with 24 GB VRAM. It serves `google/gemma-4-12B-it-qat-w4a16-ct` as the shared
+model name `openclaw` through vLLM's OpenAI-compatible API.
 
 ## Current host
 
@@ -15,8 +15,9 @@ L4 with 24 GB VRAM. It serves `Qwen/Qwen3.5-9B` as the shared model name
 | GPU | NVIDIA L4, 24 GB VRAM |
 | Root storage | 250 GB encrypted gp3 |
 | OS user | `ubuntu` |
+| Instance profile | `openclaw-ec2-ecr-readonly` |
 | vLLM listener | `127.0.0.1:11434` only |
-| Public API | `https://98-80-123-250.sslip.io/v1/*` (bearer auth) |
+| Public API | `https://<public-ip-with-dashes>.sslip.io/v1/*` (bearer auth) |
 | System services | `openclaw-vllm-ec2.service`, `openclaw-caddy-ec2.service` |
 
 The instance has no Elastic IP, so its public address can change after a
@@ -28,7 +29,7 @@ public IPv4 `/32`. It exposes 80/443 for Caddy, but never exposes port 11434.
 Refresh the AWS SSO session and look up the current public IP:
 
 ```bash
-aws sso login --profile ml-prep-deploy
+aws login --profile ml-prep-deploy
 
 EC2_IP=$(aws ec2 describe-instances \
   --profile ml-prep-deploy \
@@ -71,7 +72,9 @@ stored in the instance's root-only environment file:
 API_KEY=$(ssh -i ~/.ssh/id_ed25519 "ubuntu@$EC2_IP" \
   "sudo sed -n 's/^VLLM_API_KEY=//p' /etc/openclaw-vllm-ec2.env")
 
-curl https://98-80-123-250.sslip.io/v1/chat/completions \
+PUBLIC_HOST="${EC2_IP//./-}.sslip.io"
+
+curl "https://$PUBLIC_HOST/v1/chat/completions" \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -H "Authorization: Bearer $API_KEY" \
@@ -82,10 +85,9 @@ curl https://98-80-123-250.sslip.io/v1/chat/completions \
   }'
 ```
 
-The generated `sslip.io` name follows the current public IP. If the instance is
-stopped and started without an Elastic IP, rerun the installer to update the
-hostname and certificate after the IP changes. Set `OPENCLAW_PUBLIC_HOST` when
-running the installer to use a real DNS name instead.
+The generated `sslip.io` name follows the current public IP. The
+`openclaw-ec2-init.service` boot unit refreshes it automatically after a
+stop/start and preserves the VM's bearer key.
 
 ## Install and operate the service
 
@@ -111,28 +113,54 @@ interrupting a live model or benchmark. Start/restart it explicitly afterward.
 The source of truth is
 [`vllm/openclaw-vllm-ec2.service`](./vllm/openclaw-vllm-ec2.service):
 
-- image: `vllm/vllm-openai:v0.18.1`
-- model: `Qwen/Qwen3.5-9B`, served as `openclaw`
-- language model only; thinking disabled in the server chat template
-- BF16 model weights and FP8 KV cache
+- image: private ECR `openclaw/vllm-gemma4` pinned by digest
+  `sha256:0ea4b07a909f78a5cc8a6a82e9d3dd3efa51b59a0f5421fcf2207e80a3aae53b`
+- model: `google/gemma-4-12B-it-qat-w4a16-ct`, served as `openclaw`
+- language-model-only serving
+- compressed-tensors QAT W4A16 model weights and FP8 KV cache
 - 16,384-token maximum model length
 - 95% GPU-memory utilization and at most four concurrent sequences
 - eager execution
-- Hugging Face cache persisted at `/home/ubuntu/.cache/huggingface`
 - host API bound to `127.0.0.1:11434`
 - native vLLM bearer-key validation, with the key stored mode `0600` in
   `/etc/openclaw-vllm-ec2.env`
 - Caddy automatic HTTPS on ports 80/443, proxying only `/v1/*`
 
-The model cache is roughly 19 GB. The 250 GB root volume leaves ample room for
-this model, container layers, benchmark results, and additional quantized model
-experiments without repeating the original small-disk mistake.
+The checkpoint is roughly 10 GB. The 250 GB root volume leaves ample room for
+the serving image, Docker working space, and logs.
+
+## Reusable Docker artifact
+
+The model and vLLM runtime are built once into a private ECR image. The image is
+stored in `us-east-1` and replicated to `us-east-2` with the same immutable
+digest. New hosts pull that regional artifact and do not install Python packages
+or download model weights from Hugging Face.
+
+To publish a new immutable version after changing the Dockerfile:
+
+```bash
+aws login --profile ml-prep-deploy
+IMAGE_TAG=vllm-0.25.1-gemma4-12b-w4a16-r3 ./aws/push-ecr-image.sh
+```
+
+For a replacement VM, use the NVIDIA Driver AMI/DLAMI with:
+
+- `g6.xlarge`, 250 GB encrypted gp3, IMDSv2 required
+- IAM instance profile `openclaw-ec2-ecr-readonly`
+- SSH key pair imported into that region
+- TCP 22 from the administrator's current `/32`; TCP 80/443 publicly
+- automatic public IPv4 assignment
+
+Copy or clone this repository and run `./install-vllm-ec2.sh`. This thin
+bootstrap verifies Docker/GPU access, pulls the regional image by digest, creates
+the VM-specific bearer key and hostname, and enables vLLM and Caddy at boot.
+The expensive model/runtime preparation remains in ECR, not on each VM.
 
 ## Stop/start the EC2 instance
 
 Stopping the EC2 instance stops compute billing while retaining the EBS volume.
 Starting it again causes Docker and then `openclaw-vllm-ec2.service` to start;
-the cached model is reused, though loading it into VRAM still takes time.
+the local image is reused, though loading weights into VRAM still takes time.
 
 ```bash
 aws ec2 stop-instances --profile ml-prep-deploy --region us-east-1 \

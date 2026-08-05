@@ -1,0 +1,18 @@
+FROM vllm/vllm-openai:v0.25.1
+
+ARG MODEL_REPOSITORY=google/gemma-4-12B-it-qat-w4a16-ct
+ARG MODEL_REVISION=1d2c2d7f2466070e69d6fb3fd5ce9a7d75f2f6ee
+ENV OPENCLAW_MODEL_PATH=/models/gemma-4-12b-w4a16
+
+RUN mkdir -p "${OPENCLAW_MODEL_PATH}" && \
+    python3 -c "from huggingface_hub import snapshot_download; snapshot_download(repo_id='${MODEL_REPOSITORY}', revision='${MODEL_REVISION}', local_dir='${OPENCLAW_MODEL_PATH}')" && \
+    find "${OPENCLAW_MODEL_PATH}" -type d -name .cache -prune -exec rm -rf {} +
+
+ENV HF_HUB_OFFLINE=1 \
+    TRANSFORMERS_OFFLINE=1
+
+LABEL org.opencontainers.image.title="OpenClaw vLLM Gemma 4 12B W4A16" \
+      org.opencontainers.image.description="Pinned vLLM server with Gemma weights embedded for download-free EC2 startup" \
+      org.opencontainers.image.source="https://github.com/ajmalrasi/openclaw" \
+      ai.openclaw.model="google/gemma-4-12B-it-qat-w4a16-ct" \
+      ai.openclaw.model.revision="1d2c2d7f2466070e69d6fb3fd5ce9a7d75f2f6ee"

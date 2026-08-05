@@ -1,0 +1,13 @@
+[Unit]
+Description=Initialize machine-specific OpenClaw EC2 endpoint state
+After=network-online.target
+Wants=network-online.target
+Before=openclaw-vllm-ec2.service openclaw-caddy-ec2.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/lib/openclaw/openclaw-ec2-init.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

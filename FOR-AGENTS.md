@@ -8,7 +8,7 @@ different model cause RAM thrash and timeouts for everyone.
 
 ## The contract (all you depend on)
 
-- **Base URL:** `http://192.168.3.30:11434` (LAN) · `http://host.docker.internal:11434` (from a container on the host) · `http://127.0.0.1:11434` (through the EC2 SSH tunnel) · `https://98-80-123-250.sslip.io` (public EC2)
+- **Base URL:** `http://192.168.3.30:11434` (LAN) · `http://host.docker.internal:11434` (from a container on the host) · `http://127.0.0.1:11434` (through the EC2 SSH tunnel) · `https://<public-ip-with-dashes>.sslip.io` (public EC2)
 - **API:** OpenAI-compatible `POST /v1/chat/completions` **only** — Ollama-native
   `/api/generate` and `/api/chat` are **gone** (return 404). Use `/v1/*`.
 - **Model name:** `openclaw` ← always use this literal string
@@ -38,17 +38,18 @@ curl -s http://192.168.3.30:11434/v1/chat/completions \
 
 ## What `openclaw` is (and isn't)
 
-- It is a **non-thinking Qwen model** — **no `<think>` blocks** and no
+- It is a direct-response language model — **no `<think>` blocks** and no
   per-request flags needed; just send messages and read the reply. The Jetson
   runs Qwen3-4B Instruct-2507, `beast` runs language-only Qwen3.5-4B, and the
-  EC2 L4 host runs language-only Qwen3.5-9B. Thinking is disabled server-wide.
+  EC2 L4 host runs language-only Gemma 4 12B QAT W4A16 with FP8 KV cache.
   The name `openclaw` and API are the same everywhere; the serving engine
   depends on the host (Jetson → **MLC-LLM**; `beast` and EC2 → vLLM).
 - Speed depends on the host: **~22 tok/s** on the Jetson (MLC); Qwen3.5 on
   `beast` decodes at **~51 tok/s** for one active request and delivers ~156
-  aggregate tok/s with four-way continuous batching; the EC2 9B BF16 model
-  measured **~15.5 tok/s** in a short single-request calibration. These are not
-  apples-to-apples model comparisons. None is GPT-4 class — design accordingly.
+  aggregate tok/s with four-way continuous batching. The current EC2 Gemma
+  model has only received a short correctness smoke test; no benchmark was run.
+  These are not apples-to-apples model comparisons. None is GPT-4 class —
+  design accordingly.
 - Keep prompts within **~4096 tokens** total on the Jetson (its current context
   window). The EC2 service is configured for 16,384 tokens. A client should
   still set a timeout and fallback appropriate to the host and workload.

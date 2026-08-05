@@ -41,16 +41,16 @@ so it is **not** a submodule — it's a standalone service plus a config contrac
 
 ## What `openclaw` currently is
 
-A non-thinking Qwen 4B model. The *API and model name are identical on every
+A shared language-model alias. The *API and model name are identical on every
 host*; the engine, generation, quant, and exact variant differ per hardware:
 
 | Host | Backend | What / quant | Speed | Context |
 |------|---------|--------------|-------|---------|
 | `jetson-orin` | **MLC-LLM** (TVM) | `FutureProofHomes/Qwen3-4B-Instruct-2507-q4f16_2-MLC` (non-reasoning) | **~22 tok/s** | 4096 |
 | `beast` (RTX 3070 Ti laptop) | **vLLM** | `QuantTrio/Qwen3.5-4B-AWQ` (INT4 AWQ, language-only, thinking disabled) | **~51 tok/s** single request; **156 tok/s** batched ×4 | 4096 |
-| `aws-g6` (EC2 g6.xlarge, NVIDIA L4) | **vLLM** | `Qwen/Qwen3.5-9B` (BF16 weights, FP8 KV cache, language-only, thinking disabled) | **~15.5 tok/s** single-request calibration | 16384 |
+| `aws-g6` (EC2 g6.xlarge, NVIDIA L4) | **vLLM** | `google/gemma-4-12B-it-qat-w4a16-ct` (QAT W4A16, FP8 KV cache, language-only) | Endpoint smoke-tested; no benchmark run | 16384 |
 
-All hosts return direct responses with no `<think>` blocks. On the vLLM hosts,
+All hosts return direct responses with no `<think>` blocks. On `beast`,
 `enable_thinking=false` is a server-wide chat-template default.
 
 The EC2 vLLM port is bound only to `127.0.0.1`. It is available either through
@@ -105,13 +105,14 @@ group. Retires the Ollama backend on :11434 and installs the vLLM user service:
 ./install-vllm.sh       # pull image if needed, stop Ollama, start vLLM on :11434
 ```
 
-**vLLM host** (AWS EC2 g6.xlarge) — Ubuntu, Docker with the NVIDIA runtime, and
-an NVIDIA L4. Installs a system service that starts after Docker at every boot.
-Unlike the LAN hosts, its API listens only on loopback and is reached through
-the SSH tunnel shown above:
+**vLLM host** (AWS EC2 g6.xlarge) — Ubuntu, Docker with the NVIDIA runtime, an
+NVIDIA L4, and the `openclaw-ec2-ecr-readonly` instance profile. The installer
+pulls one private ECR artifact containing both vLLM and the pinned model; it does
+not download weights from Hugging Face. It installs system services that start
+after Docker at every boot:
 
 ```bash
-./install-vllm-ec2.sh   # pinned vLLM image + Qwen3.5-9B, starts automatically
+./install-vllm-ec2.sh   # pinned vLLM image + Gemma 4 W4A16, starts automatically
 sudo systemctl status openclaw-vllm-ec2.service
 sudo systemctl status openclaw-caddy-ec2.service
 sudo journalctl -u openclaw-vllm-ec2.service -f
@@ -132,8 +133,12 @@ sudo journalctl -u openclaw-vllm-ec2.service -f
   :11434, model name `openclaw`, language-only INT4-AWQ Qwen3.5-4B.
 - `install-vllm.sh` — idempotent vLLM provisioner (retires Ollama on :11434).
 - `vllm/openclaw-vllm-ec2.service` — boot-persistent EC2 system service: pinned
-  vLLM container, loopback-only API, Qwen3.5-9B on the NVIDIA L4.
+  vLLM container, loopback-only API, Gemma 4 12B W4A16 on the NVIDIA L4.
+- `vllm/openclaw-ec2-init.service` and `.sh` — generate a per-VM bearer key and
+  refresh the regional ECR image and `sslip.io` hostname on every boot.
 - `install-vllm-ec2.sh` — installs/enables that EC2 service and verifies its GPU.
+- `aws/Dockerfile.ec2` — pinned vLLM runtime with the Gemma checkpoint embedded.
+- `aws/push-ecr-image.sh` — build the amd64 artifact and push it to private ECR.
 - `vllm/openclaw-caddy-ec2.service` and `vllm/Caddyfile.ec2` — automatic HTTPS
   frontend for the EC2 OpenAI API; only `/v1/*` is public and vLLM checks its
   bearer key.

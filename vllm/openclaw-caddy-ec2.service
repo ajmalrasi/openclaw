@@ -4,8 +4,8 @@
 
 [Unit]
 Description=OpenClaw EC2 HTTPS frontend (Caddy)
-After=network-online.target docker.service openclaw-vllm-ec2.service
-Wants=network-online.target openclaw-vllm-ec2.service
+After=network-online.target docker.service openclaw-ec2-init.service openclaw-vllm-ec2.service
+Wants=network-online.target openclaw-ec2-init.service openclaw-vllm-ec2.service
 Requires=docker.service
 
 [Service]
