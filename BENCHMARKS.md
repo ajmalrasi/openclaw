@@ -159,3 +159,25 @@ Notes:
   and lower memory bandwidth than a discrete laptop GPU), not memory
   pressure or offload configuration — the RTX 3070 Ti is ~2.5x faster on
   generation.
+
+## 2026-08-30 — HauhauCS aggressive Qwen3.5-4B on `beast`
+
+The requested HauhauCS release contains only GGUF files. vLLM 0.24.0's
+experimental GGUF path failed before weight loading, so the service stayed on
+native vLLM formats: the BF16 safetensors reconstruction was compressed locally
+to symmetric group-128 W4A16 using LLM Compressor. The visual encoder,
+`lm_head`, and Gated DeltaNet linear-attention projections remain in BF16,
+matching the supported Qwen3.5 compressed-tensors layout. vLLM serves the
+result with its Marlin WNA16 kernel and `--language-model-only`.
+
+- Checkpoint size: 4.92 GiB
+- Model-loading GPU memory: 4.48 GiB
+- API model alias: `openclaw`
+- Direct-response smoke test: returned `READY` exactly, reasoning field null
+- Single-request smoke test: 110 completion tokens in 2.129 s (**51.7 tok/s**)
+- Four-request smoke test: 456 completion tokens in 3.569 s
+  (**127.8 aggregate tok/s**)
+
+These are short smoke tests, not directly comparable to the earlier 500-request
+benchmark. The original AWQ checkpoint remains cached and the pre-change user
+service is backed up on `beast` for rollback.

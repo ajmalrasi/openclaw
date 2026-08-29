@@ -44,10 +44,10 @@ curl -s http://192.168.3.30:11434/v1/chat/completions \
   EC2 L4 host runs language-only Gemma 4 12B QAT W4A16 with FP8 KV cache.
   The name `openclaw` and API are the same everywhere; the serving engine
   depends on the host (Jetson → **MLC-LLM**; `beast` and EC2 → vLLM).
-- Speed depends on the host: **~22 tok/s** on the Jetson (MLC); Qwen3.5 on
-  `beast` decodes at **~51 tok/s** for one active request and delivers ~156
-  aggregate tok/s with four-way continuous batching. The current EC2 Gemma
-  model has only received a short correctness smoke test; no benchmark was run.
+- Speed depends on the host: **~22 tok/s** on the Jetson (MLC); HauhauCS
+  Qwen3.5 W4A16 on `beast` decodes at **~52 tok/s** for one active request and
+  delivered ~128 aggregate tok/s in a four-request smoke test. The current EC2
+  Gemma model has only received a short correctness smoke test; no benchmark was run.
   These are not apples-to-apples model comparisons. None is GPT-4 class —
   design accordingly.
 - Keep prompts within **~4096 tokens** total on the Jetson (its current context

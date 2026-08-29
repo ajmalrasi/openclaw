@@ -12,12 +12,14 @@
 #
 # Requirements: Docker with the NVIDIA runtime, the invoking user in the
 # `docker` group, and the vLLM image (pulled automatically if missing). The
-# model checkpoint is downloaded to ~/.cache/huggingface on first start.
+# model checkpoint is generated locally on first install from the upstream BF16
+# safetensors reconstruction. Generated weights live in ~/.cache/openclaw-models.
 set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 UNIT="openclaw-vllm.service"
 IMAGE="${VLLM_IMAGE:-vllm/vllm-openai:latest}"
+MODEL_DIR="$HOME/.cache/openclaw-models/hauhaucs-w4a16"
 NO_START="${1:-}"
 
 echo ">> Checking Docker + NVIDIA runtime ..."
@@ -28,6 +30,10 @@ id -nG | tr ' ' '\n' | grep -qx docker \
 if ! docker image inspect "$IMAGE" >/dev/null 2>&1; then
   echo ">> Pulling $IMAGE (large, one-time) ..."
   docker pull "$IMAGE"
+fi
+
+if [[ ! -s "$MODEL_DIR/config.json" || ! -s "$MODEL_DIR/model.safetensors" ]]; then
+  "$HERE/build-hauhaucs-w4a16.sh"
 fi
 
 echo ">> Retiring any Ollama openclaw backend on :11434 ..."
