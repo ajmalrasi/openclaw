@@ -51,7 +51,7 @@ curl -s http://192.168.3.30:11434/v1/chat/completions \
   These are not apples-to-apples model comparisons. None is GPT-4 class —
   design accordingly.
 - Keep prompts within **~4096 tokens** total on the Jetson (its current context
-  window). The `beast` and EC2 services are configured for 16,384 tokens. A
+  window). `beast` is configured for 32,768 tokens and EC2 for 16,384 tokens. A
   client should still set a timeout and fallback appropriate to the host and
   workload.
 - Design for it: keep prompts tight and explicit; if you need strict JSON, say
