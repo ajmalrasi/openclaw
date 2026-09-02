@@ -47,16 +47,11 @@ host*; the engine, generation, quant, and exact variant differ per hardware:
 | Host | Backend | What / quant | Speed | Context |
 |------|---------|--------------|-------|---------|
 | `jetson-orin` | **MLC-LLM** (TVM) | `FutureProofHomes/Qwen3-4B-Instruct-2507-q4f16_2-MLC` (non-reasoning) | **~22 tok/s** | 4096 |
-| `beast` (RTX 3070 Ti laptop) | **vLLM** | HauhauCS aggressive Qwen3.5-4B (W4A16 compressed-tensors, language-only, thinking disabled) | **~52 tok/s** single request; **~128 tok/s** batched ×4 smoke test | 32768 |
+| `beast` (RTX 3070 Ti laptop) | **vLLM** | `QuantTrio/Qwen3.5-4B-AWQ` (INT4 AWQ, language-only, thinking disabled) | **~51 tok/s** single request; **156 tok/s** batched ×4 | 32768 |
 | `aws-g6` (EC2 g6.xlarge, NVIDIA L4) | **vLLM** | `google/gemma-4-12B-it-qat-w4a16-ct` (QAT W4A16, FP8 KV cache, language-only) | Endpoint smoke-tested; no benchmark run | 16384 |
 
 All hosts return direct responses with no `<think>` blocks. On `beast`,
 `enable_thinking=false` is a server-wide chat-template default.
-
-The HauhauCS 4B release is GGUF-only. `beast` uses the BF16 safetensors
-reconstruction at
-`DreamFast/Qwen3.5-4B-Uncensored-HauhauCS-Aggressive-Safetensor-Benchmark`,
-then applies local W4A16 compression for vLLM. GGUF is not used at runtime.
 
 The EC2 vLLM port is bound only to `127.0.0.1`. It is available either through
 an SSH tunnel or through its Caddy HTTPS frontend. vLLM requires the same bearer
@@ -104,16 +99,11 @@ systemctl --user enable --now openclaw-mlc.service   # serves :11434, auto-start
 ```
 
 **vLLM host** (beast) — Docker with the NVIDIA runtime, user in the `docker`
-group. The first run downloads a native safetensors reconstruction of the
-GGUF-only HauhauCS release, quantizes it to W4A16 compressed-tensors on CPU,
-retires the Ollama backend on :11434, and installs the vLLM user service:
+group. Retires the Ollama backend on :11434 and installs the vLLM user service:
 
 ```bash
 ./install-vllm.sh       # pull image if needed, stop Ollama, start vLLM on :11434
 ```
-
-To build only the checkpoint without changing the running service, run
-`./build-hauhaucs-w4a16.sh`.
 
 **vLLM host** (AWS EC2 g6.xlarge) — Ubuntu, Docker with the NVIDIA runtime, an
 NVIDIA L4, and the `openclaw-ec2-ecr-readonly` instance profile. The installer
@@ -140,9 +130,7 @@ sudo journalctl -u openclaw-vllm-ec2.service -f
 - `MLC_RUNBOOK.md` — how to run/tune/manage MLC; `MLC_MIGRATION.md` — why MLC
   (and why vLLM can't run on the Jetson).
 - `vllm/openclaw-vllm.service` — the vLLM user service (beast): OpenAI API on
-  :11434, model name `openclaw`, language-only W4A16 Qwen3.5-4B.
-- `build-hauhaucs-w4a16.sh` and `vllm/quantize-hauhaucs-w4a16.py` — generate
-  the local vLLM compressed-tensors checkpoint from the HauhauCS BF16 weights.
+  :11434, model name `openclaw`, language-only INT4-AWQ Qwen3.5-4B.
 - `install-vllm.sh` — idempotent vLLM provisioner (retires Ollama on :11434).
 - `vllm/openclaw-vllm-ec2.service` — boot-persistent EC2 system service: pinned
   vLLM container, loopback-only API, Gemma 4 12B W4A16 on the NVIDIA L4.
