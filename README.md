@@ -47,7 +47,7 @@ host*; the engine, generation, quant, and exact variant differ per hardware:
 | Host | Backend | What / quant | Speed | Context |
 |------|---------|--------------|-------|---------|
 | `jetson-orin` | **MLC-LLM** (TVM) | `FutureProofHomes/Qwen3-4B-Instruct-2507-q4f16_2-MLC` (non-reasoning) | **~22 tok/s** | 4096 |
-| `beast` (RTX 3070 Ti laptop) | **vLLM** | `QuantTrio/Qwen3.5-4B-AWQ` (INT4 AWQ, language-only, thinking disabled) | **~51 tok/s** single request; **156 tok/s** batched ×4 | 32768 |
+| `beast` (RTX 3070 Ti laptop) | **vLLM** | `QuantTrio/Qwen3.5-4B-AWQ` (INT4 AWQ, language-only, thinking disabled) | **~51 tok/s** single request; **156 tok/s** batched ×4 | 12288 |
 | `aws-g6` (EC2 g6.xlarge, NVIDIA L4) | **vLLM** | `google/gemma-4-12B-it-qat-w4a16-ct` (QAT W4A16, FP8 KV cache, language-only) | Endpoint smoke-tested; no benchmark run | 16384 |
 
 All hosts return direct responses with no `<think>` blocks. On `beast`,

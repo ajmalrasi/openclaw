@@ -36,7 +36,7 @@ Environment=OPENCLAW_PORT=11434
 Environment=VLLM_IMAGE=vllm/vllm-openai:latest
 # Clear any stale container left by a hard crash before (re)starting.
 ExecStartPre=-/usr/bin/docker rm -f openclaw-vllm
-ExecStart=/usr/bin/docker run --rm --name openclaw-vllm --gpus all --ipc=host -p ${OPENCLAW_PORT}:8000 -v %h/.cache/huggingface:/root/.cache/huggingface ${VLLM_IMAGE} --model ${OPENCLAW_MODEL} --served-model-name openclaw --language-model-only --default-chat-template-kwargs '{"enable_thinking":false}' --max-model-len 32768 --gpu-memory-utilization 0.92 --max-num-seqs 4 --enforce-eager
+ExecStart=/usr/bin/docker run --rm --name openclaw-vllm --gpus all --ipc=host -p ${OPENCLAW_PORT}:8000 -v %h/.cache/huggingface:/root/.cache/huggingface ${VLLM_IMAGE} --model ${OPENCLAW_MODEL} --served-model-name openclaw --language-model-only --default-chat-template-kwargs '{"enable_thinking":false}' --max-model-len 12288 --gpu-memory-utilization 0.92 --max-num-seqs 4 --enforce-eager
 ExecStop=/usr/bin/docker stop openclaw-vllm
 ExecStopPost=-/usr/bin/docker rm -f openclaw-vllm
 Restart=always
