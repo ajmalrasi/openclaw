@@ -42,7 +42,7 @@ for CTX in $CTXS; do
       --host 0.0.0.0 --port 8000 &
   DPID=$!
   up=false
-  for i in $(seq 1 45); do
+  for i in $(seq 1 150); do
     curl -sf -m 3 http://localhost:11434/v1/models >/dev/null 2>&1 && { up=true; break; }
     kill -0 "$DPID" 2>/dev/null || { echo "[openclaw-mlc] died during load at ctx $CTX"; break; }
     sleep 6
