@@ -38,7 +38,7 @@ for CTX in $CTXS; do
     -v /home/ajmalrasi/.cache/mlc_llm:/root/.cache/mlc_llm \
     "$IMAGE" \
     mlc_llm serve "$MODEL" --mode server \
-      --overrides "context_window_size=${CTX};max_total_seq_length=${CTX};prefill_chunk_size=256" \
+      --overrides "context_window_size=${CTX};max_total_seq_length=${CTX};prefill_chunk_size=256;max_num_sequence=4" \
       --host 0.0.0.0 --port 8000 &
   DPID=$!
   up=false
