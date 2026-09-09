@@ -1,5 +1,53 @@
 # Benchmarks
 
+## 2026-09-09 — Qwen3.5-9B HLWQ Q5 on `beast`
+
+The live `beast` service now runs
+`caiovicentino1/Qwen3.5-9B-HLWQ-Q5` at revision
+`35b345a98d05ac17c1ca8f79b3ab99e5e585d13d` with vLLM 0.28.0 on the RTX
+3070 Ti Laptop GPU. The compressed-tensors W4A16 weights use Marlin kernels;
+the service also uses 1.5 GiB of CPU offload, an FP8 KV cache, a 4,096-token
+context, eager execution, and a four-sequence cap. Thinking is disabled and the
+public model name remains `openclaw`.
+
+The standard random workload requested 512 input and 128 output tokens per
+request with EOS ignored and an unlimited offered request rate. Because this
+model is substantially slower than the former 4B checkpoint, these are short
+calibrations rather than the earlier 500-request suite: the sequential run used
+two warmups and five measured requests; the batched run used four warmups and
+eight measured requests (two fully saturated waves).
+
+| Metric | Sequential (`max-concurrency=1`) | Batched (`max-concurrency=4`) | Batching gain |
+|--------|----------------------------------:|------------------------------:|--------------:|
+| Successful requests | 5 / 5 | 8 / 8 | no failures |
+| Benchmark duration | 112.74 s | 53.48 s | different request counts |
+| Request throughput | 0.044 req/s | 0.150 req/s | **3.37x** |
+| Output throughput | **5.68 tok/s** | **19.15 tok/s** | **3.37x** |
+| Peak output throughput | 7 tok/s | 27 tok/s | **3.86x** |
+| Total token throughput | 28.94 tok/s | 97.59 tok/s | **3.37x** |
+| Mean TTFT | 1,481.45 ms | 5,272.57 ms | 3.56x higher |
+| Median TTFT | 1,482.94 ms | 5,378.26 ms | 3.63x higher |
+| P99 TTFT | 1,484.76 ms | 5,395.97 ms | 3.63x higher |
+| Mean TPOT | 165.87 ms | 168.93 ms | 1.8% higher |
+| P99 TPOT | 165.92 ms | 171.35 ms | 3.3% higher |
+| Mean ITL | 167.72 ms | 167.61 ms | unchanged |
+| P99 ITL | 167.12 ms | 169.34 ms | 1.3% higher |
+
+Runtime footprint and validation:
+
+- Checkpoint size: 7.12 GiB; model loading used 5.71 GiB of GPU memory.
+- vLLM reserved 0.65 GiB for the FP8 KV cache (16,384-token capacity), exactly
+  four full-context requests at the configured 4,096-token context.
+- `nvidia-smi` reported 7,581 MiB in use after the benchmark.
+- A direct-response check returned `READY` exactly with a null reasoning field.
+
+Compared with the previous Qwen3.5-4B AWQ result, the 9B checkpoint has about
+88% lower sequential and batched output throughput (5.68 vs 47.31 tok/s and
+19.15 vs 155.76 tok/s). Four-way batching still preserves decode cadence while
+raising aggregate output throughput by 3.37x; the cost is mean TTFT rising from
+1.48 s to 5.27 s under saturation. The different sample counts make this a
+calibration, not a replacement for the prior 500-request benchmark.
+
 ## 2026-08-05 — AWS EC2 g6.xlarge / Qwen3.5-9B
 
 The EC2 host serves `Qwen/Qwen3.5-9B` with vLLM 0.18.1 on an NVIDIA L4. The

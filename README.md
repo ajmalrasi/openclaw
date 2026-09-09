@@ -47,7 +47,7 @@ host*; the engine, generation, quant, and exact variant differ per hardware:
 | Host | Backend | What / quant | Speed | Context |
 |------|---------|--------------|-------|---------|
 | `jetson-orin` | **MLC-LLM** (TVM) | `FutureProofHomes/Qwen3-4B-Instruct-2507-q4f16_2-MLC` (non-reasoning) | **~22 tok/s** | 4096 |
-| `beast` (RTX 3070 Ti laptop) | **vLLM** | `QuantTrio/Qwen3.5-4B-AWQ` (INT4 AWQ, language-only, thinking disabled) | **~51 tok/s** single request; **156 tok/s** batched ×4 | 12288 |
+| `beast` (RTX 3070 Ti laptop) | **vLLM** | `caiovicentino1/Qwen3.5-9B-HLWQ-Q5` (HLWQ Q5/W4A16, FP8 KV, language-only) | **5.68 tok/s** sequential; **19.15 tok/s** batched ×4 | 4096 |
 | `aws-g6` (EC2 g6.xlarge, NVIDIA L4) | **vLLM** | `google/gemma-4-12B-it-qat-w4a16-ct` (QAT W4A16, FP8 KV cache, language-only) | Endpoint smoke-tested; no benchmark run | 16384 |
 
 All hosts return direct responses with no `<think>` blocks. On `beast`,
@@ -130,7 +130,7 @@ sudo journalctl -u openclaw-vllm-ec2.service -f
 - `MLC_RUNBOOK.md` — how to run/tune/manage MLC; `MLC_MIGRATION.md` — why MLC
   (and why vLLM can't run on the Jetson).
 - `vllm/openclaw-vllm.service` — the vLLM user service (beast): OpenAI API on
-  :11434, model name `openclaw`, language-only INT4-AWQ Qwen3.5-4B.
+  :11434, model name `openclaw`, language-only Qwen3.5-9B HLWQ Q5.
 - `install-vllm.sh` — idempotent vLLM provisioner (retires Ollama on :11434).
 - `vllm/openclaw-vllm-ec2.service` — boot-persistent EC2 system service: pinned
   vLLM container, loopback-only API, Gemma 4 12B W4A16 on the NVIDIA L4.

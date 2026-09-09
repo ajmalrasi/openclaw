@@ -1,17 +1,17 @@
 # OpenClaw backend for `beast` (RTX 3070 Ti Laptop, 8 GB, Ampere sm86).
-# vLLM serving language-only INT4-AWQ Qwen3.5-4B behind the OpenClaw contract:
+# vLLM serving language-only Qwen3.5-9B HLWQ Q5 behind the OpenClaw contract:
 # OpenAI API on :11434, model name "openclaw". A drop-in replacement for the
 # Ollama openclaw service on this host — apps need no change.
 #
 # WHY vLLM here (not Ollama, not TensorRT-LLM): on consumer Ampere the modern
 # TensorRT-LLM pytorch backend cannot serve a working quantized model — INT4
 # (W4A16-AWQ) loads fast but miscomputes into garbage, INT8 (W8A8) is
-# "unsupported quant mode", and FP8/FP4 need newer GPUs. vLLM's Marlin AWQ
-# kernels run correctly on this GPU at ~96 tok/s (2.4x Ollama's 40.5). Full
-# story: ../TRTLLM_MIGRATION.md and ../BENCHMARKS.md.
+# "unsupported quant mode", and FP8/FP4 need newer GPUs. vLLM's Marlin W4A16
+# kernels run correctly on this GPU. Full story: ../TRTLLM_MIGRATION.md and
+# ../BENCHMARKS.md.
 #
-# The Jetson is still on Ollama (see openclaw.service) for now; migrating it to
-# vLLM is planned. So this repo currently carries TWO backends; each host runs one.
+# The Jetson uses MLC-LLM (see mlc/openclaw-mlc.service), while this host uses
+# vLLM. Each host runs one backend behind the same OpenAI-compatible contract.
 #
 # Runs the vLLM container in the foreground under systemd (Type=simple): systemd
 # tracks the `docker run` client and forwards SIGTERM on stop. Requires the
@@ -22,7 +22,7 @@
 #   loginctl enable-linger "$USER"
 
 [Unit]
-Description=OpenClaw shared local LLM (vLLM, INT4-AWQ Qwen3.5-4B, LAN :11434)
+Description=OpenClaw shared local LLM (vLLM, Qwen3.5-9B HLWQ Q5, LAN :11434)
 After=network-online.target docker.service
 Wants=network-online.target
 
@@ -31,12 +31,12 @@ Type=simple
 # Swap OPENCLAW_MODEL to change the model for every app at once (mirrors the
 # Modelfile's role on the Ollama hosts). Must be an AWQ / compressed-tensors
 # checkpoint that fits ~8 GB.
-Environment=OPENCLAW_MODEL=QuantTrio/Qwen3.5-4B-AWQ
+Environment=OPENCLAW_MODEL=caiovicentino1/Qwen3.5-9B-HLWQ-Q5
 Environment=OPENCLAW_PORT=11434
 Environment=VLLM_IMAGE=vllm/vllm-openai:latest
 # Clear any stale container left by a hard crash before (re)starting.
 ExecStartPre=-/usr/bin/docker rm -f openclaw-vllm
-ExecStart=/usr/bin/docker run --rm --name openclaw-vllm --gpus all --ipc=host -p ${OPENCLAW_PORT}:8000 -v %h/.cache/huggingface:/root/.cache/huggingface ${VLLM_IMAGE} --model ${OPENCLAW_MODEL} --served-model-name openclaw --language-model-only --default-chat-template-kwargs '{"enable_thinking":false}' --max-model-len 12288 --gpu-memory-utilization 0.92 --max-num-seqs 4 --enforce-eager
+ExecStart=/usr/bin/docker run --rm --name openclaw-vllm --gpus all --ipc=host -p ${OPENCLAW_PORT}:8000 -v %h/.cache/huggingface:/root/.cache/huggingface ${VLLM_IMAGE} ${OPENCLAW_MODEL} --revision 35b345a98d05ac17c1ca8f79b3ab99e5e585d13d --served-model-name openclaw --language-model-only --default-chat-template-kwargs '{"enable_thinking":false}' --max-model-len 4096 --max-num-seqs 4 --gpu-memory-utilization 0.97 --cpu-offload-gb 1.5 --kv-cache-dtype fp8 --kv-cache-memory 700000000 --enforce-eager --enable-auto-tool-choice --tool-call-parser qwen3_coder
 ExecStop=/usr/bin/docker stop openclaw-vllm
 ExecStopPost=-/usr/bin/docker rm -f openclaw-vllm
 Restart=always
