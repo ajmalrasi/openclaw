@@ -1,5 +1,51 @@
 # Benchmarks
 
+## 2026-09-09 — Qwen3.5-4B AWQ, 8K context / eight-way validation on `beast`
+
+`beast` was switched back to `QuantTrio/Qwen3.5-4B-AWQ` at revision
+`32c292e3a73afe1138518180b1b6d2868c980ee2`. vLLM 0.28.0 runs the model
+fully on the RTX 3070 Ti Laptop GPU with FP8 KV cache, eager execution, an
+8,192-token per-request limit, and `--max-num-seqs 8`. The public model name
+remains `openclaw`, and thinking is disabled server-wide.
+
+The KV cache is explicitly limited to 1.8 GB so the Qwen3.5 GDN prefill kernel
+has working memory. It holds 60,854 tokens, or 7.43 completely full 8,192-token
+contexts. Eight requests can execute concurrently, but eight requests that all
+consume the complete context at once exceed this 8 GB GPU; vLLM must schedule
+or preempt when their combined live cache exceeds the budget.
+
+An eight-client stress run used eight random requests, each requesting 7,000
+input and 128 output tokens, offered simultaneously with EOS ignored. The
+tokenizer produced 56,099 total input tokens.
+
+| Metric | Eight-way 7K stress |
+|--------|---------------------:|
+| Successful requests | 8 / 8 |
+| Peak concurrent requests | 8 |
+| Benchmark duration | 21.99 s |
+| Request throughput | 0.36 req/s |
+| Output throughput | **46.57 tok/s** |
+| Peak output throughput | 336 tok/s |
+| Total token throughput | 2,597.85 tok/s |
+| Mean / median / P99 TTFT | 10,553 / 10,527 / 18,278 ms |
+| Mean / P99 TPOT | 82.88 / 137.74 ms |
+| Mean / P99 ITL | 82.23 / 448.23 ms |
+
+A separate near-limit request produced 8,014 input tokens plus 128 output
+tokens successfully. It completed in 4.91 seconds with a 2.58-second TTFT and
+26.06 output tok/s. The service remained healthy after both tests.
+
+Tool calling was also validated through the OpenAI-compatible chat endpoint
+with automatic tool selection. The model returned a structured
+`get_weather({"city":"Kochi"})` call with `finish_reason: "tool_calls"`, then
+accepted the matching tool-result message and produced a normal final answer.
+
+An attempted 1.948 GB cache exposed why theoretical cache capacity is not a
+safe serving target: vLLM reported exactly 65,536 cached tokens (8.00 full
+contexts), but eight near-full requests exhausted VRAM when the GDN kernel
+needed another 14 MiB of temporary memory. The 1.8 GB setting is the validated
+operating point.
+
 ## 2026-09-09 — Qwen3.5-9B HLWQ Q5 on `beast`
 
 The live `beast` service now runs

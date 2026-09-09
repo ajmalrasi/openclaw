@@ -40,19 +40,22 @@ curl -s http://192.168.3.30:11434/v1/chat/completions \
 
 - It is a direct-response language model — **no `<think>` blocks** and no
   per-request flags needed; just send messages and read the reply. The Jetson
-  runs Qwen3-4B Instruct-2507, `beast` runs language-only Qwen3.5-9B HLWQ Q5,
+  runs Qwen3-4B Instruct-2507, `beast` runs language-only Qwen3.5-4B INT4 AWQ,
   and the EC2 L4 host runs language-only Gemma 4 12B QAT W4A16 with FP8 KV
   cache.
   The name `openclaw` and API are the same everywhere; the serving engine
   depends on the host (Jetson → **MLC-LLM**; `beast` and EC2 → vLLM).
-- Speed depends on the host: **~22 tok/s** on the Jetson (MLC); Qwen3.5-9B on
-  `beast` delivers **5.68 tok/s** sequential and **19.15 tok/s** with four-way
-  continuous batching. The current EC2 Gemma
+- Speed depends on the host: **~22 tok/s** on the Jetson (MLC); Qwen3.5-4B on
+  `beast` delivers **47.31 tok/s** on the standard sequential benchmark. Its
+  eight-way 7K-context stress test delivered **46.57 aggregate output tok/s**.
+  The current EC2 Gemma
   model has only received a short correctness smoke test; no benchmark was run.
   These are not apples-to-apples model comparisons. None is GPT-4 class —
   design accordingly.
 - Keep prompts within **~4096 tokens** total on the Jetson (its current context
-  window). `beast` is configured for 4,096 tokens and EC2 for 16,384 tokens. A
+  window). `beast` is configured for 8,192 tokens and up to eight active
+  sequences; eight completely full contexts cannot all reside in its 8 GB VRAM
+  simultaneously. EC2 is configured for 16,384 tokens. A
   client should still set a timeout and fallback appropriate to the host and
   workload.
 - Design for it: keep prompts tight and explicit; if you need strict JSON, say
