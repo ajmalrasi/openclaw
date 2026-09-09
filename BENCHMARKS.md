@@ -31,6 +31,28 @@ tokenizer produced 56,099 total input tokens.
 | Mean / P99 TPOT | 82.88 / 137.74 ms |
 | Mean / P99 ITL | 82.23 / 448.23 ms |
 
+For a direct short-prompt comparison with the 2026-07-24 workload, a second
+run used two warmups and eight measured requests at concurrency eight, with 512
+requested input tokens and 128 output tokens per request. All eight requests
+completed successfully in 3.79 seconds:
+
+| Metric | Current 4B (`max-concurrency=8`) | 2026-07-24 4B (`max-concurrency=4`) | Change |
+|--------|----------------------------------:|-------------------------------------:|-------:|
+| Request throughput | 2.11 req/s | 1.22 req/s | **1.73x** |
+| Output throughput | **269.92 tok/s** | **155.76 tok/s** | **1.73x** |
+| Peak output throughput | 400 tok/s | 208 tok/s | **1.92x** |
+| Total token throughput | 1,375.70 tok/s | 793.88 tok/s | **1.73x** |
+| Mean TTFT | 953.08 ms | 619.75 ms | 53.8% higher |
+| Mean TPOT | 22.18 ms | 21.00 ms | 5.6% higher |
+| Mean ITL | 22.07 ms | 20.84 ms | 5.9% higher |
+
+This confirms that eight-way batching improves aggregate short-prompt output
+throughput by about 73% over the earlier four-way configuration. Individual
+requests wait longer and decode about 6% more slowly while eight clients share
+the GPU. The sample counts differ (eight measured requests here versus 500 in
+the July run), so this is a short validation rather than a replacement for the
+long-duration result.
+
 A separate near-limit request produced 8,014 input tokens plus 128 output
 tokens successfully. It completed in 4.91 seconds with a 2.58-second TTFT and
 26.06 output tok/s. The service remained healthy after both tests.
