@@ -40,20 +40,21 @@ curl -s http://192.168.3.30:11434/v1/chat/completions \
 
 - It is a direct-response language model — **no `<think>` blocks** and no
   per-request flags needed; just send messages and read the reply. The Jetson
-  runs Qwen3-4B Instruct-2507, `beast` runs language-only Qwen3.5-4B INT4 AWQ,
+  runs language-only Qwen3.5-4B W4A16, `beast` runs Qwen3.5-4B INT4 AWQ,
   and the EC2 L4 host runs language-only Gemma 4 12B QAT W4A16 with FP8 KV
   cache.
   The name `openclaw` and API are the same everywhere; the serving engine
-  depends on the host (Jetson → **MLC-LLM**; `beast` and EC2 → vLLM).
-- Speed depends on the host: **~22 tok/s** on the Jetson (MLC); Qwen3.5-4B on
-  `beast` delivers **47.31 tok/s** on the standard sequential benchmark. Its
+  uses vLLM on every current host.
+- Speed depends on the host: the new Jetson backend has only received a
+  correctness test; Qwen3.5-4B on `beast` delivers **47.31 tok/s** on the
+  standard sequential benchmark. Its
   eight-way 7K-context stress test delivered **46.57 aggregate output tok/s**.
   The current EC2 Gemma
   model has only received a short correctness smoke test; no benchmark was run.
   These are not apples-to-apples model comparisons. None is GPT-4 class —
   design accordingly.
-- Keep prompts within **~4096 tokens** total on the Jetson (its current context
-  window). `beast` is configured for 8,192 tokens and up to eight active
+- Keep prompts within **~4096 tokens** total on the Jetson. `beast` is
+  configured for 8,192 tokens and up to eight active
   sequences; eight completely full contexts cannot all reside in its 8 GB VRAM
   simultaneously. EC2 is configured for 16,384 tokens. A
   client should still set a timeout and fallback appropriate to the host and
@@ -66,11 +67,11 @@ curl -s http://192.168.3.30:11434/v1/chat/completions \
 
 ## Changing the model (one place, affects all apps)
 
-This repo owns the service. To swap the model: on the Jetson edit `MODEL` in
-[`mlc/openclaw-mlc-run.sh`](./mlc/openclaw-mlc-run.sh) and restart
-`openclaw-mlc.service`; on `beast` edit the vLLM user service; on EC2 edit
+This repo owns the service. To swap the model: on the Jetson edit
+[`vllm/openclaw-vllm-jetson.service`](./vllm/openclaw-vllm-jetson.service) and
+rerun `./install-vllm-jetson.sh`; on `beast` edit the vLLM user service; on EC2 edit
 [`vllm/openclaw-vllm-ec2.service`](./vllm/openclaw-vllm-ec2.service) and rerun
-`./install-vllm-ec2.sh`. See [`MLC_RUNBOOK.md`](./MLC_RUNBOOK.md) and
+`./install-vllm-ec2.sh`. See [`VLLM_JETSON_RUNBOOK.md`](./VLLM_JETSON_RUNBOOK.md) and
 [`EC2_RUNBOOK.md`](./EC2_RUNBOOK.md).
 
 Do **not** solve a model-quality problem by spinning up your own model in your

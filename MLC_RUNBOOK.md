@@ -1,5 +1,9 @@
 # MLC-LLM runbook (Jetson `openclaw` endpoint)
 
+> **Retired backend.** The Jetson now runs Qwen3.5-4B W4A16 with NVIDIA's
+> Jetson-Orin vLLM image on JetPack 7.2.1. This runbook is retained for rollback
+> and historical reference. See [VLLM_JETSON_RUNBOOK.md](VLLM_JETSON_RUNBOOK.md).
+
 How to run, tune, and manage the MLC-LLM serving of `openclaw` on the Jetson
 Orin Nano. Background & rationale: [MLC_MIGRATION.md](MLC_MIGRATION.md).
 

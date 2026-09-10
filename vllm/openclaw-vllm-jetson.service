@@ -1,0 +1,28 @@
+# Persistent OpenClaw backend for Jetson Orin Nano Super 8 GB.
+#
+# This pins the NVIDIA Jetson-Orin vLLM image that was validated on JetPack
+# 7.2.1. Qwen3.5 vision and speculative decoding are intentionally disabled:
+# LifeOS is text-only, and the full features do not fit reliably in 8 GB RAM.
+
+[Unit]
+Description=OpenClaw shared local LLM (vLLM, Qwen3.5-4B W4A16, Jetson :11434)
+After=network-online.target docker.service
+Wants=network-online.target
+StartLimitIntervalSec=1800
+StartLimitBurst=3
+
+[Service]
+Type=simple
+Environment=OPENCLAW_MODEL=RedHatAI/Qwen3.5-4B-quantized.w4a16
+Environment=VLLM_IMAGE=ghcr.io/nvidia-ai-iot/vllm@sha256:817f0f940d2d9c9067d861d2118d7bf58c40873598f0c35e19c8516269ebc4bd
+ExecStartPre=/bin/sh -c 'i=0; until /usr/bin/docker info >/dev/null 2>&1; do i=$$((i+1)); [ $$i -ge 60 ] && exit 1; /bin/sleep 2; done'
+ExecStartPre=-/usr/bin/docker rm -f openclaw-vllm-jetson
+ExecStart=/usr/bin/docker run --rm --name openclaw-vllm-jetson --runtime=nvidia --network=host --shm-size=16g --ulimit memlock=-1 --ulimit stack=67108864 -v %h/.cache/huggingface:/data/models/huggingface -v %h/.cache/vllm:/root/.cache/vllm -v %h/.cache/vllm/qwen35-tokenizer-v4:/tokenizer:ro ${VLLM_IMAGE} vllm serve ${OPENCLAW_MODEL} --tokenizer /tokenizer --host 0.0.0.0 --port 11434 --served-model-name openclaw --max-model-len 4096 --gpu-memory-utilization 0.6 --kv-cache-memory-bytes 192M --max-num-seqs 1 --max-num-batched-tokens 1024 --enforce-eager --language-model-only --mm-processor-cache-gb 0 --reasoning-parser qwen3 --default-chat-template-kwargs '{"enable_thinking":false}' --enable-auto-tool-choice --tool-call-parser qwen3_coder
+ExecStop=-/usr/bin/docker stop -t 30 openclaw-vllm-jetson
+ExecStopPost=-/usr/bin/docker rm -f openclaw-vllm-jetson
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=45
+
+[Install]
+WantedBy=default.target

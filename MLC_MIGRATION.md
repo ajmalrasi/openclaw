@@ -1,10 +1,15 @@
 # Jetson → MLC-LLM migration (findings & rationale)
 
+> **Historical.** This was the production backend on JetPack 6.2. After the
+> board was reflashed to JetPack 7.2.1, it was replaced by NVIDIA's dedicated
+> Jetson-Orin vLLM image and Qwen3.5-4B W4A16. See
+> [VLLM_JETSON_RUNBOOK.md](VLLM_JETSON_RUNBOOK.md).
+
 **Outcome (2026-07-09):** On the Jetson Orin Nano, `openclaw` now serves via
 **MLC-LLM (TVM)** instead of Ollama — **~25 tok/s vs Ollama's ~16 (~1.5×)**,
-OpenAI-compatible API on `:11434`, model name `openclaw`. vLLM was tried
-extensively first and **cannot run on this hardware**; the reasons are the
-valuable part of this document.
+OpenAI-compatible API on `:11434`, model name `openclaw`. The generic vLLM
+builds available at the time could not run on that software stack; the reasons
+remain useful historical context.
 
 Hardware: Jetson Orin Nano Super Dev Kit, **JetPack 6.2 (L4T r36.4.7)**,
 CUDA 12.6, GPU compute **sm 8.7**, **7.4 GB unified memory** (CPU+GPU shared).

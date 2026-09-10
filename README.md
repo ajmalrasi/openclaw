@@ -4,7 +4,7 @@ A single local-LLM daemon + a single resident model per host, owned in one
 place. Every app (life_os, etc.) is a **client** that points at it. No app ships
 or runs its own LLM server, and no app names a raw model — they all ask for
 **`openclaw`**, and this repo decides what that is. The serving engine is an
-implementation detail (MLC-LLM on the Jetson, vLLM on `beast` and EC2); the API
+implementation detail (currently vLLM on the Jetson, `beast`, and EC2); the API
 and model name are identical everywhere.
 
 ## Why this exists
@@ -46,7 +46,7 @@ host*; the engine, generation, quant, and exact variant differ per hardware:
 
 | Host | Backend | What / quant | Speed | Context |
 |------|---------|--------------|-------|---------|
-| `jetson-orin` | **MLC-LLM** (TVM) | `FutureProofHomes/Qwen3-4B-Instruct-2507-q4f16_2-MLC` (non-reasoning) | **~22 tok/s** | 4096 |
+| `jetson-orin` | **vLLM** (NVIDIA Jetson-Orin image) | `RedHatAI/Qwen3.5-4B-quantized.w4a16` (language-only, non-thinking) | Correctness-tested; no benchmark yet | 4096 |
 | `beast` (RTX 3070 Ti laptop) | **vLLM** | `QuantTrio/Qwen3.5-4B-AWQ` (INT4 AWQ, FP8 KV, language-only) | **47.31 tok/s** sequential; **46.57 tok/s** aggregate in the 8-way 7K stress test | 8192 |
 | `aws-g6` (EC2 g6.xlarge, NVIDIA L4) | **vLLM** | `google/gemma-4-12B-it-qat-w4a16-ct` (QAT W4A16, FP8 KV cache, language-only) | Endpoint smoke-tested; no benchmark run | 16384 |
 
@@ -64,38 +64,29 @@ ssh -i ~/.ssh/id_ed25519 -N \
 # Model: openclaw
 ```
 
-> **Jetson caveat:** the only *working* prebuilt MLC of Instruct-2507 is the
-> heavier `q4f16_2` quant (~2.7 GB params). A 4096 KV cache (~3.73 GB resident)
-> fits on the 8 GB board only from **clean memory** — the Tegra CUDA allocator
-> won't reclaim page cache, so the startup wrapper drops caches, forces
-> `max_total_seq_length=4096`, and uses `prefill_chunk_size=256` to make room
-> (falling back to 2048 if 4096 ever won't allocate). One-time setup of the
-> cache-drop helper: run [mlc/enable-4k-jetson.sh](./mlc/enable-4k-jetson.sh).
+> **Jetson vLLM result (2026-09-10):** after upgrading to JetPack 7.2.1, the
+> dedicated NVIDIA Jetson-Orin vLLM image successfully serves Qwen3.5-4B W4A16.
+> The 8 GB board uses a text-only, single-request configuration with explicit
+> KV-cache sizing. See
+> [VLLM_JETSON_RUNBOOK.md](./VLLM_JETSON_RUNBOOK.md).
 
-`beast` moved off Ollama to vLLM for a 2.4x speedup. **The Jetson moved off
-Ollama to MLC-LLM** for ~1.5x (25 vs 16 tok/s) — vLLM was tried first and
-**cannot run on the Orin Nano's unified-memory iGPU** (NVML + contiguous-KV
-walls); MLC's TVM-compiled kernels sidestep both. TensorRT-LLM was also rejected.
+`beast` moved off Ollama to vLLM for a 2.4x speedup. The Jetson moved from
+Ollama to MLC-LLM, then to vLLM after the JetPack 7 upgrade and NVIDIA's
+dedicated Orin image became available.
 See [MLC_MIGRATION.md](./MLC_MIGRATION.md), [TRTLLM_MIGRATION.md](./TRTLLM_MIGRATION.md),
 [BENCHMARKS.md](./BENCHMARKS.md).
 
-To change the model for **every** app on a host at once: on the MLC host edit
-`MODEL`/`CTXS` in [`mlc/openclaw-mlc-run.sh`](./mlc/openclaw-mlc-run.sh) and
-restart `openclaw-mlc.service`; on vLLM hosts edit `OPENCLAW_MODEL` in
-[`vllm/openclaw-vllm.service`](./vllm/openclaw-vllm.service) and re-run
-`./install-vllm.sh`. Nothing in any app changes either way.
+To change the model for **every** app on a host at once, edit that host's vLLM
+service and rerun its installer. Nothing in any app changes either way.
 
 ## Install / update
 
-**MLC host** (Jetson) — Docker with the NVIDIA runtime, JetPack 6.2 (L4T r36.4),
-user-service linger enabled. Full details in [MLC_RUNBOOK.md](./MLC_RUNBOOK.md):
+**vLLM host** (Jetson) — Docker with the NVIDIA runtime, JetPack 7.2.1,
+16 GB swap, and user-service linger enabled. Full details in
+[VLLM_JETSON_RUNBOOK.md](./VLLM_JETSON_RUNBOOK.md):
 
 ```bash
-# copy the unit + wrapper into place, then:
-cp mlc/openclaw-mlc-run.sh ~/.local/bin/ && chmod +x ~/.local/bin/openclaw-mlc-run.sh
-cp mlc/openclaw-mlc.service ~/.config/systemd/user/
-systemctl --user daemon-reload
-systemctl --user enable --now openclaw-mlc.service   # serves :11434, auto-starts at boot
+./install-vllm-jetson.sh
 ```
 
 **vLLM host** (beast) — Docker with the NVIDIA runtime, user in the `docker`
@@ -123,12 +114,12 @@ sudo journalctl -u openclaw-vllm-ec2.service -f
 
 ## Files
 
-- `mlc/openclaw-mlc.service` — the **MLC-LLM user service** (Jetson): OpenAI API
-  on :11434, model name `openclaw`, auto-starts at boot.
-- `mlc/openclaw-mlc-run.sh` — wrapper it runs: starts the MLC container, tries
-  4096 context and falls back if memory is too tight to generate.
-- `MLC_RUNBOOK.md` — how to run/tune/manage MLC; `MLC_MIGRATION.md` — why MLC
-  (and why vLLM can't run on the Jetson).
+- `vllm/openclaw-vllm-jetson.service`, `install-vllm-jetson.sh`, and
+  `VLLM_JETSON_RUNBOOK.md` — active Jetson vLLM service, installer, and runbook.
+- `mlc/openclaw-mlc-run.sh` — retired wrapper that starts the MLC container, tries
+  4096 context and falls back if memory is too tight to generate; retained only
+  for historical rollback.
+- `MLC_RUNBOOK.md` and `MLC_MIGRATION.md` — retired JetPack 6.2 backend history.
 - `vllm/openclaw-vllm.service` — the vLLM user service (beast): OpenAI API on
   :11434, model name `openclaw`, language-only Qwen3.5-4B INT4 AWQ, 8K context,
   and up to eight active sequences.
@@ -149,12 +140,16 @@ sudo journalctl -u openclaw-vllm-ec2.service -f
 - `Modelfile`, `install.sh`, `systemd/openclaw.service`, `bin/openclaw-warmup.sh`
   — **retired** Ollama provisioner, kept for reference only.
 
-## Migration note (Jetson, 2026-07-09)
+## Migration notes (Jetson)
 
-The Jetson moved **Ollama → MLC-LLM** (~16 → ~25 tok/s). Ollama was fully removed
-(binary, models, unit files, image). vLLM was evaluated first and cannot run on
-the Orin Nano — see [MLC_MIGRATION.md](./MLC_MIGRATION.md) for the full story and
-[MLC_RUNBOOK.md](./MLC_RUNBOOK.md) for operations.
+**2026-09-10:** upgraded the Jetson to JetPack 7.2.1 and replaced MLC with the
+dedicated NVIDIA Jetson-Orin vLLM container serving Qwen3.5-4B W4A16. The
+production profile is language-only, non-thinking, 4096 context, one concurrent
+request, and a 192 MB explicit KV cache.
+
+**2026-07-09:** the Jetson moved **Ollama → MLC-LLM** (~16 → ~25 tok/s). That
+historical JetPack 6.2 migration is documented in
+[MLC_MIGRATION.md](./MLC_MIGRATION.md) and [MLC_RUNBOOK.md](./MLC_RUNBOOK.md).
 
 _(Earlier, 2026-06-22: replaced the app-specific `lifeos-ollama.service` with the
 shared Ollama `openclaw.service`, since also retired.)_
