@@ -1,0 +1,41 @@
+ARG BASE_IMAGE=openclaw-mlc:qwen35-jp7-r39.2.tegra-aarch64-cu132-24.04
+FROM ${BASE_IMAGE}
+
+# The upstream Jetson recipe compiled MLC against its pinned TVM/TVM-FFI
+# submodules, but installed a newer, ABI-incompatible TVM-FFI wheel and omitted
+# TVM's Python package. Install the matching bindings and expose the libraries
+# that were already built with MLC.
+RUN uv pip uninstall apache-tvm-ffi && \
+    cd /opt/mlc-llm/3rdparty/tvm/3rdparty/tvm-ffi && \
+    uv pip install .
+
+# MLC's top-level build intentionally produces a dummy libtvm.so containing
+# only the runtime.  The Python CLI also needs TVM's compiler registrations,
+# so build the full library from the same pinned TVM source for Orin (sm_87).
+RUN --mount=type=cache,target=/root/.cache/ccache,sharing=locked \
+    cmake \
+      -S /opt/mlc-llm/3rdparty/tvm \
+      -B /opt/tvm-full-build \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DUSE_LLVM=/usr/bin/llvm-config-22 \
+      -DUSE_CUDA=ON \
+      -DUSE_CUBLAS=ON \
+      -DUSE_CUDNN=OFF \
+      -DUSE_CUTLASS=ON \
+      -DUSE_THRUST=ON \
+      -DUSE_NCCL=OFF \
+      -DTVM_FFI_USE_LIBBACKTRACE=OFF \
+      -DHIDE_PRIVATE_SYMBOLS=ON \
+      -DBUILD_DUMMY_LIBTVM=OFF \
+      -DCMAKE_CUDA_ARCHITECTURES=87 && \
+    cmake --build /opt/tvm-full-build --target tvm_compiler -j2
+
+# TVM imports its testing helpers during CLI startup in this revision. Triton
+# bundles a second LLVM copy that collides with TVM's LLVM compiler on Jetson;
+# Qwen's MLC CUDA compilation/runtime path does not require Triton.
+RUN uv pip install pytest && \
+    uv pip uninstall triton
+
+ENV PYTHONPATH=/opt/mlc-llm/3rdparty/tvm/python:${PYTHONPATH} \
+    TVM_LIBRARY_PATH=/opt/tvm-full-build/lib:/opt/tvm-full-build \
+    LD_LIBRARY_PATH=/opt/tvm-full-build/lib:/opt/tvm-full-build:/opt/mlc-llm/build/lib:/opt/mlc-llm/build/tvm:/opt/mlc-llm/build/tvm/3rdparty/cutlass_fpA_intB_gemm/cutlass_kernels:/opt/mlc-llm/build/tvm/3rdparty/libflash_attn/src:${LD_LIBRARY_PATH}

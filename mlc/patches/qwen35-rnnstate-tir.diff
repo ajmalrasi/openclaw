@@ -1,0 +1,18 @@
+--- a/python/mlc_llm/nn/rnn_state.py
++++ b/python/mlc_llm/nn/rnn_state.py
+@@ -223,14 +223,7 @@
+                             vi, *vs = T.axis.remap("S" * (len(shape) + 1), [i, *s])
+                             seq_id: T.int32 = seq_slot_ids[vi]
+                             history_id: T.int32 = history_slot_ids[vi]
+-                            # The following line is equivalent to:
+-                            # `output[vi, *vs] = storage[seq_id, history_id, *vs]`
+-                            # However, unpacking operator in subscript requires Python 3.11 or newer
+-                            T.buffer_store(
+-                                output,
+-                                T.BufferLoad(storage, [seq_id, history_id, *vs]),
+-                                [vi, *vs],
+-                            )
++                            output[vi, *vs] = storage[seq_id, history_id, *vs]
+ 
+             return f
+ 

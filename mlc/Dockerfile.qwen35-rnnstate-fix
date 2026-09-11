@@ -1,0 +1,12 @@
+FROM openclaw-mlc:qwen35-main-sm87-runtime
+
+# TVM's current verifier cannot establish the declared-buffer relationship when
+# Qwen3.5 creates this RNN-state getter through manual BufferLoad/buffer_store.
+# Python 3.12 supports the direct indexed form, which preserves the operation
+# while exposing the relationship to the parser/verifier.
+COPY mlc/patches/qwen35-rnnstate-tir.diff /tmp/qwen35-rnnstate-tir.diff
+RUN cd /opt/mlc-llm && \
+    git apply --check /tmp/qwen35-rnnstate-tir.diff && \
+    git apply /tmp/qwen35-rnnstate-tir.diff && \
+    cp python/mlc_llm/nn/rnn_state.py \
+      /opt/venv/lib/python3.12/site-packages/mlc_llm/nn/rnn_state.py
