@@ -1,5 +1,9 @@
 # Jetson Orin Nano vLLM runbook
 
+> **Status (2026-09-12): rollback only.** The Jetson's current serving backend
+> is TensorRT Edge-LLM, not vLLM. Keep this runbook and the vLLM unit only for a
+> deliberate rollback; never start it alongside `openclaw-tensorrt-edgellm.service`.
+
 ## Production result (2026-09-10)
 
 `openclaw` serves successfully on the Jetson Orin Nano Super 8 GB after the

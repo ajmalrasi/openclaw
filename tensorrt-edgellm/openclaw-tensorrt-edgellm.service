@@ -1,0 +1,16 @@
+[Unit]
+Description=OpenClaw TensorRT Edge-LLM OpenAI-compatible API
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/ajmalrasi/TensorRT-Edge-LLM
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/home/ajmalrasi/TensorRT-Edge-LLM/.venv/bin/python -m experimental.server /home/ajmalrasi/Qwen3.5-4B/quantized --engine-dir /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input4096-kv4608-vanilla --host 0.0.0.0 --port 11434 --served-model-name openclaw --reasoning-parser qwen3 --tool-call-parser qwen3_xml --enable-auto-tool-choice --max-queued-requests 16 --queue-timeout 120
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+
+[Install]
+WantedBy=default.target

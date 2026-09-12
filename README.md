@@ -4,8 +4,8 @@ A single local-LLM daemon + a single resident model per host, owned in one
 place. Every app (life_os, etc.) is a **client** that points at it. No app ships
 or runs its own LLM server, and no app names a raw model — they all ask for
 **`openclaw`**, and this repo decides what that is. The serving engine is an
-implementation detail (currently vLLM on the Jetson, `beast`, and EC2); the API
-and model name are identical everywhere.
+implementation detail (currently TensorRT Edge-LLM on the Jetson; vLLM on
+`beast` and EC2); the API and model name are identical everywhere.
 
 ## Why this exists
 
@@ -22,7 +22,8 @@ shared, pinned model = warm replies and headroom to spare.
 | API        | OpenAI-compatible `/v1/chat/completions` |
 | Model name | `openclaw`                         |
 
-> **Use the OpenAI `/v1/*` API only.** The current engines (MLC-LLM, vLLM) do
+> **Use the OpenAI `/v1/*` API only.** The current engines (TensorRT Edge-LLM,
+> vLLM, and historical MLC-LLM) do
 > **not** serve Ollama-native `/api/generate` / `/api/chat` — those return 404.
 > Apps that used raw `/api/*` must switch to `/v1/chat/completions`.
 
@@ -46,7 +47,7 @@ host*; the engine, generation, quant, and exact variant differ per hardware:
 
 | Host | Backend | What / quant | Speed | Context |
 |------|---------|--------------|-------|---------|
-| `jetson-orin` | **vLLM** (NVIDIA Jetson-Orin image) | `RedHatAI/Qwen3.5-4B-quantized.w4a16` (language-only, non-thinking) | Correctness-tested; no benchmark yet | 4096 |
+| `jetson-orin` | **TensorRT Edge-LLM** | `Qwen/Qwen3.5-4B` INT4 AWQ, text-only non-MTP engine | **~24 tok/s** real generation; **70.24 aggregate decode tok/s** in synthetic batch-4 engine tests | 4096 input / 4608 total |
 | `beast` (RTX 3070 Ti laptop) | **vLLM** | `QuantTrio/Qwen3.5-4B-AWQ` (INT4 AWQ, FP8 KV, language-only) | **47.31 tok/s** sequential; **46.57 tok/s** aggregate in the 8-way 7K stress test | 8192 |
 | `aws-g6` (EC2 g6.xlarge, NVIDIA L4) | **vLLM** | `google/gemma-4-12B-it-qat-w4a16-ct` (QAT W4A16, FP8 KV cache, language-only) | Endpoint smoke-tested; no benchmark run | 16384 |
 
@@ -64,30 +65,30 @@ ssh -i ~/.ssh/id_ed25519 -N \
 # Model: openclaw
 ```
 
-> **Jetson vLLM result (2026-09-10):** after upgrading to JetPack 7.2.1, the
-> dedicated NVIDIA Jetson-Orin vLLM image successfully serves Qwen3.5-4B W4A16.
-> The 8 GB board uses a text-only, single-request configuration with explicit
-> KV-cache sizing. See
-> [VLLM_JETSON_RUNBOOK.md](./VLLM_JETSON_RUNBOOK.md).
+> **Jetson deployment (2026-09-12):** the active deployment is the TensorRT
+> Edge-LLM user service, `openclaw-tensorrt-edgellm.service`, serving the
+> batch-two INT4 AWQ engine on port 11434. vLLM is retained only as a disabled
+> rollback service. The model may be intentionally stopped for maintenance;
+> check `/v1/models` or the service state rather than assuming it is running.
+> See [TENSORRT_EDGE_LLM_EXPERIMENT_LOG.md](./TENSORRT_EDGE_LLM_EXPERIMENT_LOG.md).
 
 `beast` moved off Ollama to vLLM for a 2.4x speedup. The Jetson moved from
-Ollama to MLC-LLM, then to vLLM after the JetPack 7 upgrade and NVIDIA's
-dedicated Orin image became available.
+Ollama to MLC-LLM, then to vLLM after the JetPack 7 upgrade, and now to
+TensorRT Edge-LLM.
 See [MLC_MIGRATION.md](./MLC_MIGRATION.md), [TRTLLM_MIGRATION.md](./TRTLLM_MIGRATION.md),
 [BENCHMARKS.md](./BENCHMARKS.md).
 
-To change the model for **every** app on a host at once, edit that host's vLLM
-service and rerun its installer. Nothing in any app changes either way.
+To change the model for **every** app on a host at once, update that host's
+serving service. On the Jetson, this is TensorRT Edge-LLM; nothing in any app
+changes either way.
 
 ## Install / update
 
-**vLLM host** (Jetson) — Docker with the NVIDIA runtime, JetPack 7.2.1,
-16 GB swap, and user-service linger enabled. Full details in
-[VLLM_JETSON_RUNBOOK.md](./VLLM_JETSON_RUNBOOK.md):
-
-```bash
-./install-vllm-jetson.sh
-```
+**TensorRT Edge-LLM host** (Jetson) — JetPack 7.2.1, TensorRT Edge-LLM 0.10.1,
+and the existing batch-two engine. The service source is
+`tensorrt-edgellm/openclaw-tensorrt-edgellm.service`; its experiment and
+deployment record is [TENSORRT_EDGE_LLM_EXPERIMENT_LOG.md](./TENSORRT_EDGE_LLM_EXPERIMENT_LOG.md).
+Do not start vLLM alongside it on the 8 GB board.
 
 **vLLM host** (beast) — Docker with the NVIDIA runtime, user in the `docker`
 group. Retires the Ollama backend on :11434 and installs the vLLM user service:
@@ -114,8 +115,12 @@ sudo journalctl -u openclaw-vllm-ec2.service -f
 
 ## Files
 
+- `tensorrt-edgellm/openclaw-tensorrt-edgellm.service` — active Jetson
+  TensorRT Edge-LLM service source, serving the existing batch-two INT4 AWQ
+  engine on :11434 when started.
 - `vllm/openclaw-vllm-jetson.service`, `install-vllm-jetson.sh`, and
-  `VLLM_JETSON_RUNBOOK.md` — active Jetson vLLM service, installer, and runbook.
+  `VLLM_JETSON_RUNBOOK.md` — preserved Jetson vLLM rollback service and
+  historical runbook; not the current Jetson backend.
 - `mlc/openclaw-mlc-run.sh` — retired wrapper that starts the MLC container, tries
   4096 context and falls back if memory is too tight to generate; retained only
   for historical rollback.
@@ -142,10 +147,13 @@ sudo journalctl -u openclaw-vllm-ec2.service -f
 
 ## Migration notes (Jetson)
 
+**2026-09-12:** replaced the Jetson's vLLM deployment with TensorRT Edge-LLM
+using the existing batch-two Qwen3.5-4B INT4 AWQ engine. The endpoint remains
+OpenAI-compatible on :11434 with model alias `openclaw`; vLLM is rollback-only.
+
 **2026-09-10:** upgraded the Jetson to JetPack 7.2.1 and replaced MLC with the
-dedicated NVIDIA Jetson-Orin vLLM container serving Qwen3.5-4B W4A16. The
-production profile is language-only, non-thinking, 4096 context, one concurrent
-request, and a 192 MB explicit KV cache.
+dedicated NVIDIA Jetson-Orin vLLM container serving Qwen3.5-4B W4A16. That is
+now a preserved rollback configuration, not the active backend.
 
 **2026-07-09:** the Jetson moved **Ollama → MLC-LLM** (~16 → ~25 tok/s). That
 historical JetPack 6.2 migration is documented in
