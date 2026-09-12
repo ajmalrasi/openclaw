@@ -34,9 +34,13 @@ Type=simple
 Environment=OPENCLAW_MODEL=QuantTrio/Qwen3.5-4B-AWQ
 Environment=OPENCLAW_PORT=11434
 Environment=VLLM_IMAGE=vllm/vllm-openai:latest
+# Qwen3.5's GDN/FLA execution requires transient workspace beyond the explicit
+# KV cache. On Beast's 8 GB GPU, admit four active sequences, use a 6,144-token
+# total sequence limit, reserve 1.2 GB for FP8 KV, and prefill in 1,024-token
+# waves so GDN/FLA workspace retains headroom; additional requests queue safely.
 # Clear any stale container left by a hard crash before (re)starting.
 ExecStartPre=-/usr/bin/docker rm -f openclaw-vllm
-ExecStart=/usr/bin/docker run --rm --name openclaw-vllm --gpus all --ipc=host -p ${OPENCLAW_PORT}:8000 -e PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True -v %h/.cache/huggingface:/root/.cache/huggingface ${VLLM_IMAGE} ${OPENCLAW_MODEL} --revision 32c292e3a73afe1138518180b1b6d2868c980ee2 --served-model-name openclaw --language-model-only --default-chat-template-kwargs '{"enable_thinking":false}' --max-model-len 8192 --max-num-seqs 8 --gpu-memory-utilization 0.97 --kv-cache-dtype fp8 --kv-cache-memory 1800000000 --enforce-eager --enable-auto-tool-choice --tool-call-parser qwen3_coder
+ExecStart=/usr/bin/docker run --rm --name openclaw-vllm --gpus all --ipc=host -p ${OPENCLAW_PORT}:8000 -e PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True -v %h/.cache/huggingface:/root/.cache/huggingface ${VLLM_IMAGE} ${OPENCLAW_MODEL} --revision 32c292e3a73afe1138518180b1b6d2868c980ee2 --served-model-name openclaw --language-model-only --default-chat-template-kwargs '{"enable_thinking":false}' --max-model-len 6144 --max-num-seqs 4 --max-num-batched-tokens 1024 --gpu-memory-utilization 0.95 --kv-cache-dtype fp8 --kv-cache-memory 1200000000 --enforce-eager --enable-auto-tool-choice --tool-call-parser qwen3_coder
 ExecStop=/usr/bin/docker stop openclaw-vllm
 ExecStopPost=-/usr/bin/docker rm -f openclaw-vllm
 Restart=always
