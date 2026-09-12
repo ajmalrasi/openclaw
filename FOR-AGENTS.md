@@ -45,16 +45,20 @@ curl -s http://192.168.3.30:11434/v1/chat/completions \
   cache.
   The name `openclaw` and API are the same everywhere; the Jetson uses
   TensorRT Edge-LLM, while `beast` and EC2 use vLLM.
-- Speed depends on the host: Jetson's TensorRT endpoint has a real-generation
-  result around **24 tok/s**; Qwen3.5-4B on `beast` delivers **47.31 tok/s** on the
+- Speed depends on the host: Jetson's TensorRT endpoint has a prior
+  real-generation result around **24 tok/s** on an earlier engine; do not treat
+  it as a benchmark of the current engine. Qwen3.5-4B on `beast` delivers **47.31 tok/s** on the
   standard sequential benchmark. Its
   eight-way 7K-context stress test delivered **46.57 aggregate output tok/s**.
   The current EC2 Gemma
   model has only received a short correctness smoke test; no benchmark was run.
   These are not apples-to-apples model comparisons. None is GPT-4 class —
   design accordingly.
-- Keep prompts within **~4096 tokens** total on the Jetson. `beast` is
-  configured for 8,192 tokens and up to eight active
+- On the Jetson, keep serialized request input within **6,144 tokens** and
+  account for generated output within the engine's **8,192-token total
+  sequence** capacity. Its loaded engine has batch capacity two, but the
+  current server admits one active sequence; do not assume dynamic batching.
+  `beast` is configured for 8,192 tokens and up to eight active
   sequences; eight completely full contexts cannot all reside in its 8 GB VRAM
   simultaneously. EC2 is configured for 16,384 tokens. A
   client should still set a timeout and fallback appropriate to the host and

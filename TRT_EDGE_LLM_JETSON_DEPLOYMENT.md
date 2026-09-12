@@ -4,8 +4,11 @@ This document records the TensorRT Edge-LLM export and deployment investigation 
 
 > **Superseding deployment status (2026-09-12):** the Jetson deployment is now
 > TensorRT Edge-LLM, served by `openclaw-tensorrt-edgellm.service` on port
-> 11434 with model alias `openclaw`. It uses the existing batch-two Qwen3.5-4B
-> INT4 AWQ non-MTP engine. The vLLM service is rollback-only. The model may be
+> 11434 with model alias `openclaw`. It uses the existing
+> `llm-b2-input6144-kv8192-vanilla` batch-two Qwen3.5-4B INT4 AWQ non-MTP
+> engine: 6,144-token maximum input and 8,192-token maximum total sequence.
+> The server currently admits one active sequence despite the engine's
+> batch-two capability. The vLLM service is rollback-only. The model may be
 > deliberately stopped for maintenance, so confirm the live backend through
 > `/v1/models` and the user-service state before operating on it.
 
