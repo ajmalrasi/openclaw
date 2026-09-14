@@ -1,0 +1,41 @@
+{
+  "id": "openclaw",
+  "object": "model",
+  "created": 1789380594,
+  "owned_by": "tensorrt-edgellm",
+  "max_model_len": 8192
+}
+true
+2026-09-14T15:39:54+05:30
+7dbe1219ab15152d781a94001f3e4c964a4ec70c198082868cad0773db200d1d  /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/config.json
+41b1ab83885e8d36353bed31612005a5682157a9383b13a0f8750e2aed4fde30  /home/ajmalrasi/continuous-batching-p1-20260914/continuousBatchingProbe.cpp
+b2a03d898da3cf8e62a026a989f7e3151d39884f5eb256bef4cb3820b69b64b0  /home/ajmalrasi/continuous-batching-p1-20260914/include/runtime/llmRankRuntime.h
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7033         216           5         439         451
+Swap:          16383        1276       15107
+MAINTENANCE model stopped; watchdog paused
+               total        used        free      shared  buff/cache   available
+Mem:            7485        1863        5373           5         452        5621
+Swap:          16383         300       16083
+/home/ajmalrasi/continuous-batching-p1-20260914/continuousBatchingProbe.cpp: In member function ‘std::vector<std::vector<float> > trt_edgellm::rt::ContinuousBatchingProbe::step(int32_t, const std::vector<std::vector<int> >&, bool)’:
+/home/ajmalrasi/continuous-batching-p1-20260914/continuousBatchingProbe.cpp:132:57: error: cannot convert ‘const std::nullopt_t’ to ‘const trt_edgellm::rt::OptionalInputTensors&’ {aka ‘const std::vector<std::reference_wrapper<const trt_edgellm::rt::Tensor> >&’}
+  132 |         context.initialize(count, 8, std::nullopt, std::nullopt, "", mStream);
+      |                                                    ~~~~~^~~~~~~
+      |                                                         |
+      |                                                         const std::nullopt_t
+In file included from /home/ajmalrasi/TensorRT-Edge-LLM/cpp/runtime/decoding/decodingStrategy.h:30,
+                 from /home/ajmalrasi/TensorRT-Edge-LLM/cpp/runtime/decoding/decoderRegistry.h:21,
+                 from /home/ajmalrasi/continuous-batching-p1-20260914/include/runtime/llmRankRuntime.h:29,
+                 from /home/ajmalrasi/continuous-batching-p1-20260914/continuousBatchingProbe.cpp:9:
+/home/ajmalrasi/TensorRT-Edge-LLM/cpp/runtime/state/decodingInferenceContext.h:163:41: note:   initializing argument 4 of ‘void trt_edgellm::rt::DecodingInferenceContext::initialize(int32_t, int32_t, const trt_edgellm::rt::OptionalInputTensor&, const trt_edgellm::rt::OptionalInputTensors&, const std::string&, cudaStream_t)’
+  163 |         rt::OptionalInputTensors const& deepstackFeatures, std::string const& loraName, cudaStream_t cudaStream);
+      |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+RESTORE begin task_exit=1
+true
+active
+active
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7423          80           5         170          61
+Swap:          16383         559       15824
+2026-09-14T15:40:17+05:30
+RESTORE healthy=true task_exit=1

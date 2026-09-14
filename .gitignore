@@ -1,2 +1,4 @@
 *.swp
 .DS_Store
+__pycache__/
+examples/mock_interview/runs/

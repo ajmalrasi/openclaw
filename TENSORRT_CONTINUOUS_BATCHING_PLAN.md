@@ -1,6 +1,6 @@
 # Continuous batching and chunked prefill for the Jetson
 
-Design proposal, 2026-09-12. Research and source inspection only; implementation and deployment have not started.
+Design proposal, 2026-09-12; implementation phases refined 2026-09-14. Research and source inspection only; implementation and deployment have not started.
 
 ## 1. Intended outcome
 
@@ -164,20 +164,90 @@ Paths are relative to the pinned source checkout. New names are design proposals
 
 Audit TensorRT graph behavior before optimization. Initially validate with eager execution. Later capture only the finite decode views `{0}`, `{1}`, `{0,1}` using stable buffers; confirm profile identity and all aliased bindings participate in safe lookup. Never recapture per request or per prompt length. Capture warmups mutate state, so perform them before requests or reset all affected slots before admission. Do not claim lower single-user overhead until graphs and eager fallback are both tested.
 
-## 9. Implementation milestones and exit criteria
+## 9. Implementation phases and exit criteria
 
-Each milestone is a reviewable change with evidence. This is one continuous-batching implementation delivered in stages, not a substitute coalescing solution.
+Execution order: **P1 → P2 → P3 → P4 → P5 → P6 → P7 → P8**. **P1's bounded feasibility gate and P2's ownership/execution-preservation gate passed on 2026-09-14.** P3–P8 are not implemented; a newly exposed full-versus-chunked numerical discrepancy is an open P3 gate. See [P1 evidence](tensorrt-edgellm/evidence/continuous-batching-p1-20260914/RESULTS.md) and [P2 evidence](tensorrt-edgellm/evidence/continuous-batching-p2-20260914/RESULTS.md). Each phase produces a reviewable change, focused verification evidence and a journal entry. These are technical checkpoints, not requirements to ask for permission after every phase once implementation is authorized.
 
-| Milestone | Work | Required evidence before proceeding |
+| Phase | Deliverable | Completion gate |
 | --- | --- | --- |
-| 1. Engine/state proof | Small native harness against the existing engine: resumed chunks, alternate physical slots, selected-row commits, prefill/decode profile switching. | A's inactive state is unchanged while B prefills; chunked B matches the established full-prefill reference within a predefined numerical policy; final-token tails work; no unexpected state-sized allocation. |
-| 2. Native step interfaces | Persistent `SequenceState`, fixed slot views, explicit prepared token IDs, independent limits/sampling, preserve legacy whole-request path. | One-request regression checks; slot 1 alone works; request lifecycle invariants and sampled-versus-committed token counts hold. |
-| 3. Continuous worker | Bounded queue, decode-first step planner, chunk progress, immediate slot reuse, cancellation/deadlines and fault propagation. | Native A-start/B-arrives/C-reuses trace proves progress before the previous group finishes; no state contamination or starvation. |
-| 4. HTTP integration | Submit/tickets and per-request SSE/results, per-client parsing/usage, queue accounting, slow consumers and shutdown. | Two staggered streaming clients overlap; mixed streaming/non-streaming and differing parameters work; disconnected A does not terminate B. |
-| 5. Performance and memory | Finite CUDA graphs, chunk-size selection, bounded buffers, progress metrics, operator diagnostics. | Stable memory and graph counts, measured token-gap/TTFT/throughput tradeoff, singleton regression characterized. |
-| 6. Production handoff | Candidate installation, smoke checks, recovery/watchdog compatibility, rollback documentation. | All correctness gates pass; controlled current-engine endpoint comparison; exact artifact/config recorded with recoverable previous runtime. |
+| P1. Engine feasibility | Native proof harness and engine compatibility findings. | Resumed prefill, selected physical slots and profile switching preserve correct state. |
+| P2. Persistent sequence state | Reusable per-sequence state and native step interfaces. | Either slot runs independently; allocation/reset/commit touches only its owner. |
+| P3. Chunked prefill | Production prompt continuation with a bounded chunk size. | Chunked prompts produce correct continuations, including final one-token chunks. |
+| P4. Continuous scheduler | Native queue and one worker admitting requests between steps. | B joins A; C reuses A's slot while B remains active. |
+| P5. Independent request controls | Per-request sampling, output limits, cancellation and failure handling. | Different request settings coexist and one request cannot corrupt or terminate another. |
+| P6. HTTP and streaming integration | OpenAI-compatible submission, independent SSE streams and results. | Real staggered clients overlap with correct responses, usage and cleanup. |
+| P7. Performance and memory | Verified graph use, chunk tuning and bounded runtime overhead. | Measured latency/throughput goals and memory stability meet the production gate. |
+| P8. Deployment and recovery | Validated candidate service, rollback and operator documentation. | Endpoint smoke checks and recovery checks pass on the selected artifact. |
 
-If milestone 1 fails because of a serialized profile or plugin limitation, isolate whether it is a binding bug, kernel continuation bug or genuine engine-contract restriction. Fix native binding/kernel code where sufficient. If an engine change is required, specify the exact contract change and preserve the working artifact; do not repeatedly rebuild/export in hope. Runtime-only work uses existing ONNX/engine artifacts. A model graph/export change requires its own export → build → inference verification.
+### P1 — Prove the existing engine can support the design
+
+Scope: pin the source/engine versions, preserve the existing-engine loading patch, define reference outputs and numerical checks, and build a small native proof harness. Add only the narrow test hooks or slot bindings necessary to exercise resumed chunks and physical slot selection; do not build the HTTP scheduler yet. Keep the proof code separate from the production abstractions introduced in P2/P3.
+
+Verify: slot 0 and slot 1 separately; A's state remaining unchanged while B executes; initial versus resumed prompt offsets; one-token final chunks; switching between prefill and decode profiles. Record memory allocations and any engine/plugin restrictions. Use eager execution to simplify diagnosis.
+
+Done when: evidence establishes whether the current engine can be reused and identifies the supported continuation shapes. If it fails, classify the problem as binding, kernel or serialized-engine contract before proceeding. A required engine change must be specified and validated against a separately preserved artifact; do not rebuild speculatively.
+
+Verified P1 finding: the existing serialized engine supports the tested slot views and resumed multi-token chunks. A resumed **one-token** prompt chunk must use decode-shaped execution and absolute context lengths; the attention plugin otherwise interprets chunk length one as the full KV endpoint and produces incorrect output. This was reproduced, classified, corrected in the proof adapter and retested. All 24 output comparisons and five exact inactive-state checks passed in attempt 4. No engine rebuild or production deployment was performed. The probe's decoder call discards its sample for prompt tails; P2/P3 must implement the sampling-free forward contract, rather than adopting that diagnostic shortcut. Numerical/quality coverage beyond these short fixtures and memory qualification remain explicit later gates.
+
+### P2 — Introduce persistent sequence ownership and native steps
+
+Depends on P1. Introduce `SequenceState`, stable request IDs, generation-tagged slot handles, per-slot KV/recurrent/convolution ownership, and selected-row tensor views. Extract explicit preparation, prefill-step, decode-forward and completion boundaries from `handleRequest`. Keep physical slots stable and preserve the legacy whole-request API.
+
+Verify: both single-slot execution views and the two-slot view; reset/release/reuse; correct sampled-versus-committed token counts; unchanged state for unselected slots; no large state copies or repeated allocations. Create fields for all per-request settings now; implement their full concurrent behavior in P5.
+
+Done when: the native runtime can pause between steps and resume either sequence without losing ownership or state. This phase supplies the mechanism; scheduling policy is still pending.
+
+P2 result: `SequenceSlots` and `SequenceStepRuntime` implement this mechanism with a runtime-wide exclusive lease, prebuilt selected-row views, sampling-free forwards and explicit completion. Nine CPU tests passed normally and under ASan/UBSan; seven native comparisons matched independent execution exactly, four inactive-state checks passed, six invalid operations were rejected, unequal-length two-row decode worked, and the legacy API worked after lease release. The current scope is single-rank two-slot vanilla text-only Qwen3.5. Matching-recipe preservation is separate from numerical qualification: a new fixture exceeded the original full-versus-chunked screen in both P1 and P2; padding did not resolve it and was not adopted. No tolerance was relaxed. P3 must investigate this rather than interpreting P2 completion as production chunking correctness.
+
+### P3 — Implement correct chunked prefill
+
+Depends on P2. Format/tokenize each prompt once, persist its cursor, continue all three state types across chunks, and sample only after the final chunk. Start with a fixed verified chunk cap; adaptive tuning belongs to P7. Use the P1 findings for supported chunk/tail shapes.
+
+Verify: chunk-boundary cases in section 10, full versus chunked prefill, long inputs within the existing 6144 limit, first-token accounting, and manual alternation of A's decode with B's prefill. Confirm B's chunks cannot reset A's state.
+
+Done when: a long prompt can be processed in bounded pieces with correct continuation. The manual interleaving harness is evidence for the primitive, not a claim that automatic continuous admission is complete.
+
+### P4 — Implement the continuous native scheduler
+
+Depends on P3. Add one worker, bounded pending work, up to two resident sequences including prefills, FIFO admission, decode-first execution, guaranteed prefill progress and immediate free-slot reuse. Introduce basic cancellation/fault plumbing so the worker cannot strand requests; comprehensive per-request behavior follows in P5.
+
+Verify with native tickets and deterministic requests: start A, submit B after A begins decoding, then submit C and let C take A's slot while B continues. Capture step membership and admission/release timestamps. Test two prefills, an idle worker, queue overflow and no busy waiting.
+
+Done when: genuine staggered admission and slot reuse work automatically. Use simple matching sampling settings for the first proof; do not expose this incomplete capability as the production HTTP server yet.
+
+### P5 — Complete independent request behavior
+
+Depends on P4. Apply sampling/RNG, maximum output, KV headroom, EOS/thinking, stop strings, logit bias and logprobs per sequence. Add complete queued/prefilling/decoding cancellation, deadline semantics, stale-ticket protection, bounded native output buffers, terminal results and shutdown/fault propagation.
+
+Verify: different temperatures and output limits in one forward batch; unequal prompt lengths without shared output truncation; one client finishing/cancelling while its partner continues; repeated slot reuse; slow consumers; injected worker/runtime failures. A CUDA error that may corrupt shared state must mark the runtime unready.
+
+Done when: all request settings supported by the target endpoint remain independent under native concurrency. A request is not forced to wait merely because its sampling tuple differs.
+
+### P6 — Connect the OpenAI HTTP server
+
+Depends on P5. Expose native tickets/channels through pybind with GIL-free waits. Replace the HTTP one-generation lease with bounded submission and independent completion ownership. Wire streaming and non-streaming responses, tool/reasoning parsing, usage, disconnect handling and honest health metrics. Preserve `--engine-dir`, model alias `openclaw` and the existing service contract.
+
+Verify: staggered independent HTTP clients, mixed streaming/non-streaming, different parameters, correct terminal SSE events and tool calls, overload/timeout responses, disconnect isolation and graceful shutdown. No per-request thread may join or destroy the shared scheduler.
+
+Done when: the requested behavior works end to end through the candidate endpoint. This is the functional implementation milestone; performance qualification and production rollout remain outstanding.
+
+### P7 — Qualify performance and memory
+
+Depends on P6. Add the finite, verified decode graph captures and tune chunk size using measured step duration. Bound preparation, stream/logprob storage, graph counts and allocation growth. Diagnose profile-switch overhead and compare the candidate against the preserved runtime using the same engine and workload.
+
+Verify: singleton regression, staggered-request waiting, token gaps, aggregate throughput, near-capacity contexts and repeated slot reuse. Keep benchmark comparison within the total five-minute session cap in section 10, including warmup. Report longer reliability testing as outstanding when not covered; do not infer it from a short run.
+
+Done when: the correctness, memory and provisional performance gates in section 10 pass. If separate prefill/decode execution cannot meet them, document the bottleneck and design the necessary engine/plugin optimization before claiming completion. Packed mixed-phase execution is conditional engineering work, not an automatic extra phase or a silent reduction of the requested scope.
+
+### P8 — Deploy and verify recovery
+
+Depends on P7. Record the exact candidate revision, native library/bindings, engine and configuration. Preserve the previous service/runtime for rollback. Perform the controlled single-model cutover and account for the watchdog during maintenance; preserve unrelated services.
+
+Verify: health/models, streaming and non-streaming correctness, a short staggered-request smoke check, shutdown/restart behavior and watchdog behavior under normal queue load. Restore the intended service/watchdog state and document rollback.
+
+Done when: the qualified candidate is serving, operational checks pass and recovery artifacts/instructions are recorded. This phase is the production completion point.
+
+The software dependencies above are sequential. CPU test fixtures and documentation can be prepared alongside the relevant implementation, but later phases cannot claim completion before their prerequisite gates pass. Runtime-only work reuses existing ONNX/engine artifacts. A model graph/export change requires separate export → build → inference verification.
 
 ## 10. Test matrix and acceptance
 
@@ -210,4 +280,4 @@ Record exact commit, native library, bindings, engine path/checksum, runtime set
 
 The research supports the scheduler approach. Source inspection now identifies concrete continuation primitives and a two-slot layout that may avoid costly state copies. That improves confidence in implementing correct behavior on this codebase.
 
-The first decisive uncertainty is whether the actual engine supports resumed chunks and arbitrary selected-slot bindings without corruption. The second is the latency and memory cost of alternating its prefill/decode profiles on the Orin. Milestone 1 answers the first before the larger server rewrite; the bounded on-device comparisons answer the second. A successful research design is not yet experimental evidence that the implementation works.
+The first decisive uncertainty is whether the actual engine supports resumed chunks and arbitrary selected-slot bindings without corruption. The second is the latency and memory cost of alternating its prefill/decode profiles on the Orin. Phase P1 answers the first before the larger server rewrite; phase P7's bounded on-device comparisons answer the second. A successful research design is not yet experimental evidence that the implementation works.

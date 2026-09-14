@@ -1,0 +1,188 @@
+{
+  "id": "openclaw",
+  "object": "model",
+  "created": 1789380680,
+  "owned_by": "tensorrt-edgellm",
+  "max_model_len": 8192
+}
+true
+2026-09-14T15:41:20+05:30
+7dbe1219ab15152d781a94001f3e4c964a4ec70c198082868cad0773db200d1d  /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/config.json
+4d0be5c0b494d5fe9f678fb25dfe575a518c8ba8001a8aa5878de781ae8646bc  /home/ajmalrasi/continuous-batching-p1-20260914/continuousBatchingProbe.cpp
+b2a03d898da3cf8e62a026a989f7e3151d39884f5eb256bef4cb3820b69b64b0  /home/ajmalrasi/continuous-batching-p1-20260914/include/runtime/llmRankRuntime.h
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7310          94           4         285         175
+Swap:          16383         749       15634
+MAINTENANCE model stopped; watchdog paused
+               total        used        free      shared  buff/cache   available
+Mem:            7485        1717        5676           4         296        5768
+Swap:          16383         406       15977
+BUILD passed
+2026-09-14T15:41:32+05:30
+[15:41:33.769] [INFO] [trtUtils.h:71:loadEdgellmPluginLib] EDGELLM_PLUGIN_PATH: /home/ajmalrasi/TensorRT-Edge-LLM/build/libNvInfer_edgellm_plugin.so
+[15:41:35.189] [INFO] [tokenizer.cpp:603:loadVocabulary] Loaded 248044 vocabulary tokens
+[15:41:35.481] [INFO] [tokenizer.cpp:135:loadFromHF] Loaded 33 special tokens
+[15:41:35.676] [INFO] [tokenizer.cpp:1090:loadChatTemplate] Successfully loaded chat template from /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/processed_chat_template.json (for model: Qwen3.5-4B/quantized)
+[15:41:35.676] [INFO] [tokenizer.cpp:167:loadFromHF] Successfully loaded tokenizer from /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla (vocab_size=248077)
+[15:41:36.818] [INFO] [externalWeightManager.cpp:882:load] Loaded 192 transformed model weight tensor(s) in 1050 ms
+[15:41:38.007] [INFO] [llmRuntimeUtils.cpp:715:loadEmbeddingTable] Loaded FP16 embedding: [248320, 2560]
+[15:41:38.008] [INFO] [llmEngineConfig.cpp:672:parseEngineConfig] reading /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/config.json
+[15:41:38.008] [INFO] [llmRuntimeUtils.cpp:422:collectRopeConfig] Collected rope config: RopeConfig:  type: MRope  rotaryScale: 1  rotaryTheta: 1e+07  partialRotaryFactor: 1  maxPositionEmbeddings: 262144
+[15:41:38.008] [INFO] [llmEngineConfig.cpp:887:parseEngineConfig] LLMEngineConfig{ hiddenSize=2560 vocabSize=248320 outputVocabSize=248320 numDecoderLayers=32 numAttentionLayers=8 numKVHeads=4 headDim=256 rotaryDim=64 maxBatch=2 maxInputLen=6144 maxKVCapacity=8192 kvPoolPages=128 pleEnabled=false numPleInputs=0 pleHiddenSize=0 isSpecDecodeBase=false specDecodeType=0 loraRank=0 numLinearAttnLayers=24 recurrentStateDtype=0 convStateDtype=1 eosTokenIds=[248044] }
+[15:41:38.008] [INFO] [engineExecutor.cpp:135:TrtEngineExecutor] loading engine file: /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/llm.engine
+[15:41:39.990] [INFO] [TensorRT] [MS] Running engine with multi stream info
+[15:41:39.990] [INFO] [TensorRT] [MS] Number of aux streams is 1
+[15:41:39.990] [INFO] [TensorRT] [MS] Number of total worker streams is 2
+[15:41:39.990] [INFO] [TensorRT] [MS] The main stream provided by execute/enqueue calls is the first worker stream
+[15:41:41.331] [INFO] [TensorRT] [MemUsageChange] TensorRT-managed allocation in IExecutionContext creation: CPU +0, GPU +0, now: CPU 0, GPU 1862 (MiB)
+[15:41:41.331] [INFO] [trtUtils.cpp:374:setNonBlockingAuxStreams] configured 1 non-blocking auxiliary stream(s) for execution context
+[15:41:41.340] [INFO] [engineExecutor.cpp:166:TrtEngineExecutor] engine loaded successfully (311 I/O tensors)
+[15:41:41.340] [INFO] [llmRankRuntime.cpp:281:initializeFromEngineDir] Base EngineExecutor successfully loaded from /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/llm.engine.
+[15:41:41.342] [INFO] [externalWeightManager.cpp:930:validateAgainstEngine] Validated 192 external weight tensor(s) for base
+[15:41:41.343] [INFO] [llmRankRuntime.cpp:364:initializeCommon] Runtime batch size set to: 2 (from engine bundle)
+[15:41:41.814] [INFO] [llmRankRuntime.cpp:533:initializeCommon] Runtime tensors successfully allocated.
+[15:41:42.206] [INFO] [llmRankRuntime.cpp:676:initializeCommon] Setup shared execution context memory: 1071319040 bytes (base requires: 1071319040, strategy requires: 0, vision requires: 0, audio requires: 0, action requires: 0)
+MEMORY initialized cuda_free=185839616 cuda_total=7849046016
+STEP slot=0 batch=1 profile=0 start=0 tokens=1
+STEP slot=0 batch=1 profile=1 start=1 tokens=1
+[15:41:42.558] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=0 start=0 tokens=1
+[15:41:43.641] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE chunk_prefill_1 max_abs=0 relative_l2=0 reference_greedy=2614 candidate_greedy=2614 passed=1
+STEP slot=1 batch=1 profile=1 start=1 tokens=1
+[15:41:43.712] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE chunk_decode_1 max_abs=0 relative_l2=0 reference_greedy=513 candidate_greedy=513 passed=1
+STEP slot=0 batch=1 profile=0 start=0 tokens=3
+[15:41:43.781] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=0 batch=1 profile=1 start=3 tokens=1
+[15:41:43.862] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=0 start=0 tokens=3
+[15:41:43.922] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE chunk_prefill_3 max_abs=0 relative_l2=0 reference_greedy=4460 candidate_greedy=4460 passed=1
+STEP slot=1 batch=1 profile=1 start=3 tokens=1
+[15:41:44.001] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE chunk_decode_3 max_abs=0 relative_l2=0 reference_greedy=53 candidate_greedy=53 passed=1
+STEP slot=0 batch=1 profile=0 start=0 tokens=4
+[15:41:44.072] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=0 batch=1 profile=1 start=4 tokens=1
+[15:41:44.153] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=0 start=0 tokens=4
+[15:41:44.197] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE chunk_prefill_4 max_abs=0 relative_l2=0 reference_greedy=220 candidate_greedy=220 passed=1
+STEP slot=1 batch=1 profile=1 start=4 tokens=1
+[15:41:44.266] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE chunk_decode_4 max_abs=0 relative_l2=0 reference_greedy=16 candidate_greedy=16 passed=1
+STEP slot=0 batch=1 profile=0 start=0 tokens=63
+[15:41:44.319] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=0 batch=1 profile=1 start=63 tokens=1
+[15:41:44.467] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=0 start=0 tokens=63
+[15:41:44.511] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE chunk_prefill_63 max_abs=0 relative_l2=0 reference_greedy=220 candidate_greedy=220 passed=1
+STEP slot=1 batch=1 profile=1 start=63 tokens=1
+[15:41:44.661] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE chunk_decode_63 max_abs=0 relative_l2=0 reference_greedy=561 candidate_greedy=561 passed=1
+STEP slot=0 batch=1 profile=0 start=0 tokens=64
+[15:41:44.727] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=0 batch=1 profile=1 start=64 tokens=1
+[15:41:44.863] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=0 start=0 tokens=64
+[15:41:44.907] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE chunk_prefill_64 max_abs=0 relative_l2=0 reference_greedy=561 candidate_greedy=561 passed=1
+STEP slot=1 batch=1 profile=1 start=64 tokens=1
+[15:41:45.047] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE chunk_decode_64 max_abs=0 relative_l2=0 reference_greedy=2438 candidate_greedy=2438 passed=1
+STEP slot=0 batch=1 profile=0 start=0 tokens=65
+[15:41:45.102] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=0 batch=1 profile=1 start=65 tokens=1
+[15:41:45.241] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=0 start=0 tokens=64
+[15:41:45.288] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=0 start=64 tokens=1
+COMPARE chunk_prefill_65 max_abs=11.3906 relative_l2=0.596586 reference_greedy=2438 candidate_greedy=561 passed=0
+STEP slot=1 batch=1 profile=1 start=65 tokens=1
+[15:41:45.476] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE chunk_decode_65 max_abs=7.90625 relative_l2=0.268596 reference_greedy=37550 candidate_greedy=37550 passed=0
+STEP slot=0 batch=1 profile=0 start=0 tokens=127
+[15:41:45.533] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=0 batch=1 profile=1 start=127 tokens=1
+[15:41:45.731] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=0 start=0 tokens=64
+[15:41:45.775] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=0 start=64 tokens=63
+COMPARE chunk_prefill_127 max_abs=0 relative_l2=0 reference_greedy=220 candidate_greedy=220 passed=1
+STEP slot=1 batch=1 profile=1 start=127 tokens=1
+[15:41:46.054] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE chunk_decode_127 max_abs=0 relative_l2=0 reference_greedy=561 candidate_greedy=561 passed=1
+STEP slot=0 batch=1 profile=0 start=0 tokens=128
+[15:41:46.114] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=0 batch=1 profile=1 start=128 tokens=1
+[15:41:46.313] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=0 start=0 tokens=64
+[15:41:46.360] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=0 start=64 tokens=64
+COMPARE chunk_prefill_128 max_abs=0 relative_l2=0 reference_greedy=561 candidate_greedy=561 passed=1
+STEP slot=1 batch=1 profile=1 start=128 tokens=1
+[15:41:46.640] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE chunk_decode_128 max_abs=0 relative_l2=0 reference_greedy=2438 candidate_greedy=2438 passed=1
+STEP slot=0 batch=1 profile=0 start=0 tokens=129
+[15:41:46.706] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=0 batch=1 profile=1 start=129 tokens=1
+[15:41:46.954] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=0 start=0 tokens=64
+[15:41:47.017] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=0 start=64 tokens=64
+STEP slot=1 batch=1 profile=0 start=128 tokens=1
+COMPARE chunk_prefill_129 max_abs=16.0312 relative_l2=0.641261 reference_greedy=2438 candidate_greedy=561 passed=0
+STEP slot=1 batch=1 profile=1 start=129 tokens=1
+[15:41:47.343] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE chunk_decode_129 max_abs=2.54297 relative_l2=0.201993 reference_greedy=37550 candidate_greedy=37550 passed=0
+STEP slot=0 batch=1 profile=0 start=0 tokens=129
+[15:41:47.407] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=0 batch=1 profile=1 start=129 tokens=1
+[15:41:47.656] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=0 start=0 tokens=129
+[15:41:47.711] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=1 start=129 tokens=1
+[15:41:47.960] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=0 batch=1 profile=0 start=0 tokens=129
+[15:41:48.015] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE A_reuse max_abs=0 relative_l2=0 reference_greedy=2438 candidate_greedy=2438 passed=1
+STEP slot=1 batch=1 profile=0 start=0 tokens=64
+ISOLATION slot=0 exact_bytes=56132096 passed=1
+STEP slot=0 batch=1 profile=1 start=129 tokens=1
+[15:41:48.548] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE A_decode_during_B_prefill max_abs=0 relative_l2=0 reference_greedy=37550 candidate_greedy=37550 passed=1
+ISOLATION slot=1 exact_bytes=54002176 passed=1
+STEP slot=1 batch=1 profile=0 start=64 tokens=64
+[15:41:48.651] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+ISOLATION slot=0 exact_bytes=56164864 passed=1
+STEP slot=1 batch=1 profile=0 start=128 tokens=1
+ISOLATION slot=0 exact_bytes=56164864 passed=1
+COMPARE B_one_token_tail max_abs=9.38281 relative_l2=0.944711 reference_greedy=220 candidate_greedy=760 passed=0
+STEP slot=1 batch=1 profile=1 start=129 tokens=1
+[15:41:48.909] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE B_decode_after_A max_abs=11.6641 relative_l2=0.915819 reference_greedy=13 candidate_greedy=641 passed=0
+ISOLATION slot=0 exact_bytes=56164864 passed=1
+STEP slot=0 batch=1 profile=1 start=130 tokens=1
+STEP slot=1 batch=1 profile=1 start=130 tokens=1
+STEP slot=0 batch=1 profile=0 start=0 tokens=129
+[15:41:49.085] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=0 start=0 tokens=129
+STEP slot=0 batch=1 profile=1 start=129 tokens=1
+[15:41:49.574] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=1 start=129 tokens=1
+STEP slot=0 batch=2 profile=1 start=130 tokens=1
+COMPARE two_slot_decode_A max_abs=0 relative_l2=0 reference_greedy=21780 candidate_greedy=21780 passed=1
+COMPARE two_slot_decode_B max_abs=3.92676 relative_l2=0.324936 reference_greedy=2943 candidate_greedy=2943 passed=0
+MEMORY completed cuda_free=111702016 cuda_total=7849046016
+PROBE_RESULT passed=0
+RESTORE begin task_exit=1
+true
+active
+active
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7383         118           2         170         101
+Swap:          16383         531       15852
+2026-09-14T15:42:05+05:30
+RESTORE healthy=true task_exit=1
