@@ -1,0 +1,33 @@
+{
+  "id": "openclaw",
+  "object": "model",
+  "created": 1789442439,
+  "owned_by": "tensorrt-edgellm",
+  "max_model_len": 8192
+}
+true
+2026-09-15T08:50:39+05:30
+7dbe1219ab15152d781a94001f3e4c964a4ec70c198082868cad0773db200d1d  /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/config.json
+d0d4cdb297a25d7afa5f212a69c0a79e5a1e72ffdf7001df46f4389c2eabf3b6  /home/ajmalrasi/continuous-batching-p3-20260915/continuousBatchingProbe.cpp
+0eb78f51fc12f4f74fb19060b9a4347b98d21ad94c7317666842e4f802f941df  /home/ajmalrasi/continuous-batching-p3-20260915/include/runtime/llmRankRuntime.h
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7067         149           1         487         418
+Swap:          16383        1050       15333
+MAINTENANCE model stopped; watchdog paused
+               total        used        free      shared  buff/cache   available
+Mem:            7485        1733        5474           1         496        5752
+Swap:          16383         479       15904
+/home/ajmalrasi/continuous-batching-p3-20260915/continuousBatchingProbe.cpp: In lambda function:
+/home/ajmalrasi/continuous-batching-p3-20260915/continuousBatchingProbe.cpp:660:42: error: comparison of integer expressions of different signedness: ‘int64_t’ {aka ‘long int’} and ‘long unsigned int’ [-Werror=sign-compare]
+  660 |         require(host.getMemoryCapacity() >= count * sizeof(float), "Host logit capacity");
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+cc1plus: all warnings being treated as errors
+RESTORE begin task_exit=1
+true
+active
+active
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7370         136           1         161         114
+Swap:          16383         617       15766
+2026-09-15T08:51:09+05:30
+RESTORE healthy=true task_exit=1

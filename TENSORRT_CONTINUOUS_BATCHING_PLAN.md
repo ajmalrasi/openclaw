@@ -1,6 +1,6 @@
 # Continuous batching and chunked prefill for the Jetson
 
-Design proposal, 2026-09-12; implementation phases refined 2026-09-14. Research and source inspection only; implementation and deployment have not started.
+Design proposal, 2026-09-12; phase status updated 2026-09-15. P1–P3 are implemented and qualified within their documented scope; P4–P8 and production deployment remain pending.
 
 ## 1. Intended outcome
 
@@ -166,7 +166,7 @@ Audit TensorRT graph behavior before optimization. Initially validate with eager
 
 ## 9. Implementation phases and exit criteria
 
-Execution order: **P1 → P2 → P3 → P4 → P5 → P6 → P7 → P8**. **P1's bounded feasibility gate and P2's ownership/execution-preservation gate passed on 2026-09-14.** P3–P8 are not implemented; a newly exposed full-versus-chunked numerical discrepancy is an open P3 gate. See [P1 evidence](tensorrt-edgellm/evidence/continuous-batching-p1-20260914/RESULTS.md) and [P2 evidence](tensorrt-edgellm/evidence/continuous-batching-p2-20260914/RESULTS.md). Each phase produces a reviewable change, focused verification evidence and a journal entry. These are technical checkpoints, not requirements to ask for permission after every phase once implementation is authorized.
+Execution order: **P1 → P2 → P3 → P4 → P5 → P6 → P7 → P8**. **P1's bounded feasibility gate and P2's ownership/execution-preservation gate passed on 2026-09-14.** P3 passed on 2026-09-15 with a fixed 128-token policy that avoids unsupported small resumed chunks; P4–P8 remain pending. See [P3 evidence](tensorrt-edgellm/evidence/continuous-batching-p3-20260915/RESULTS.md). Raw manual short-tail numerical drift remains a retained negative control. See [P1 evidence](tensorrt-edgellm/evidence/continuous-batching-p1-20260914/RESULTS.md) and [P2 evidence](tensorrt-edgellm/evidence/continuous-batching-p2-20260914/RESULTS.md). Each phase produces a reviewable change, focused verification evidence and a journal entry. These are technical checkpoints, not requirements to ask for permission after every phase once implementation is authorized.
 
 | Phase | Deliverable | Completion gate |
 | --- | --- | --- |
@@ -206,6 +206,8 @@ Depends on P2. Format/tokenize each prompt once, persist its cursor, continue al
 Verify: chunk-boundary cases in section 10, full versus chunked prefill, long inputs within the existing 6144 limit, first-token accounting, and manual alternation of A's decode with B's prefill. Confirm B's chunks cannot reset A's state.
 
 Done when: a long prompt can be processed in bounded pieces with correct continuation. The manual interleaving harness is evidence for the primitive, not a claim that automatic continuous admission is complete.
+
+P3 result: `beginPrefillChunk` preserves token accounting with a 128-token cap and resumed final chunks of 64–128 tokens. A 129–191-token remainder is partitioned as 64 plus 65–127. Passing runs produced 487 exact logit comparisons, 11,648 exact active-state comparisons, and 20 exact inactive snapshots. Coverage includes the specified boundaries, every length 129–193, 6144-token prompts, four formatted chats and both slot orders. Eleven host tests passed normally and under sanitizers, including all supported input lengths. Singleton-only tail avoidance failed for remainders 2–4; the final policy avoids all short resumed tails without changing thresholds. The raw 64+64+1 path remains unqualified. P4 must use the qualified helper from the first prompt step; arbitrary manual chunk sizes require separate qualification. Production remains unchanged.
 
 ### P4 — Implement the continuous native scheduler
 

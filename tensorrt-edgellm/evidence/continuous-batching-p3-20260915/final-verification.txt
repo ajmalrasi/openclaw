@@ -1,0 +1,24 @@
+2026-09-15T09:04:02+05:30
+Id=openclaw-tensorrt-edgellm.service
+ActiveState=active
+SubState=running
+
+Id=openclaw-tensorrt-watchdog.timer
+ActiveState=active
+SubState=running
+{"object":"list","data":[{"id":"openclaw","object":"model","created":1789443242,"owned_by":"tensorrt-edgellm","max_model_len":8192}]}{"status":"healthy","model":"openclaw","active_requests":1,"queued_requests":0,"capabilities":{"chat":true,"transcription":false,"speech":false,"input_modalities":["text"],"output_modalities":["text"],"max_model_len":8192,"max_input_len":6144,"max_batch_size":2,"max_num_seqs":1,"kv_cache_dtype":"fp16","speculative_decoding":false,"speculative_method":"none","context_reuse":false}}e8b29522938901f6df19ebeedd4b69bc8edbcd97
+ M experimental/server/config.py
+ M experimental/server/runtime/engine.py
+938eb8ddad9e122e1b0d48746abb7ffacf82315d8050c2e6daf239e84cd7af64  -
+938eb8ddad9e122e1b0d48746abb7ffacf82315d8050c2e6daf239e84cd7af64  /home/ajmalrasi/continuous-batching-p3-20260915/preserved-engine-dir.patch
+5e167b93557266635fc09d2595a258e562367d07fd4fcc592e7a1f628f319726  /home/ajmalrasi/continuous-batching-p3-20260915/continuousBatchingProbe.cpp
+654058dae8e5f2cd4c5cd56fbb26adfc6ab06ea35ed955510d94a41caa9e0494  /home/ajmalrasi/continuous-batching-p3-20260915/sequenceStepRuntime.cpp
+b010624d3bf43136b33fb53ebfb636c6ebe128804b9ff41936e6d1eeaffd534a  /home/ajmalrasi/continuous-batching-p3-20260915/sequenceSlots.cpp
+952fd8dcd98fc30d902b2b2e78b055b1934b25175a025c3b3abde73ca8ccaec5  /home/ajmalrasi/continuous-batching-p3-20260915/include/runtime/sequenceStepRuntime.h
+6e47cf44e3967f9f880f23f55350a0c3a968aa55d4cc1024184eef67cbfd7a48  /home/ajmalrasi/continuous-batching-p3-20260915/include/runtime/state/prefillChunk.h
+8a968e59bca3dbad7e193a7431d4fb3acf7e3e0f6a7f34858e519d3d9e1bd4d3  /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/llm.engine
+backend-api-1 Up 37 hours (healthy)
+backend-db-1 Up 2 days (healthy)
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7301         119           1         265         183
+Swap:          16383         798       15585
