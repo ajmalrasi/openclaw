@@ -13,6 +13,28 @@ Append an entry after every TensorRT Edge-LLM export, transfer, build, repair, e
 
 ## Current state
 
+- 2026-09-16 P8 deployed the qualified source commit
+  `1496d3404f0cc18d26fb51d830991d28cc50cccb` as a versioned release at
+  `/home/ajmalrasi/continuous-batching-p8-20260916-attempt3/`, leaving the
+  original checkout, engine and base unit intact. The systemd drop-in sets the
+  release working directory, isolated P7 binding, continuous batching, graph
+  capture and the required existing plugin path. Attempt 1 stopped before
+  maintenance because a real request was active. Attempt 2 exposed the omitted
+  plugin environment variable; the engine consequently could not deserialize,
+  and the rollback trap restored the original healthy one-sequence service.
+  Attempt 3 passed under one 300-second detached deadline: live model/health,
+  non-streaming completion and staggered SSE passed before and after a service
+  restart; health showed three captures and 78 replays. The rollback test then
+  restored and verified `max_num_seqs=1`, before final candidate reactivation.
+  The candidate's final live gate passed with 78 replays, then final manual
+  verification showed healthy/idle `max_num_seqs=2`, three captures and 83
+  replays. The watchdog service completed successfully and its timer is active.
+  The wrapper initially did not assert that final timer activation persisted;
+  its retained script now resets and asserts the timer, and the deployed timer
+  was explicitly reset, started and verified active. Evidence:
+  `tensorrt-edgellm/evidence/continuous-batching-p8-20260916/`; failed-attempt
+  evidence is retained. P8 is complete and continuous batching is deployed.
+
 - 2026-09-16: P6 and P7 completed in the isolated implementation checkout,
   source commit `1496d3404f0cc18d26fb51d830991d28cc50cccb` on
   `origin/codex/continuous-batching-p1`. P6 now routes prepared HTTP requests

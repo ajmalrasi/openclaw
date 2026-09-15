@@ -1,0 +1,15 @@
+2026-09-16T02:08:39+05:30
+true
+true
+{"P8_LIVE_GATE": "passed", "execution": {"captures": 3, "eager": 10, "profile_switches": 12, "replays": 78}, "first_ttft": 0.15484337200177833, "second_ttft": 0.19663110602414235, "single_usage": {"completion_tokens": 16, "prompt_tokens": 23, "total_tokens": 39}}
+true
+{"P8_LIVE_GATE": "passed", "execution": {"captures": 3, "eager": 10, "profile_switches": 12, "replays": 78}, "first_ttft": 0.1545039059710689, "second_ttft": 0.19536655297270045, "single_usage": {"completion_tokens": 16, "prompt_tokens": 23, "total_tokens": 39}}
+true
+P8_ROLLBACK_GATE passed
+true
+{"P8_LIVE_GATE": "passed", "execution": {"captures": 3, "eager": 10, "profile_switches": 12, "replays": 78}, "first_ttft": 0.1541367620229721, "second_ttft": 0.1969086939934641, "single_usage": {"completion_tokens": 16, "prompt_tokens": 23, "total_tokens": 39}}
+active
+inactive
+true
+2026-09-16T02:10:04+05:30
+P8_DEPLOYMENT_GATE passed
