@@ -1,5 +1,7 @@
 # TensorRT Edge-LLM Qwen3.5-4B experiment journal
 
+- 2026-09-15: Pruned `TENSORRT_CONTINUOUS_BATCHING_HANDOFF.md` to implementation-critical TensorRT materials only: repository instructions, the eight-phase plan, TensorRT analysis and journal, P1/P2 evidence, native harness notes, and the Jetson deployment procedure needed for P8. Removed unrelated vLLM, Beast, EC2, MLC, and general README links. No Jetson state or experiment changed.
+
 Created: 2026-09-12. Time zone: Asia/Kolkata (IST, UTC+05:30).
 Target: Jetson Orin Nano Super, 8 GB unified memory, JetPack 7.2.1 / L4T r39.2.1, CUDA 13.2, SM87.
 

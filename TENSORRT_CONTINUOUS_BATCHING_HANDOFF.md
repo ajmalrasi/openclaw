@@ -12,21 +12,16 @@ The implementation must preserve correctness for the hybrid Qwen3.5 model: atten
 
 1. [Agent instructions](AGENTS.md)
 2. [Shared API and Jetson operating contract](FOR-AGENTS.md)
-3. [Continuous-batching design and eight-phase plan](TENSORRT_CONTINUOUS_BATCHING_PLAN.md)
+3. [Eight-phase implementation plan](TENSORRT_CONTINUOUS_BATCHING_PLAN.md)
 4. [TensorRT experiment journal](TENSORRT_EDGE_LLM_EXPERIMENT_LOG.md)
 5. [Concurrency source analysis](TENSORRT_CONCURRENCY_ANALYSIS.md)
 6. [P1 feasibility results](tensorrt-edgellm/evidence/continuous-batching-p1-20260914/RESULTS.md)
 7. [P2 persistent-state results](tensorrt-edgellm/evidence/continuous-batching-p2-20260914/RESULTS.md)
-8. [P1 harness documentation](../openclaw-tensorrt-concurrency-review/examples/llm/continuousBatchingProbe.md)
-9. [P2 step-runtime documentation](../openclaw-tensorrt-concurrency-review/examples/llm/sequenceStepRuntime.md)
+8. [P1 native harness notes](https://github.com/ajmalrasi/TensorRT-Edge-LLM/blob/codex/continuous-batching-p1/examples/llm/continuousBatchingProbe.md)
+9. [P2 step-runtime notes](https://github.com/ajmalrasi/TensorRT-Edge-LLM/blob/codex/continuous-batching-p1/examples/llm/sequenceStepRuntime.md)
+10. [Jetson deployment and rollback procedure](TRT_EDGE_LLM_JETSON_DEPLOYMENT.md)
 
-Operational references:
-
-- [TensorRT Edge-LLM Jetson deployment](TRT_EDGE_LLM_JETSON_DEPLOYMENT.md)
-- [Jetson vLLM rollback runbook](VLLM_JETSON_RUNBOOK.md)
-- [Repository README](README.md)
-
-The MLC migration documents are not authoritative for this TensorRT work. The [MLC experiment journal](JETSON_MLC_EXPERIMENT_LOG.md) is historical context only.
+No other Markdown file is required for implementing these eight phases.
 
 ## Source and branches
 
@@ -35,7 +30,6 @@ The MLC migration documents are not authoritative for this TensorRT work. The [M
 - Source repository: [ajmalrasi/TensorRT-Edge-LLM](https://github.com/ajmalrasi/TensorRT-Edge-LLM)
 - Implementation branch: `codex/continuous-batching-p1`
 - Pushed source commit: `cf57e1c`
-- Pushed OpenClaw documentation commit: `ba43065`
 - Existing base: `e8b29522938901f6df19ebeedd4b69bc8edbcd97` (TensorRT Edge-LLM 0.10.1)
 
 Do not work directly on the live deployment checkout. Preserve unrelated dirty files. Use a `codex/` branch. Commit C++ changes with `git commit -s`; do not add AI co-authors.
@@ -112,4 +106,3 @@ When finishing a phase, report:
 4. Failures retained, diagnosis and unresolved issues.
 5. Jetson/service/watchdog state before and after.
 6. Whether the next phase is safe to start.
-
