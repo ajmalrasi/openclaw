@@ -1,6 +1,6 @@
 # TensorRT Edge-LLM continuous batching implementation handoff
 
-This is the reusable handoff for implementing any phase of the TensorRT Edge-LLM continuous-batching project. Give an agent this file and ask it to implement a named phase, for example: “Use TENSORRT_CONTINUOUS_BATCHING_HANDOFF.md and implement P3.”
+This is the reusable handoff for implementing any phase of the TensorRT Edge-LLM continuous-batching project. Give an agent this file and ask it to implement a named phase, for example: “Use TENSORRT_CONTINUOUS_BATCHING_HANDOFF.md and implement P4.”
 
 ## Mission
 
@@ -19,7 +19,9 @@ The implementation must preserve correctness for the hybrid Qwen3.5 model: atten
 7. [P2 persistent-state results](tensorrt-edgellm/evidence/continuous-batching-p2-20260914/RESULTS.md)
 8. [P1 native harness notes](https://github.com/ajmalrasi/TensorRT-Edge-LLM/blob/codex/continuous-batching-p1/examples/llm/continuousBatchingProbe.md)
 9. [P2 step-runtime notes](https://github.com/ajmalrasi/TensorRT-Edge-LLM/blob/codex/continuous-batching-p1/examples/llm/sequenceStepRuntime.md)
-10. [Jetson deployment and rollback procedure](TRT_EDGE_LLM_JETSON_DEPLOYMENT.md)
+10. [P3 chunked-prefill results](tensorrt-edgellm/evidence/continuous-batching-p3-20260915/RESULTS.md)
+11. [P3 chunk API notes](../openclaw-tensorrt-concurrency-review/examples/llm/chunkedPrefill.md)
+12. [Jetson deployment and rollback procedure](TRT_EDGE_LLM_JETSON_DEPLOYMENT.md)
 
 No other Markdown file is required for implementing these eight phases.
 
@@ -29,7 +31,8 @@ No other Markdown file is required for implementing these eight phases.
 - TensorRT source checkout: `/Users/ajmalrasi/openclaw-tensorrt-concurrency-review`
 - Source repository: [ajmalrasi/TensorRT-Edge-LLM](https://github.com/ajmalrasi/TensorRT-Edge-LLM)
 - Implementation branch: `codex/continuous-batching-p1`
-- Pushed source commit: `cf57e1c`
+- Latest local source commit: `f416525` (P3; not yet pushed).
+- Previously pushed source commit: `cf57e1c` (P2).
 - Existing base: `e8b29522938901f6df19ebeedd4b69bc8edbcd97` (TensorRT Edge-LLM 0.10.1)
 
 Do not work directly on the live deployment checkout. Preserve unrelated dirty files. Use a `codex/` branch. Commit C++ changes with `git commit -s`; do not add AI co-authors.
@@ -60,20 +63,22 @@ P2 added, but has not been integrated into production serving:
 
 P2 is scoped to single-rank, two-slot, text-only vanilla Qwen3.5. It does not provide a scheduler, automatic chunking, sampling policy, HTTP/SSE integration, CUDA graphs or production deployment.
 
+P3 adds `beginPrefillChunk(handle)` with a fixed 128-token cap. Resumed final chunks contain 64–128 true prompt tokens; smaller remainders are absorbed by shortening the preceding chunk. Cold one-token prompts remain supported. Arbitrary low-level partitions, including raw 64+64+1, are not qualified. The first singleton-only workaround also failed for remainders 2–4; both failures remain recorded. The final policy passed 487 exact logit and 11,648 exact active-state comparisons across passing runs, plus 20 exact inactive snapshots in both slot orders. P4 must use this helper from the first prompt step. No scheduler or HTTP deployment has occurred.
+
 ## Phase ranking and gates
 
 | Phase | Scope | Difficulty |
 | --- | --- | ---: |
 | P1 | Engine feasibility and native proof | 8/10 — complete |
 | P2 | Persistent ownership and native steps | 8/10 — complete, not production-integrated |
-| P3 | Correct chunked prefill and numerical qualification | 10/10 — next |
-| P4 | Native continuous scheduler and slot reuse | 9/10 |
+| P3 | Correct chunked prefill and numerical qualification | 10/10 — complete for the fixed policy, not deployed |
+| P4 | Native continuous scheduler and slot reuse | 9/10 — next |
 | P5 | Independent sampling, limits, cancellation and failures | 9/10 |
 | P6 | Pybind, HTTP and independent SSE streaming | 7/10 |
 | P7 | CUDA graphs, tuning, memory and performance qualification | 10/10 |
 | P8 | Deployment, watchdog and rollback verification | 5/10 |
 
-P3 must resolve or rigorously qualify the retained full-versus-chunked discrepancy. Test boundaries 1, 3, 4, 63, 64, 65, 127, 128 and 129, one-token tails, longer prompts, all three state types, active-state comparisons and teacher-forced continuation. Do not loosen thresholds.
+P3 qualified the fixed policy through 6144 tokens, all remainder boundaries, four formatted chat fixtures, all three state types, teacher-forced continuation and both slot orders. Raw short-tail numerical drift remains an unsupported diagnostic path; never loosen thresholds or substitute arbitrary manual spans in P4.
 
 P4 must add one native worker, bounded queue, decode-first scheduling, guaranteed prefill progress, chunk limits, immediate slot reuse and no busy waiting. Prove A starts, B arrives, A finishes, C reuses A while B continues.
 
