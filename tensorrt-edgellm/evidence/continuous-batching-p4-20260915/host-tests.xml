@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="20" failures="0" disabled="0" errors="0" time="0.967" timestamp="2026-09-15T09:25:55.990" name="AllTests">
+  <testsuite name="ContinuousScheduler" tests="9" failures="0" disabled="0" skipped="0" errors="0" time="0.065" timestamp="2026-09-15T09:25:55.990">
+    <testcase name="StaggeredReuseAndDecodeFirst" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="77" status="run" result="completed" time="0." timestamp="2026-09-15T09:25:55.990" classname="ContinuousScheduler" />
+    <testcase name="QueueBoundsCancellationAndShutdown" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="127" status="run" result="completed" time="0." timestamp="2026-09-15T09:25:55.990" classname="ContinuousScheduler" />
+    <testcase name="ByteBoundAndValidation" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="147" status="run" result="completed" time="0." timestamp="2026-09-15T09:25:55.990" classname="ContinuousScheduler" />
+    <testcase name="FaultSettlesActiveAndQueued" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="161" status="run" result="completed" time="0." timestamp="2026-09-15T09:25:55.990" classname="ContinuousScheduler" />
+    <testcase name="IdleWaitAndWake" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="179" status="run" result="completed" time="0.062" timestamp="2026-09-15T09:25:55.991" classname="ContinuousScheduler" />
+    <testcase name="TwoPrefillsFairnessAndActiveCancellation" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="195" status="run" result="completed" time="0." timestamp="2026-09-15T09:25:56.053" classname="ContinuousScheduler" />
+    <testcase name="CloseSettlesAllTickets" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="223" status="run" result="completed" time="0." timestamp="2026-09-15T09:25:56.054" classname="ContinuousScheduler" />
+    <testcase name="CancelledQueueHeadDoesNotDelayAdmission" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="238" status="run" result="completed" time="0." timestamp="2026-09-15T09:25:56.054" classname="ContinuousScheduler" />
+    <testcase name="ConcurrentProducersAndRepeatedReuse" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="268" status="run" result="completed" time="0.001" timestamp="2026-09-15T09:25:56.054" classname="ContinuousScheduler" />
+  </testsuite>
+  <testsuite name="PrefillChunks" tests="2" failures="0" disabled="0" skipped="0" errors="0" time="0.901" timestamp="2026-09-15T09:25:56.055">
+    <testcase name="EverySupportedPromptPreservesTokensAndBounds" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="15" status="run" result="completed" time="0.901" timestamp="2026-09-15T09:25:56.055" classname="PrefillChunks" />
+    <testcase name="InvalidRemaindersAndShortTails" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="59" status="run" result="completed" time="0." timestamp="2026-09-15T09:25:56.957" classname="PrefillChunks" />
+  </testsuite>
+  <testsuite name="SequenceSlots" tests="9" failures="0" disabled="0" skipped="0" errors="0" time="0." timestamp="2026-09-15T09:25:56.957">
+    <testcase name="RejectsInvalidCapacity" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="70" status="run" result="completed" time="0." timestamp="2026-09-15T09:25:56.957" classname="SequenceSlots" />
+    <testcase name="AdmissionIsBoundedAndIdsAreUnique" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="79" status="run" result="completed" time="0." timestamp="2026-09-15T09:25:56.957" classname="SequenceSlots" />
+    <testcase name="RejectsStaleAndForeignHandles" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="92" status="run" result="completed" time="0." timestamp="2026-09-15T09:25:56.957" classname="SequenceSlots" />
+    <testcase name="SeparatesSampledAndCommittedTokens" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="109" status="run" result="completed" time="0." timestamp="2026-09-15T09:25:56.957" classname="SequenceSlots" />
+    <testcase name="OneTokenOutputNeedsNoDecodeForward" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="133" status="run" result="completed" time="0." timestamp="2026-09-15T09:25:56.957" classname="SequenceSlots" />
+    <testcase name="RequestsKeepIndependentOptionsAndHeadroom" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="146" status="run" result="completed" time="0." timestamp="2026-09-15T09:25:56.957" classname="SequenceSlots" />
+    <testcase name="InvalidTransitionsDoNotMutateState" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="169" status="run" result="completed" time="0." timestamp="2026-09-15T09:25:56.957" classname="SequenceSlots" />
+    <testcase name="DetectsRandomCounterOverflow" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="185" status="run" result="completed" time="0." timestamp="2026-09-15T09:25:56.957" classname="SequenceSlots" />
+    <testcase name="ReuseDoesNotCarryPromptOutputOrOptions" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="198" status="run" result="completed" time="0." timestamp="2026-09-15T09:25:56.957" classname="SequenceSlots" />
+  </testsuite>
+</testsuites>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="33" failures="0" disabled="0" errors="0" time="3.21" timestamp="2026-09-15T09:47:04.851" name="AllTests">
+  <testsuite name="ContinuousScheduler" tests="13" failures="0" disabled="0" skipped="0" errors="0" time="0.128" timestamp="2026-09-15T09:47:04.851">
+    <testcase name="StaggeredReuseAndDecodeFirst" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="75" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:04.851" classname="ContinuousScheduler" />
+    <testcase name="QueueBoundsCancellationAndShutdown" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="125" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:04.852" classname="ContinuousScheduler" />
+    <testcase name="ByteBoundAndValidation" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="145" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:04.852" classname="ContinuousScheduler" />
+    <testcase name="FaultSettlesActiveAndQueued" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="159" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:04.853" classname="ContinuousScheduler" />
+    <testcase name="IdleWaitAndWake" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="177" status="run" result="completed" time="0.07" timestamp="2026-09-15T09:47:04.853" classname="ContinuousScheduler" />
+    <testcase name="TwoPrefillsFairnessAndActiveCancellation" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="193" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:04.923" classname="ContinuousScheduler" />
+    <testcase name="CloseSettlesAllTickets" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="221" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:04.924" classname="ContinuousScheduler" />
+    <testcase name="CancelledQueueHeadDoesNotDelayAdmission" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="236" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:04.925" classname="ContinuousScheduler" />
+    <testcase name="ConcurrentProducersAndRepeatedReuse" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="266" status="run" result="completed" time="0.003" timestamp="2026-09-15T09:47:04.925" classname="ContinuousScheduler" />
+    <testcase name="SlowConsumerDoesNotBlockPartner" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="292" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:04.929" classname="ContinuousScheduler" />
+    <testcase name="QueuedCancellationWhileBothSlotsOccupied" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="312" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:04.930" classname="ContinuousScheduler" />
+    <testcase name="QueueAndActiveDeadlines" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="339" status="run" result="completed" time="0.036" timestamp="2026-09-15T09:47:04.930" classname="ContinuousScheduler" />
+    <testcase name="DecodeCancellationAndStartupFailure" file="unittests/cpp/runtime/continuousSchedulerTest.cpp" line="367" status="run" result="completed" time="0.013" timestamp="2026-09-15T09:47:04.966" classname="ContinuousScheduler" />
+  </testsuite>
+  <testsuite name="PrefillChunks" tests="2" failures="0" disabled="0" skipped="0" errors="0" time="3.079" timestamp="2026-09-15T09:47:04.980">
+    <testcase name="EverySupportedPromptPreservesTokensAndBounds" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="15" status="run" result="completed" time="3.079" timestamp="2026-09-15T09:47:04.980" classname="PrefillChunks" />
+    <testcase name="InvalidRemaindersAndShortTails" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="59" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:08.059" classname="PrefillChunks" />
+  </testsuite>
+  <testsuite name="SequenceSlots" tests="9" failures="0" disabled="0" skipped="0" errors="0" time="0." timestamp="2026-09-15T09:47:08.059">
+    <testcase name="RejectsInvalidCapacity" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="70" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:08.059" classname="SequenceSlots" />
+    <testcase name="AdmissionIsBoundedAndIdsAreUnique" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="79" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:08.059" classname="SequenceSlots" />
+    <testcase name="RejectsStaleAndForeignHandles" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="92" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:08.059" classname="SequenceSlots" />
+    <testcase name="SeparatesSampledAndCommittedTokens" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="109" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:08.059" classname="SequenceSlots" />
+    <testcase name="OneTokenOutputNeedsNoDecodeForward" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="133" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:08.059" classname="SequenceSlots" />
+    <testcase name="RequestsKeepIndependentOptionsAndHeadroom" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="146" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:08.059" classname="SequenceSlots" />
+    <testcase name="InvalidTransitionsDoNotMutateState" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="169" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:08.060" classname="SequenceSlots" />
+    <testcase name="DetectsRandomCounterOverflow" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="185" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:08.060" classname="SequenceSlots" />
+    <testcase name="ReuseDoesNotCarryPromptOutputOrOptions" file="unittests/cpp/runtime/state/sequenceSlotsTest.cpp" line="198" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:08.060" classname="SequenceSlots" />
+  </testsuite>
+  <testsuite name="SequencePolicy" tests="8" failures="0" disabled="0" skipped="0" errors="0" time="0." timestamp="2026-09-15T09:47:08.060">
+    <testcase name="BiasedUnscaledLogprobsAndTopK" file="unittests/cpp/runtime/state/sequencePolicyTest.cpp" line="20" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:08.060" classname="SequencePolicy" />
+    <testcase name="RngIndependentOfOtherRowsAndSeed" file="unittests/cpp/runtime/state/sequencePolicyTest.cpp" line="42" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:08.060" classname="SequencePolicy" />
+    <testcase name="NucleusRetainsMinimalProbabilityPrefix" file="unittests/cpp/runtime/state/sequencePolicyTest.cpp" line="65" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:08.060" classname="SequencePolicy" />
+    <testcase name="StopAcrossTokensDoesNotLeakPrefix" file="unittests/cpp/runtime/state/sequencePolicyTest.cpp" line="81" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:08.061" classname="SequencePolicy" />
+    <testcase name="UnicodeBoundariesAndReset" file="unittests/cpp/runtime/state/sequencePolicyTest.cpp" line="98" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:08.061" classname="SequencePolicy" />
+    <testcase name="IndependentThinkingAndEos" file="unittests/cpp/runtime/state/sequencePolicyTest.cpp" line="121" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:08.061" classname="SequencePolicy" />
+    <testcase name="ValidatesMetadataBeforeAdmission" file="unittests/cpp/runtime/state/sequencePolicyTest.cpp" line="153" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:08.061" classname="SequencePolicy" />
+    <testcase name="FinalUtf8ReplacementParticipatesInStopMatch" file="unittests/cpp/runtime/state/sequencePolicyTest.cpp" line="194" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:08.061" classname="SequencePolicy" />
+  </testsuite>
+  <testsuite name="SequenceChannel" tests="1" failures="0" disabled="0" skipped="0" errors="0" time="0." timestamp="2026-09-15T09:47:08.061">
+    <testcase name="WraparoundByteLimitAndTerminalOnFull" file="unittests/cpp/runtime/state/sequencePolicyTest.cpp" line="171" status="run" result="completed" time="0." timestamp="2026-09-15T09:47:08.061" classname="SequenceChannel" />
+  </testsuite>
+</testsuites>

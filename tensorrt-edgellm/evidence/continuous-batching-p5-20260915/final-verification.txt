@@ -1,0 +1,29 @@
+2026-09-15T15:21:00+05:30
+active
+active
+{"status":"healthy","model":"openclaw","active_requests":0,"queued_requests":0,"capabilities":{"chat":true,"transcription":false,"speech":false,"input_modalities":["text"],"output_modalities":["text"],"max_model_len":8192,"max_input_len":6144,"max_batch_size":2,"max_num_seqs":1,"kv_cache_dtype":"fp16","speculative_decoding":false,"speculative_method":"none","context_reuse":false}}{"object":"list","data":[{"id":"openclaw","object":"model","created":1789465861,"owned_by":"tensorrt-edgellm","max_model_len":8192}]}e8b29522938901f6df19ebeedd4b69bc8edbcd97
+ M experimental/server/config.py
+ M experimental/server/runtime/engine.py
+938eb8ddad9e122e1b0d48746abb7ffacf82315d8050c2e6daf239e84cd7af64  -
+938eb8ddad9e122e1b0d48746abb7ffacf82315d8050c2e6daf239e84cd7af64  /home/ajmalrasi/continuous-batching-p5-20260915/preserved-engine-dir.patch
+8a968e59bca3dbad7e193a7431d4fb3acf7e3e0f6a7f34858e519d3d9e1bd4d3  /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/llm.engine
+c08d654c00140c8c40d9c23b42a138fa74c7cbab792771c0f190aff25a270e61  /home/ajmalrasi/continuous-batching-p5-20260915/continuousBatchingProbe.cpp
+b37025b1c4c8a139416362cf7fb273ce7dfa539df0285fec8e119ba1cd2511fe  /home/ajmalrasi/continuous-batching-p5-20260915/continuousScheduler.cpp
+e3ef0cffa83f1a5717da2a16c21cdbab1376563a11c238b4204bea60d4d1ccba  /home/ajmalrasi/continuous-batching-p5-20260915/greedySchedulerBackend.cpp
+df56f505f72b6d576077c20271b7eff4babb412faa22d887f0fb7765c851475d  /home/ajmalrasi/continuous-batching-p5-20260915/sequenceChannel.cpp
+662d461293d4cd522aa3d5641d4300b619dcdd19f202d4bba7b31aaa59b01dc7  /home/ajmalrasi/continuous-batching-p5-20260915/sequencePolicy.cpp
+b010624d3bf43136b33fb53ebfb636c6ebe128804b9ff41936e6d1eeaffd534a  /home/ajmalrasi/continuous-batching-p5-20260915/sequenceSlots.cpp
+37c13c5cac5bca4e36c24d1342d27571c13e6b4a2eaa3f2cfbf6e90dd59eaf7f  /home/ajmalrasi/continuous-batching-p5-20260915/sequenceStepRuntime.cpp
+82932896a46cec2f65b52d99fc632acafea07d39c148b7a2d875069a6374ca71  /home/ajmalrasi/continuous-batching-p5-20260915/include/runtime/continuousScheduler.h
+ef7b06ff43c1905d31704b78b5523703e01ea1330389911c6cec4d40eb2cf6d5  /home/ajmalrasi/continuous-batching-p5-20260915/include/runtime/greedySchedulerBackend.h
+0eb78f51fc12f4f74fb19060b9a4347b98d21ad94c7317666842e4f802f941df  /home/ajmalrasi/continuous-batching-p5-20260915/include/runtime/llmRankRuntime.h
+d4580860d6e0bcc4938612a057836ce2e7532acc16522f3a3620d2b7a1d8e312  /home/ajmalrasi/continuous-batching-p5-20260915/include/runtime/sequenceStepRuntime.h
+6e47cf44e3967f9f880f23f55350a0c3a968aa55d4cc1024184eef67cbfd7a48  /home/ajmalrasi/continuous-batching-p5-20260915/include/runtime/state/prefillChunk.h
+f5600b99bdd4d029901e1d3d02a108f78caf9a6f818712bd54bb8d40927754d3  /home/ajmalrasi/continuous-batching-p5-20260915/include/runtime/state/sequenceChannel.h
+124b124047627e8b8b776d0abb9156f940015b1c1838052563bf54f0f03a330c  /home/ajmalrasi/continuous-batching-p5-20260915/include/runtime/state/sequencePolicy.h
+36975ba289214314296938e565975c532919464415e978812309dbb84297bfe8  /home/ajmalrasi/continuous-batching-p5-20260915/include/runtime/state/sequenceSlots.h
+backend-api-1 Up 44 hours (healthy)
+backend-db-1 Up 2 days (healthy)
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7206          93           4         387         279
+Swap:          16383         982       15401
