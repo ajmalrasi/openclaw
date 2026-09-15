@@ -1,6 +1,6 @@
 # Continuous batching and chunked prefill for the Jetson
 
-Design proposal, 2026-09-12; phase status updated 2026-09-15. P1–P3 are implemented and qualified within their documented scope; P4–P8 and production deployment remain pending.
+Design proposal, 2026-09-12; phase status updated 2026-09-15. P1–P4 are implemented and qualified within their documented scope; P5–P8 and production deployment remain pending.
 
 ## 1. Intended outcome
 
@@ -166,7 +166,7 @@ Audit TensorRT graph behavior before optimization. Initially validate with eager
 
 ## 9. Implementation phases and exit criteria
 
-Execution order: **P1 → P2 → P3 → P4 → P5 → P6 → P7 → P8**. **P1's bounded feasibility gate and P2's ownership/execution-preservation gate passed on 2026-09-14.** P3 passed on 2026-09-15 with a fixed 128-token policy that avoids unsupported small resumed chunks; P4–P8 remain pending. See [P3 evidence](tensorrt-edgellm/evidence/continuous-batching-p3-20260915/RESULTS.md). Raw manual short-tail numerical drift remains a retained negative control. See [P1 evidence](tensorrt-edgellm/evidence/continuous-batching-p1-20260914/RESULTS.md) and [P2 evidence](tensorrt-edgellm/evidence/continuous-batching-p2-20260914/RESULTS.md). Each phase produces a reviewable change, focused verification evidence and a journal entry. These are technical checkpoints, not requirements to ask for permission after every phase once implementation is authorized.
+Execution order: **P1 → P2 → P3 → P4 → P5 → P6 → P7 → P8**. **P1's bounded feasibility gate and P2's ownership/execution-preservation gate passed on 2026-09-14.** P3 passed on 2026-09-15 with a fixed 128-token policy that avoids unsupported small resumed chunks; P4 passed automatic staggered scheduling and slot reuse on 2026-09-15; P5–P8 remain pending. See [P4 evidence](tensorrt-edgellm/evidence/continuous-batching-p4-20260915/RESULTS.md) and [P3 evidence](tensorrt-edgellm/evidence/continuous-batching-p3-20260915/RESULTS.md). Raw manual short-tail numerical drift remains a retained negative control. See [P1 evidence](tensorrt-edgellm/evidence/continuous-batching-p1-20260914/RESULTS.md) and [P2 evidence](tensorrt-edgellm/evidence/continuous-batching-p2-20260914/RESULTS.md). Each phase produces a reviewable change, focused verification evidence and a journal entry. These are technical checkpoints, not requirements to ask for permission after every phase once implementation is authorized.
 
 | Phase | Deliverable | Completion gate |
 | --- | --- | --- |
@@ -216,6 +216,8 @@ Depends on P3. Add one worker, bounded pending work, up to two resident sequence
 Verify with native tickets and deterministic requests: start A, submit B after A begins decoding, then submit C and let C take A's slot while B continues. Capture step membership and admission/release timestamps. Test two prefills, an idle worker, queue overflow and no busy waiting.
 
 Done when: genuine staggered admission and slot reuse work automatically. Use simple matching sampling settings for the first proof; do not expose this incomplete capability as the production HTTP server yet.
+
+P4 result: source `e37d897` adds one worker, count/byte-bounded FIFO queue, decode-first rounds, round-robin qualified chunks, safe-boundary reuse, native futures, basic cancellation and conservative poisoning. Twenty host tests pass normally and with ASan/UBSan/ThreadSanitizer. Two Jetson runs proved automatic A/B/C staggering, slot generation reuse and exact serial greedy output equality; model/watchdog restored. P5 may begin. HTTP remains single-active-sequence. See [P4 evidence](tensorrt-edgellm/evidence/continuous-batching-p4-20260915/RESULTS.md).
 
 ### P5 — Complete independent request behavior
 

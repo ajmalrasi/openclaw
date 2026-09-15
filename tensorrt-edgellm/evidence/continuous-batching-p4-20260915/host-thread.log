@@ -1,0 +1,55 @@
+Running main() from 3rdParty/googletest/googletest/src/gtest_main.cc
+[==========] Running 20 tests from 3 test suites.
+[----------] Global test environment set-up.
+[----------] 9 tests from ContinuousScheduler
+[ RUN      ] ContinuousScheduler.StaggeredReuseAndDecodeFirst
+[       OK ] ContinuousScheduler.StaggeredReuseAndDecodeFirst (0 ms)
+[ RUN      ] ContinuousScheduler.QueueBoundsCancellationAndShutdown
+[       OK ] ContinuousScheduler.QueueBoundsCancellationAndShutdown (0 ms)
+[ RUN      ] ContinuousScheduler.ByteBoundAndValidation
+[       OK ] ContinuousScheduler.ByteBoundAndValidation (0 ms)
+[ RUN      ] ContinuousScheduler.FaultSettlesActiveAndQueued
+[       OK ] ContinuousScheduler.FaultSettlesActiveAndQueued (0 ms)
+[ RUN      ] ContinuousScheduler.IdleWaitAndWake
+[       OK ] ContinuousScheduler.IdleWaitAndWake (69 ms)
+[ RUN      ] ContinuousScheduler.TwoPrefillsFairnessAndActiveCancellation
+[       OK ] ContinuousScheduler.TwoPrefillsFairnessAndActiveCancellation (1 ms)
+[ RUN      ] ContinuousScheduler.CloseSettlesAllTickets
+[       OK ] ContinuousScheduler.CloseSettlesAllTickets (0 ms)
+[ RUN      ] ContinuousScheduler.CancelledQueueHeadDoesNotDelayAdmission
+[       OK ] ContinuousScheduler.CancelledQueueHeadDoesNotDelayAdmission (0 ms)
+[ RUN      ] ContinuousScheduler.ConcurrentProducersAndRepeatedReuse
+[       OK ] ContinuousScheduler.ConcurrentProducersAndRepeatedReuse (5 ms)
+[----------] 9 tests from ContinuousScheduler (79 ms total)
+
+[----------] 2 tests from PrefillChunks
+[ RUN      ] PrefillChunks.EverySupportedPromptPreservesTokensAndBounds
+[       OK ] PrefillChunks.EverySupportedPromptPreservesTokensAndBounds (6896 ms)
+[ RUN      ] PrefillChunks.InvalidRemaindersAndShortTails
+[       OK ] PrefillChunks.InvalidRemaindersAndShortTails (0 ms)
+[----------] 2 tests from PrefillChunks (6896 ms total)
+
+[----------] 9 tests from SequenceSlots
+[ RUN      ] SequenceSlots.RejectsInvalidCapacity
+[       OK ] SequenceSlots.RejectsInvalidCapacity (0 ms)
+[ RUN      ] SequenceSlots.AdmissionIsBoundedAndIdsAreUnique
+[       OK ] SequenceSlots.AdmissionIsBoundedAndIdsAreUnique (0 ms)
+[ RUN      ] SequenceSlots.RejectsStaleAndForeignHandles
+[       OK ] SequenceSlots.RejectsStaleAndForeignHandles (0 ms)
+[ RUN      ] SequenceSlots.SeparatesSampledAndCommittedTokens
+[       OK ] SequenceSlots.SeparatesSampledAndCommittedTokens (0 ms)
+[ RUN      ] SequenceSlots.OneTokenOutputNeedsNoDecodeForward
+[       OK ] SequenceSlots.OneTokenOutputNeedsNoDecodeForward (0 ms)
+[ RUN      ] SequenceSlots.RequestsKeepIndependentOptionsAndHeadroom
+[       OK ] SequenceSlots.RequestsKeepIndependentOptionsAndHeadroom (0 ms)
+[ RUN      ] SequenceSlots.InvalidTransitionsDoNotMutateState
+[       OK ] SequenceSlots.InvalidTransitionsDoNotMutateState (0 ms)
+[ RUN      ] SequenceSlots.DetectsRandomCounterOverflow
+[       OK ] SequenceSlots.DetectsRandomCounterOverflow (0 ms)
+[ RUN      ] SequenceSlots.ReuseDoesNotCarryPromptOutputOrOptions
+[       OK ] SequenceSlots.ReuseDoesNotCarryPromptOutputOrOptions (0 ms)
+[----------] 9 tests from SequenceSlots (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 20 tests from 3 test suites ran. (6977 ms total)
+[  PASSED  ] 20 tests.

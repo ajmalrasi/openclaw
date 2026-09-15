@@ -1,0 +1,8 @@
+{
+  "id": "openclaw",
+  "object": "model",
+  "created": 1789445623,
+  "owned_by": "tensorrt-edgellm",
+  "max_model_len": 8192
+}
+false

@@ -1,0 +1,171 @@
+{
+  "id": "openclaw",
+  "object": "model",
+  "created": 1789444443,
+  "owned_by": "tensorrt-edgellm",
+  "max_model_len": 8192
+}
+true
+2026-09-15T09:24:03+05:30
+7dbe1219ab15152d781a94001f3e4c964a4ec70c198082868cad0773db200d1d  /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/config.json
+1197250b3d1d6225fb943023ac826b572ad84ae0791acafd87ac8148b04ddc2d  /home/ajmalrasi/continuous-batching-p4-20260915/continuousBatchingProbe.cpp
+0eb78f51fc12f4f74fb19060b9a4347b98d21ad94c7317666842e4f802f941df  /home/ajmalrasi/continuous-batching-p4-20260915/include/runtime/llmRankRuntime.h
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7283          85           1         316         202
+Swap:          16383         809       15574
+MAINTENANCE model stopped; watchdog paused
+               total        used        free      shared  buff/cache   available
+Mem:            7485        1722        5638           1         323        5763
+Swap:          16383         487       15896
+BUILD passed
+2026-09-15T09:24:32+05:30
+[09:24:33.354] [INFO] [trtUtils.h:71:loadEdgellmPluginLib] EDGELLM_PLUGIN_PATH: /home/ajmalrasi/TensorRT-Edge-LLM/build/libNvInfer_edgellm_plugin.so
+[09:24:34.803] [INFO] [tokenizer.cpp:603:loadVocabulary] Loaded 248044 vocabulary tokens
+[09:24:35.093] [INFO] [tokenizer.cpp:135:loadFromHF] Loaded 33 special tokens
+[09:24:35.280] [INFO] [tokenizer.cpp:1090:loadChatTemplate] Successfully loaded chat template from /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/processed_chat_template.json (for model: Qwen3.5-4B/quantized)
+[09:24:35.281] [INFO] [tokenizer.cpp:167:loadFromHF] Successfully loaded tokenizer from /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla (vocab_size=248077)
+[09:24:36.517] [INFO] [externalWeightManager.cpp:882:load] Loaded 192 transformed model weight tensor(s) in 1145 ms
+[09:24:37.662] [INFO] [llmRuntimeUtils.cpp:715:loadEmbeddingTable] Loaded FP16 embedding: [248320, 2560]
+[09:24:37.663] [INFO] [llmEngineConfig.cpp:672:parseEngineConfig] reading /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/config.json
+[09:24:37.664] [INFO] [llmRuntimeUtils.cpp:422:collectRopeConfig] Collected rope config: RopeConfig:  type: MRope  rotaryScale: 1  rotaryTheta: 1e+07  partialRotaryFactor: 1  maxPositionEmbeddings: 262144
+[09:24:37.664] [INFO] [llmEngineConfig.cpp:887:parseEngineConfig] LLMEngineConfig{ hiddenSize=2560 vocabSize=248320 outputVocabSize=248320 numDecoderLayers=32 numAttentionLayers=8 numKVHeads=4 headDim=256 rotaryDim=64 maxBatch=2 maxInputLen=6144 maxKVCapacity=8192 kvPoolPages=128 pleEnabled=false numPleInputs=0 pleHiddenSize=0 isSpecDecodeBase=false specDecodeType=0 loraRank=0 numLinearAttnLayers=24 recurrentStateDtype=0 convStateDtype=1 eosTokenIds=[248044] }
+[09:24:37.665] [INFO] [engineExecutor.cpp:135:TrtEngineExecutor] loading engine file: /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/llm.engine
+[09:24:39.784] [INFO] [TensorRT] [MS] Running engine with multi stream info
+[09:24:39.784] [INFO] [TensorRT] [MS] Number of aux streams is 1
+[09:24:39.784] [INFO] [TensorRT] [MS] Number of total worker streams is 2
+[09:24:39.784] [INFO] [TensorRT] [MS] The main stream provided by execute/enqueue calls is the first worker stream
+[09:24:41.180] [INFO] [TensorRT] [MemUsageChange] TensorRT-managed allocation in IExecutionContext creation: CPU +0, GPU +0, now: CPU 0, GPU 1862 (MiB)
+[09:24:41.180] [INFO] [trtUtils.cpp:374:setNonBlockingAuxStreams] configured 1 non-blocking auxiliary stream(s) for execution context
+[09:24:41.180] [INFO] [engineExecutor.cpp:166:TrtEngineExecutor] engine loaded successfully (311 I/O tensors)
+[09:24:41.180] [INFO] [llmRankRuntime.cpp:281:initializeFromEngineDir] Base EngineExecutor successfully loaded from /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/llm.engine.
+[09:24:41.182] [INFO] [externalWeightManager.cpp:930:validateAgainstEngine] Validated 192 external weight tensor(s) for base
+[09:24:41.182] [INFO] [llmRankRuntime.cpp:364:initializeCommon] Runtime batch size set to: 2 (from engine bundle)
+[09:24:41.564] [INFO] [llmRankRuntime.cpp:533:initializeCommon] Runtime tensors successfully allocated.
+[09:24:41.963] [INFO] [llmRankRuntime.cpp:676:initializeCommon] Setup shared execution context memory: 1071319040 bytes (base requires: 1071319040, strategy requires: 0, vision requires: 0, audio requires: 0, action requires: 0)
+MEMORY initialized cuda_free=250830848 cuda_total=7849046016
+[09:24:42.373] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:43.658] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:45.307] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:45.778] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:46.046] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:46.514] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:46.650] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:46.694] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:46.892] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:46.936] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:47.134] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:47.177] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:47.375] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:47.418] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:47.615] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:47.659] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:48.126] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:48.170] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:48.366] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:48.409] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:48.610] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:48.653] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:48.785] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:48.829] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[09:24:48.967] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+P4_EVENT kind=0 request=1 slot=0 generation=1 partner=0 cursor=0 us=210446904297
+P4_EVENT kind=1 request=1 slot=0 generation=1 partner=0 cursor=65 us=210447301684
+P4_EVENT kind=2 request=1 slot=0 generation=1 partner=0 cursor=65 us=210448349657
+P4_EVENT kind=2 request=1 slot=0 generation=1 partner=0 cursor=65 us=210448408970
+P4_EVENT kind=2 request=1 slot=0 generation=1 partner=0 cursor=65 us=210448467982
+P4_EVENT kind=2 request=1 slot=0 generation=1 partner=0 cursor=65 us=210448527026
+P4_EVENT kind=2 request=1 slot=0 generation=1 partner=0 cursor=65 us=210448586425
+P4_EVENT kind=3 request=1 slot=0 generation=1 partner=0 cursor=65 us=210448586428
+P4_EVENT kind=0 request=2 slot=0 generation=2 partner=0 cursor=0 us=210448586891
+P4_EVENT kind=1 request=2 slot=0 generation=2 partner=0 cursor=128 us=210448778432
+P4_EVENT kind=1 request=2 slot=0 generation=2 partner=0 cursor=256 us=210448976390
+P4_EVENT kind=1 request=2 slot=0 generation=2 partner=0 cursor=384 us=210449173091
+P4_EVENT kind=1 request=2 slot=0 generation=2 partner=0 cursor=512 us=210449371107
+P4_EVENT kind=1 request=2 slot=0 generation=2 partner=0 cursor=640 us=210449569426
+P4_EVENT kind=1 request=2 slot=0 generation=2 partner=0 cursor=768 us=210449768287
+P4_EVENT kind=1 request=2 slot=0 generation=2 partner=0 cursor=896 us=210449967498
+P4_EVENT kind=1 request=2 slot=0 generation=2 partner=0 cursor=960 us=210450098982
+P4_EVENT kind=1 request=2 slot=0 generation=2 partner=0 cursor=1025 us=210450236467
+P4_EVENT kind=2 request=2 slot=0 generation=2 partner=0 cursor=1025 us=210450280186
+P4_EVENT kind=2 request=2 slot=0 generation=2 partner=0 cursor=1025 us=210450322999
+P4_EVENT kind=2 request=2 slot=0 generation=2 partner=0 cursor=1025 us=210450365742
+P4_EVENT kind=2 request=2 slot=0 generation=2 partner=0 cursor=1025 us=210450408552
+P4_EVENT kind=2 request=2 slot=0 generation=2 partner=0 cursor=1025 us=210450451228
+P4_EVENT kind=2 request=2 slot=0 generation=2 partner=0 cursor=1025 us=210450493912
+P4_EVENT kind=2 request=2 slot=0 generation=2 partner=0 cursor=1025 us=210450536535
+P4_EVENT kind=2 request=2 slot=0 generation=2 partner=0 cursor=1025 us=210450579166
+P4_EVENT kind=2 request=2 slot=0 generation=2 partner=0 cursor=1025 us=210450621851
+P4_EVENT kind=2 request=2 slot=0 generation=2 partner=0 cursor=1025 us=210450664471
+P4_EVENT kind=2 request=2 slot=0 generation=2 partner=0 cursor=1025 us=210450707099
+P4_EVENT kind=3 request=2 slot=0 generation=2 partner=0 cursor=1025 us=210450707101
+P4_EVENT kind=0 request=3 slot=0 generation=3 partner=0 cursor=0 us=210450707599
+P4_EVENT kind=1 request=3 slot=0 generation=3 partner=0 cursor=64 us=210450839995
+P4_EVENT kind=1 request=3 slot=0 generation=3 partner=0 cursor=129 us=210450975800
+P4_EVENT kind=2 request=3 slot=0 generation=3 partner=0 cursor=129 us=210451019173
+P4_EVENT kind=2 request=3 slot=0 generation=3 partner=0 cursor=129 us=210451061673
+P4_EVENT kind=2 request=3 slot=0 generation=3 partner=0 cursor=129 us=210451104046
+P4_EVENT kind=2 request=3 slot=0 generation=3 partner=0 cursor=129 us=210451146398
+P4_EVENT kind=2 request=3 slot=0 generation=3 partner=0 cursor=129 us=210451188747
+P4_EVENT kind=2 request=3 slot=0 generation=3 partner=0 cursor=129 us=210451231091
+P4_EVENT kind=2 request=3 slot=0 generation=3 partner=0 cursor=129 us=210451273406
+P4_EVENT kind=2 request=3 slot=0 generation=3 partner=0 cursor=129 us=210451315722
+P4_EVENT kind=2 request=3 slot=0 generation=3 partner=0 cursor=129 us=210451358129
+P4_EVENT kind=2 request=3 slot=0 generation=3 partner=0 cursor=129 us=210451400522
+P4_EVENT kind=2 request=3 slot=0 generation=3 partner=0 cursor=129 us=210451442883
+P4_EVENT kind=3 request=3 slot=0 generation=3 partner=0 cursor=129 us=210451442885
+P4_EVENT kind=0 request=4 slot=0 generation=4 partner=0 cursor=0 us=210451443397
+P4_EVENT kind=1 request=4 slot=0 generation=4 partner=0 cursor=65 us=210451579705
+P4_EVENT kind=2 request=4 slot=0 generation=4 partner=0 cursor=65 us=210451623067
+P4_EVENT kind=0 request=5 slot=1 generation=1 partner=0 cursor=0 us=210451623466
+P4_EVENT kind=1 request=5 slot=1 generation=1 partner=0 cursor=128 us=210451821768
+P4_EVENT kind=2 request=4 slot=0 generation=4 partner=0 cursor=65 us=210451865103
+P4_EVENT kind=1 request=5 slot=1 generation=1 partner=0 cursor=256 us=210452062876
+P4_EVENT kind=2 request=4 slot=0 generation=4 partner=0 cursor=65 us=210452106205
+P4_EVENT kind=1 request=5 slot=1 generation=1 partner=0 cursor=384 us=210452303886
+P4_EVENT kind=2 request=4 slot=0 generation=4 partner=0 cursor=65 us=210452347241
+P4_EVENT kind=1 request=5 slot=1 generation=1 partner=0 cursor=512 us=210452544828
+P4_EVENT kind=2 request=4 slot=0 generation=4 partner=0 cursor=65 us=210452588238
+P4_EVENT kind=3 request=4 slot=0 generation=4 partner=0 cursor=65 us=210452588241
+P4_EVENT kind=0 request=6 slot=0 generation=5 partner=0 cursor=0 us=210452588554
+P4_EVENT kind=1 request=6 slot=0 generation=5 partner=0 cursor=64 us=210452721762
+P4_EVENT kind=1 request=5 slot=1 generation=1 partner=0 cursor=640 us=210452919928
+P4_EVENT kind=1 request=6 slot=0 generation=5 partner=0 cursor=129 us=210453055716
+P4_EVENT kind=2 request=6 slot=0 generation=5 partner=0 cursor=129 us=210453099132
+P4_EVENT kind=1 request=5 slot=1 generation=1 partner=0 cursor=768 us=210453294843
+P4_EVENT kind=2 request=6 slot=0 generation=5 partner=0 cursor=129 us=210453338208
+P4_EVENT kind=1 request=5 slot=1 generation=1 partner=0 cursor=896 us=210453539287
+P4_EVENT kind=2 request=6 slot=0 generation=5 partner=0 cursor=129 us=210453582820
+P4_EVENT kind=1 request=5 slot=1 generation=1 partner=0 cursor=960 us=210453714570
+P4_EVENT kind=2 request=6 slot=0 generation=5 partner=0 cursor=129 us=210453757937
+P4_EVENT kind=1 request=5 slot=1 generation=1 partner=0 cursor=1025 us=210453895973
+P4_EVENT kind=2 request=6 slot=0 generation=5 partner=5 cursor=129 us=210453948215
+P4_EVENT kind=2 request=5 slot=1 generation=1 partner=6 cursor=1025 us=210453948216
+P4_EVENT kind=2 request=6 slot=0 generation=5 partner=5 cursor=129 us=210453999181
+P4_EVENT kind=2 request=5 slot=1 generation=1 partner=6 cursor=1025 us=210453999181
+P4_EVENT kind=2 request=6 slot=0 generation=5 partner=5 cursor=129 us=210454050135
+P4_EVENT kind=2 request=5 slot=1 generation=1 partner=6 cursor=1025 us=210454050135
+P4_EVENT kind=2 request=6 slot=0 generation=5 partner=5 cursor=129 us=210454101018
+P4_EVENT kind=2 request=5 slot=1 generation=1 partner=6 cursor=1025 us=210454101018
+P4_EVENT kind=2 request=6 slot=0 generation=5 partner=5 cursor=129 us=210454151857
+P4_EVENT kind=2 request=5 slot=1 generation=1 partner=6 cursor=1025 us=210454151858
+P4_EVENT kind=2 request=6 slot=0 generation=5 partner=5 cursor=129 us=210454202652
+P4_EVENT kind=2 request=5 slot=1 generation=1 partner=6 cursor=1025 us=210454202652
+P4_EVENT kind=2 request=6 slot=0 generation=5 partner=5 cursor=129 us=210454253505
+P4_EVENT kind=2 request=5 slot=1 generation=1 partner=6 cursor=1025 us=210454253506
+P4_EVENT kind=3 request=6 slot=0 generation=5 partner=0 cursor=129 us=210454253508
+P4_EVENT kind=2 request=5 slot=1 generation=1 partner=0 cursor=1025 us=210454296386
+P4_EVENT kind=2 request=5 slot=1 generation=1 partner=0 cursor=1025 us=210454339094
+P4_EVENT kind=2 request=5 slot=1 generation=1 partner=0 cursor=1025 us=210454381759
+P4_EVENT kind=2 request=5 slot=1 generation=1 partner=0 cursor=1025 us=210454424386
+P4_EVENT kind=3 request=5 slot=1 generation=1 partner=0 cursor=1025 us=210454424389
+P4_SCHEDULER_GATE passed=1 exact_outputs=1 reused=1 b_continued=1 paired_decode=1
+PROBE_RESULT passed=1
+RESTORE begin task_exit=0
+true
+active
+active
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7371         118           1         194         114
+Swap:          16383         603       15780
+2026-09-15T09:25:04+05:30
+RESTORE healthy=true task_exit=0
