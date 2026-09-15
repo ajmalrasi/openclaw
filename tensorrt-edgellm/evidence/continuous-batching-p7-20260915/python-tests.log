@@ -1,0 +1,21 @@
+/Users/ajmalrasi/Library/Python/3.12/lib/python/site-packages/pytest_asyncio/plugin.py:207: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform darwin -- Python 3.12.8, pytest-8.3.4, pluggy-1.6.0
+rootdir: /Users/ajmalrasi/openclaw-tensorrt-concurrency-review/tests
+configfile: pytest.ini
+plugins: anyio-4.14.1, asyncio-0.25.0
+asyncio: mode=Mode.STRICT, asyncio_default_fixture_loop_scope=None
+collected 146 items
+
+tests/python-unittests/test_continuous_http.py .......                   [  4%]
+tests/python-unittests/test_server_runtime.py ................           [ 15%]
+tests/python-unittests/test_server_requests.py ......................... [ 32%]
+.......................................................                  [ 70%]
+tests/python-unittests/test_experimental_server_logit_bias.py .......... [ 77%]
+............                                                             [ 85%]
+tests/python-unittests/test_server_config.py .....................       [100%]
+
+============================= 146 passed in 0.94s ==============================

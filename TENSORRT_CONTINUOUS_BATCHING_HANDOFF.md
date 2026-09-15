@@ -33,7 +33,7 @@ Phase 5 completion is recorded only in this handoff, as explicitly requested by 
 - TensorRT source checkout: `/Users/ajmalrasi/openclaw-tensorrt-concurrency-review`
 - Source repository: [ajmalrasi/TensorRT-Edge-LLM](https://github.com/ajmalrasi/TensorRT-Edge-LLM)
 - Implementation branch: `codex/continuous-batching-p1`
-- Latest local source commit: `711270f` (P5; not yet pushed).
+- Latest source commit: `1496d34` (P6/P7), pushed to `origin/codex/continuous-batching-p1`.
 - Previously pushed source commit: `cf57e1c` (P2).
 - Existing base: `e8b29522938901f6df19ebeedd4b69bc8edbcd97` (TensorRT Edge-LLM 0.10.1)
 
@@ -78,21 +78,17 @@ P4 adds `ContinuousScheduler` and `GreedySchedulerBackend`: one worker, bounded 
 | P3 | Correct chunked prefill and numerical qualification | 10/10 — complete for the fixed policy, not deployed |
 | P4 | Native continuous scheduler and slot reuse | 9/10 — complete, not deployed |
 | P5 | Independent sampling, limits, cancellation and failures | 9/10 — complete, native-only |
-| P6 | Pybind, HTTP and independent SSE streaming | 7/10 — next |
-| P7 | CUDA graphs, tuning, memory and performance qualification | 10/10 |
+| P6 | Pybind, HTTP and independent SSE streaming | 7/10 — complete, candidate-only |
+| P7 | CUDA graphs, tuning, memory and performance qualification | 10/10 — complete, candidate-only |
 | P8 | Deployment, watchdog and rollback verification | 5/10 |
 
 P3 qualified the fixed policy through 6144 tokens, all remainder boundaries, four formatted chat fixtures, all three state types, teacher-forced continuation and both slot orders. Raw short-tail numerical drift remains an unsupported diagnostic path; never loosen thresholds or substitute arbitrary manual spans in P4.
 
 P4 passed: A starts decoding, B arrives, A finishes, C reuses A’s slot while B continues, then B/C decode together. Preserve its single-owner and qualified chunking contract in P5.
 
-P5 passed independent temperature, top-p/top-k, seed/counter, output limits, EOS/thinking, stop strings, bias, logprobs, cancellation, deadlines and bounded output checks. A simulated reported corrupting error after a real GPU forward failed the scheduler and retained the poisoned parent lease. See the P5 completion record below. P6 may start.
+P5 passed independent temperature, top-p/top-k, seed/counter, output limits, EOS/thinking, stop strings, bias, logprobs, cancellation, deadlines and bounded output checks. P6 completed native pybind/HTTP ticket ownership and independent SSE. P7 qualified three startup-only decode graph views, graph replays, bounded allocations, singleton latency, staggered TTFT, aggregate throughput, near-capacity requests and reuse. The candidate remains opt-in and the production endpoint still reports one active sequence.
 
-P6 must replace the HTTP single-generation lease with bounded native submission and independent result/SSE ownership. Test mixed clients, parameters, disconnect isolation, usage, overload and shutdown.
-
-P7 comes only after correctness: qualify finite graph views, chunk size, profile switching, allocations, memory, singleton regression, TTFT, inter-token gaps and aggregate throughput. Do not promise a 2x speedup.
-
-P8 deploys only a qualified candidate and verifies health/models, streaming/non-streaming, staggered requests, restart, watchdog and rollback.
+P8 is safe to start: deploy only the qualified candidate and verify health/models, streaming/non-streaming, staggered requests, restart, watchdog and rollback.
 
 ## Non-negotiable rules
 
@@ -100,8 +96,8 @@ P8 deploys only a qualified candidate and verifies health/models, streaming/non-
 - No state-sized copies, per-token heap allocation or per-request CUDA graph capture.
 - Keep physical slots stable; use selected-row views and generation tags.
 - PR #199 coalescing is not the final continuous-batching solution.
-- Preserve the legacy whole-request API until P6 migration is complete.
-- Use eager execution until P7 graph qualification.
+- Preserve the legacy whole-request API until P8 migration is complete.
+- Capture only the three verified startup decode views; never capture per request.
 - Update the experiment journal after every experiment, build, service change, benchmark or requested status check.
 - Never report an untested phase as complete. Distinguish implementation, mechanism verification, numerical qualification, performance qualification and deployment.
 

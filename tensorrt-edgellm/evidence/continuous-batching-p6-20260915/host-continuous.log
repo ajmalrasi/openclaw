@@ -1,0 +1,35 @@
+/Users/ajmalrasi/Library/Python/3.12/lib/python/site-packages/pytest_asyncio/plugin.py:207: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform darwin -- Python 3.12.8, pytest-8.3.4, pluggy-1.6.0
+rootdir: /Users/ajmalrasi/openclaw-tensorrt-concurrency-review/tests
+configfile: pytest.ini
+plugins: anyio-4.14.1, asyncio-0.25.0
+asyncio: mode=Mode.STRICT, asyncio_default_fixture_loop_scope=None
+collected 6 items
+
+../openclaw-tensorrt-concurrency-review/tests/python-unittests/test_continuous_http.py . [ 16%]
+F....                                                                    [100%]
+
+=================================== FAILURES ===================================
+____________ test_prepared_requests_overlap_and_use_native_tickets _____________
+../openclaw-tensorrt-concurrency-review/tests/python-unittests/test_continuous_http.py:90: in test_prepared_requests_overlap_and_use_native_tickets
+    assert [item async for item in owner.stream([], params, prepared=second)] == ["streamed"]
+../openclaw-tensorrt-concurrency-review/experimental/server/runtime/engine_client.py:502: in stream
+    await asyncio.to_thread(_close_stream, iterator)
+/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/threads.py:25: in to_thread
+    return await loop.run_in_executor(None, func_call)
+/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/thread.py:59: in run
+    result = self.fn(*self.args, **self.kwargs)
+../openclaw-tensorrt-concurrency-review/experimental/server/runtime/engine_client.py:218: in _close_stream
+    iterator.close()
+E   AttributeError: 'list_iterator' object has no attribute 'close'
+------------------------------ Captured log setup ------------------------------
+INFO     test_test_prepared_requests_overlap_and_use_native_tickets:conftest.py:298 Starting: test_prepared_requests_overlap_and_use_native_tickets
+---------------------------- Captured log teardown -----------------------------
+INFO     test_test_prepared_requests_overlap_and_use_native_tickets:conftest.py:304 Completed: test_prepared_requests_overlap_and_use_native_tickets
+=========================== short test summary info ============================
+FAILED ../openclaw-tensorrt-concurrency-review/tests/python-unittests/test_continuous_http.py::test_prepared_requests_overlap_and_use_native_tickets
+========================= 1 failed, 5 passed in 0.09s ==========================

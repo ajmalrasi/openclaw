@@ -13,7 +13,35 @@ Append an entry after every TensorRT Edge-LLM export, transfer, build, repair, e
 
 ## Current state
 
-- 2026-09-15 P6 implementation is in progress in the isolated local checkout
+- 2026-09-16: P6 and P7 completed in the isolated implementation checkout,
+  source commit `1496d3404f0cc18d26fb51d830991d28cc50cccb` on
+  `origin/codex/continuous-batching-p1`. P6 now routes prepared HTTP requests
+  through independent native tickets, bounds stream buffers, preserves usage on
+  text-only flushes, exposes native worker health, supports seed in continuous
+  mode, and cancels request-local tickets on disconnect. P6 passed 146 host
+  regressions and Jetson HTTP gates for staggered A/B/C, mixed streaming,
+  chunked prompts, EOS/stops, logprobs, tools, reasoning, overload and cleanup.
+  P7 adds exactly three startup-only decode graph captures for views `{0}`, `{1}`
+  and `{0,1}`, records execution counters, avoids per-step binding-name
+  allocations, and narrows sampling work when full logprobs are not requested.
+  Its Jetson graph gate passed with three captures and four verified replays;
+  33 native host tests passed normally and under ASan/UBSan. One 128.38-second
+  benchmark session passed its provisional gates: singleton median latency ratio
+  1.043 (within 10%), simultaneous aggregate rate 33.97 versus 22.54 tok/s
+  (1.507x), and staggered second-request TTFT 0.202 versus 2.048 seconds.
+  Candidate health reported 229 graph replays and no graph-launch fallback.
+  Near-capacity two-request work completed, but took 16.58 seconds versus 15.50
+  for serialized legacy execution; that overhead remains a tuning limitation.
+  The primary service briefly hit systemd's start-rate limit during repeated
+  candidate teardown; reset-failed/start restored it. Final verification:
+  TensorRT `openclaw` healthy and idle with its watchdog active, original
+  `max_num_seqs=1`, and unrelated API/database healthy. No production candidate
+  was deployed; P8 is the remaining rollout and recovery phase. Evidence:
+  `tensorrt-edgellm/evidence/continuous-batching-p6-20260915/` and
+  `tensorrt-edgellm/evidence/continuous-batching-p7-20260915/`.
+
+- Historical 2026-09-15 P6 implementation record (superseded by the completion
+  record above):
   `/Users/ajmalrasi/openclaw-tensorrt-concurrency-review`; no Jetson source,
   binding, service or engine has changed. Candidate source `a90574f` is pushed
   to `origin/codex/continuous-batching-p1`. It adds a native pybind
@@ -253,3 +281,14 @@ Alternative path: use stock `tensorrt-edgellm-serve` with the original or compat
 - P4 final verification: all twenty host tests (nine scheduler plus eleven existing state/chunk tests) passed normally, with ASan/UBSan, and with ThreadSanitizer; no sanitizer findings. Final native attempt 2 passed all scheduler gates with exact serial/concurrent greedy output equality. Model/watchdog restored healthy at 09:27:16 IST. At 09:27:42 the endpoint was healthy/idle with unchanged max_num_seqs=1, original source base, exact engine hash and two-file deployed Python patch preserved, unrelated API/database healthy. Available RAM 176 MiB, swap 724 MiB; no memory-longevity claim. Final candidate C++ source/header hashes exactly match the remote tested files. Evidence includes both logs, XML/sanitizer output, restored health, final preservation snapshot, source hashes and extracted native events. Final CMake adds an explicit Threads dependency; full clean CMake build remains unrun, as in P1–P3. P4 native scheduling is complete within greedy length-limited scope; P5 may start, P6–P8 remain pending. No HTTP integration, production replacement, engine build or throughput benchmark occurred.
 
 - P4 completion: native changes committed with DCO sign-off as `e37d897`; source working tree clean, no push. Updated P4 RESULTS, plan, handoff and journal current state. Both native runs together used a conservative 64-second model-validation/restoration bound. Failed first host fixture remains preserved; no native failure or production upgrade occurred.
+
+## P7 prerequisite inspection — 2026-09-15
+
+- User requested Phase 7. Read handoff, plan, prior evidence and source at `a90574f894d07d6e1fbc7eda6dffa43a0dcbb37d`. P6 is an uncompiled candidate, with native/HTTP validation explicitly pending in this journal and the prior task. No P6 evidence directory exists. P7 performance qualification cannot be declared until P6's end-to-end gate passes. Read-only Jetson preflight found model/watchdog active, TensorRT `openclaw` healthy/idle, batch capacity two and max_num_seqs one; RAM available 304 MiB, swap used 994 MiB, unrelated API/database healthy. No service, engine or remote file changed; no benchmark ran. Inspecting prerequisite gaps before selecting the implementation/qualification work.
+
+- P6 repair authorized explicitly after the P7 prerequisite finding. Candidate fixes route prepared HTTP requests through native tickets, bound stream storage independently of output limit, omit text-flush sentinel from token usage, cancel owned tickets on cleanup, and consult worker health. Initial local regression invocation named a nonexistent logit-bias test file and collected nothing; corrected invocation exposed an overbroad edit in the legacy stream initializer (two failures, 94 passed), which was corrected. All 118 existing runtime/request/logit-bias regressions now pass (`continuous-batching-p6-20260915/host-regression.log`). New continuous-path coverage remains to be added.
+- P6 build attempt 1 launched detached in `continuous-batching-p6-attempt1.service`, log `/home/ajmalrasi/continuous-batching-p6-20260915/attempt1.log`. Isolated source overlays plus a copied pinned archive; existing-engine patch applied only to the candidate. Wrapper checks idle live health, pauses watchdog/stops model before compiling, and automatically restores original model/prior timer state. Build-only/import check: no model validation or benchmark is scheduled in this attempt. Results pending.
+
+- P6 build attempt 1 passed native compilation/linking and imported the isolated candidate `.so` at 16:06:24 IST. Original model/watchdog restored healthy at 16:06:37, exit zero; no candidate model inference ran. Log retained as `attempt1.log`. Host expanded suite now passes 145 tests. New fixture initially used a list iterator without the required close method (five passed, one failed); changed the fixture to the real generator protocol and reran successfully. Local candidate now includes the exact existing-engine patch, avoiding deployment-only behavior. Remaining: real HTTP/SSE and native ticket lifecycle validation.
+
+- P6 HTTP attempt 2 launched detached with an external 180-second initialization/functional-validation deadline. It uses the successfully compiled isolated binding, candidate port 11435, the preserved engine, mixed streaming/non-streaming settings, serial references, staggered A/B/C, disconnect isolation, logprobs and invalid/reuse checks. Wrapper again restores original service/watchdog and explicitly kills any surviving candidate before restoration. No throughput benchmark is claimed. Added chosen-token logprob preservation when sampling selects outside top-N; bounded rings stay below native admission budget. Result pending.

@@ -1,0 +1,107 @@
+{
+  "id": "openclaw",
+  "object": "model",
+  "created": 1789503619,
+  "owned_by": "tensorrt-edgellm",
+  "max_model_len": 8192
+}
+true
+2026-09-16T01:50:19+05:30
+7dbe1219ab15152d781a94001f3e4c964a4ec70c198082868cad0773db200d1d  /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/config.json
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7320          92           2         273         164
+Swap:          16383         732       15651
+MAINTENANCE model stopped; watchdog paused
+               total        used        free      shared  buff/cache   available
+Mem:            7485        1662        5741           2         281        5822
+Swap:          16383         560       15823
+BUILD available
+2026-09-16T01:50:40+05:30
+/home/ajmalrasi/continuous-batching-p7-20260915/build/_edgellm_runtime.cpython-312-aarch64-linux-gnu.so
+[01:50:41.158] [INFO] [trtUtils.h:71:loadEdgellmPluginLib] EDGELLM_PLUGIN_PATH: /home/ajmalrasi/TensorRT-Edge-LLM/build/libNvInfer_edgellm_plugin.so
+[01:50:42.512] [INFO] [tokenizer.cpp:603:loadVocabulary] Loaded 248044 vocabulary tokens
+[01:50:42.804] [INFO] [tokenizer.cpp:135:loadFromHF] Loaded 33 special tokens
+[01:50:42.994] [INFO] [tokenizer.cpp:1090:loadChatTemplate] Successfully loaded chat template from /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/processed_chat_template.json (for model: Qwen3.5-4B/quantized)
+[01:50:42.994] [INFO] [tokenizer.cpp:167:loadFromHF] Successfully loaded tokenizer from /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla (vocab_size=248077)
+[01:50:44.138] [INFO] [externalWeightManager.cpp:882:load] Loaded 192 transformed model weight tensor(s) in 1052 ms
+[01:50:45.339] [INFO] [llmRuntimeUtils.cpp:715:loadEmbeddingTable] Loaded FP16 embedding: [248320, 2560]
+[01:50:45.339] [INFO] [llmEngineConfig.cpp:672:parseEngineConfig] reading /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/config.json
+[01:50:45.341] [INFO] [llmRuntimeUtils.cpp:422:collectRopeConfig] Collected rope config: RopeConfig:  type: MRope  rotaryScale: 1  rotaryTheta: 1e+07  partialRotaryFactor: 1  maxPositionEmbeddings: 262144
+[01:50:45.341] [INFO] [llmEngineConfig.cpp:887:parseEngineConfig] LLMEngineConfig{ hiddenSize=2560 vocabSize=248320 outputVocabSize=248320 numDecoderLayers=32 numAttentionLayers=8 numKVHeads=4 headDim=256 rotaryDim=64 maxBatch=2 maxInputLen=6144 maxKVCapacity=8192 kvPoolPages=128 pleEnabled=false numPleInputs=0 pleHiddenSize=0 isSpecDecodeBase=false specDecodeType=0 loraRank=0 numLinearAttnLayers=24 recurrentStateDtype=0 convStateDtype=1 eosTokenIds=[248044] }
+[01:50:45.342] [INFO] [engineExecutor.cpp:143:TrtEngineExecutor] loading engine file: /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/llm.engine
+[01:50:47.342] [INFO] [TensorRT] [MS] Running engine with multi stream info
+[01:50:47.342] [INFO] [TensorRT] [MS] Number of aux streams is 1
+[01:50:47.342] [INFO] [TensorRT] [MS] Number of total worker streams is 2
+[01:50:47.342] [INFO] [TensorRT] [MS] The main stream provided by execute/enqueue calls is the first worker stream
+[01:50:48.714] [INFO] [TensorRT] [MemUsageChange] TensorRT-managed allocation in IExecutionContext creation: CPU +0, GPU +0, now: CPU 0, GPU 1862 (MiB)
+[01:50:48.714] [INFO] [trtUtils.cpp:374:setNonBlockingAuxStreams] configured 1 non-blocking auxiliary stream(s) for execution context
+[01:50:48.722] [INFO] [engineExecutor.cpp:182:TrtEngineExecutor] engine loaded successfully (311 I/O tensors)
+[01:50:48.722] [INFO] [llmRankRuntime.cpp:281:initializeFromEngineDir] Base EngineExecutor successfully loaded from /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/llm.engine.
+[01:50:48.724] [INFO] [externalWeightManager.cpp:930:validateAgainstEngine] Validated 192 external weight tensor(s) for base
+[01:50:48.724] [INFO] [llmRankRuntime.cpp:364:initializeCommon] Runtime batch size set to: 2 (from engine bundle)
+[01:50:49.099] [INFO] [llmRankRuntime.cpp:533:initializeCommon] Runtime tensors successfully allocated.
+[01:50:49.478] [INFO] [llmRankRuntime.cpp:676:initializeCommon] Setup shared execution context memory: 1071319040 bytes (base requires: 1071319040, strategy requires: 0, vision requires: 0, audio requires: 0, action requires: 0)
+MEMORY initialized cuda_free=236216320 cuda_total=7849046016
+STEP slot=0 batch=1 profile=0 logical_decode=0 prompt_tail=0 start=0 tokens=65
+STEP slot=1 batch=1 profile=0 logical_decode=0 prompt_tail=0 start=0 tokens=129
+STEP slot=0 batch=1 profile=1 logical_decode=1 prompt_tail=0 start=65 tokens=1
+[01:50:50.109] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=1 logical_decode=1 prompt_tail=0 start=129 tokens=1
+STEP slot=1 batch=1 profile=0 logical_decode=0 prompt_tail=0 start=0 tokens=64
+[01:50:51.335] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=0 logical_decode=0 prompt_tail=0 start=64 tokens=64
+STEP slot=1 batch=1 profile=1 logical_decode=0 prompt_tail=1 start=128 tokens=1
+[01:50:51.608] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+STEP slot=1 batch=1 profile=1 logical_decode=1 prompt_tail=0 start=129 tokens=1
+COMPARE P1_decode_tail_quality_diagnostic max_abs=0.113281 relative_l2=0.00932514 reference_greedy=264 candidate_greedy=264 passed=0
+P1_TAIL_BASELINE quality_passed=0
+MEMORY initialized cuda_free=70942720 cuda_total=7849046016
+[01:50:51.728] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[01:50:51.781] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[01:50:51.882] [INFO] [engineExecutor.cpp:377:captureGraph] captured graph (hash=0x8a94397ff5c56dd9)
+[01:50:51.883] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[01:50:51.934] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[01:50:52.035] [INFO] [engineExecutor.cpp:377:captureGraph] captured graph (hash=0xb195323eccce4c0a)
+[01:50:52.036] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[01:50:52.124] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[01:50:52.237] [INFO] [engineExecutor.cpp:377:captureGraph] captured graph (hash=0x1622fedd9be1eeeb)
+REJECT second_session passed=1
+[01:50:52.241] [ERROR] [llmRankRuntime.cpp:863:handleRequest] Overlapping handleRequest() calls on one runtime are not supported.
+[01:50:52.242] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+REJECT release_in_flight passed=1
+REJECT overlapping_forward passed=1
+COMPARE native_prefill_A max_abs=0 relative_l2=0 reference_greedy=1330 candidate_greedy=1330 passed=1
+ISOLATION slot=0 exact_bytes=54034944 passed=1
+[01:50:52.614] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE native_decode_A_while_B_prefills max_abs=0 relative_l2=0 reference_greedy=2250 candidate_greedy=2250 passed=1
+ISOLATION slot=1 exact_bytes=54002176 passed=1
+[01:50:52.691] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[01:50:52.823] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE native_sampling_free_tail_matches_P1 max_abs=0 relative_l2=0 reference_greedy=47771 candidate_greedy=47771 passed=1
+ISOLATION slot=0 exact_bytes=54067712 passed=1
+COMPARE native_decode_B_after_tail_matches_P1 max_abs=0 relative_l2=0 reference_greedy=264 candidate_greedy=264 passed=1
+REJECT stale_release passed=1
+[01:50:52.952] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE native_reused_slot_C max_abs=0 relative_l2=0 reference_greedy=1330 candidate_greedy=1330 passed=1
+ISOLATION slot=1 exact_bytes=56164864 passed=1
+REJECT duplicate_decode_slot passed=1
+REJECT unordered_decode_slots passed=1
+[01:50:53.492] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+COMPARE native_unequal_batch_A max_abs=0 relative_l2=0 reference_greedy=2250 candidate_greedy=2250 passed=1
+COMPARE native_unequal_batch_B max_abs=0 relative_l2=0 reference_greedy=264 candidate_greedy=264 passed=1
+FORWARD_ONLY sampler_unchanged=1 passed=1
+[01:50:53.560] [INFO] [TensorRT] Switching optimization profile from: 1 to 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+[01:50:53.699] [INFO] [TensorRT] Switching optimization profile from: 0 to 1. Please ensure there are no enqueued operations pending in this context prior to switching profiles
+LEGACY_RESTORED passed=1
+P7_GRAPH_GATE passed=1 captures=3 replays=4 eager=23 profile_switches=18
+P2_STATE_GATE passed=1 full_chunk_quality=separate_P1_TAIL_BASELINE
+PROBE_RESULT passed=1
+RESTORE begin task_exit=0
+true
+active
+active
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7412          80           1         188          72
+Swap:          16383         654       15729
+2026-09-16T01:51:08+05:30
+RESTORE healthy=true task_exit=0
