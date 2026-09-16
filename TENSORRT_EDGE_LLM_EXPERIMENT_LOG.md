@@ -38,6 +38,8 @@
 
 - 2026-09-16 IST: user selected batch two as the final production configuration and authorized completion. Started `openclaw-tensorrt-edgellm.service` and `openclaw-tensorrt-watchdog.timer`, both previously intentionally stopped for engine tests. After normal loading delay, live `/health` is healthy and idle, identifies TensorRT `openclaw`, reports three graph captures and `max_batch_size=2` / `max_num_seqs=2;` both units active. The deployed unit remains pointed at `llm-b2-input6144-kv8192-vanilla`; no engine, source or deployment override changed. Updated `BENCHMARKS.md` with final direct-native and live-API results, and `FOR-AGENTS.md` to correct stale one-active-sequence wording and distinguish experimental batch-four artifacts from validated batch-two production. Final local documentation commit/push follows; unrelated workspace files are preserved.
 
+- 2026-09-16 IST: final post-restart production request passed. Live OpenAI-compatible endpoint received deterministic `Reply exactly: READY`, returned exact `READY` with `finish_reason=stop` and 16 prompt / 2 completion tokens. Immediate health remains healthy/idle, graph capture count three, replay count one, `max_batch_size=2` and `max_num_seqs=2`. This completes live functional verification of the finalized batch-two configuration. No configuration changed.
+
 Created: 2026-09-12. Time zone: Asia/Kolkata (IST, UTC+05:30).
 Target: Jetson Orin Nano Super, 8 GB unified memory, JetPack 7.2.1 / L4T r39.2.1, CUDA 13.2, SM87.
 
