@@ -1,0 +1,11 @@
+{
+  "batch_size": 2,
+  "temperature": 0.0,
+  "top_p": 1.0,
+  "top_k": 1,
+  "max_generate_length": 512,
+  "requests": [
+    {"messages": [{"role": "user", "content": "List the integers from 1 to 1000, each on a separate line. Start immediately and continue until stopped."}]},
+    {"messages": [{"role": "user", "content": "List the integers from 1 to 1000, each on a separate line. Start immediately and continue until stopped."}]}
+  ]
+}

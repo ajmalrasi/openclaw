@@ -56,8 +56,10 @@ curl -s http://192.168.3.30:11434/v1/chat/completions \
   design accordingly.
 - On the Jetson, keep serialized request input within **6,144 tokens** and
   account for generated output within the engine's **8,192-token total
-  sequence** capacity. Its loaded engine has batch capacity two, but the
-  current server admits one active sequence; do not assume dynamic batching.
+  sequence** capacity. Its loaded TensorRT engine and deployed continuous
+  scheduler support **up to two active sequences**. This is the validated
+  production configuration; do not assume four-way serving merely because
+  separate experimental batch-four engine files exist.
   `beast` is configured for 8,192 tokens and up to eight active
   sequences; eight completely full contexts cannot all reside in its 8 GB VRAM
   simultaneously. EC2 is configured for 16,384 tokens. A
