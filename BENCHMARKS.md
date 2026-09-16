@@ -25,6 +25,35 @@ tok/s for the earlier one-sequence path (1.55x). The selected batch-two engine
 is the validated balance of context capacity, per-request speed, and memory
 headroom on the 8 GB unified-memory Jetson.
 
+### Live AIPerf endpoint retest
+
+NVIDIA AIPerf 0.12.0 reran the prior concurrency-two endpoint profile from
+`beast`: six streaming chat requests to the public `openclaw` API, each with a
+synthetic 2,048-token input and a requested 512-token output. The production
+service was healthy and idle before and after the run; it retained its two
+active-sequence limit.
+
+| Metric | AIPerf concurrency two |
+|---|---:|
+| Completed requests | 6 / 6 (no errors) |
+| Benchmark duration | 102.50 s |
+| Total input / output tokens | 12,288 / 2,911 |
+| Aggregate output throughput | **28.40 tok/s** |
+| Mean end-to-end throughput per user | 14.74 tok/s |
+| Active decode throughput | 32.50 tok/s |
+| Mean / p50 TTFT | 5,818 / 6,582 ms |
+| Mean / p50 ITL | 55.99 / 55.22 ms |
+| Mean request latency | 32.96 s |
+| Effective decode concurrency, mean / p50 | 1.59 / 2.00 |
+
+This is endpoint evidence that the current scheduler overlaps two active
+decodes. It is not directly comparable to the native 41.4 tok/s result above:
+it includes HTTP, scheduling and AIPerf client overhead. Three requests ended
+at EOS before the 512-token cap (minimum 351; mean 485 outputs), so a future
+strict A/B should use a verified `min_tokens` or `ignore_eos` setting. Relative
+to the retained older AIPerf concurrency-two run (20.15 aggregate tok/s), this
+run is 41.0% higher, but it is still a short, non-fixed-length calibration.
+
 An experimental 2,048-input / 4,096-KV batch-four engine also completed four
 512-token native requests at 66.8 aggregate tok/s, but reduces average
 per-request throughput to about 16.7 tok/s and has not been qualified through
