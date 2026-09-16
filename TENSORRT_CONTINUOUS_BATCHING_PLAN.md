@@ -1,6 +1,6 @@
 # Continuous batching and chunked prefill for the Jetson
 
-Design proposal, 2026-09-12; phase status updated 2026-09-15. P1–P4 are implemented and qualified within their documented scope; P5–P8 and production deployment remain pending.
+Design proposal, 2026-09-12; phase status updated 2026-09-16. P1–P8 are complete within their documented scope; P8 deployed the qualified candidate with rollback verification.
 
 ## 1. Intended outcome
 
@@ -166,7 +166,7 @@ Audit TensorRT graph behavior before optimization. Initially validate with eager
 
 ## 9. Implementation phases and exit criteria
 
-Execution order: **P1 → P2 → P3 → P4 → P5 → P6 → P7 → P8**. **P1's bounded feasibility gate and P2's ownership/execution-preservation gate passed on 2026-09-14.** P3 passed on 2026-09-15 with a fixed 128-token policy that avoids unsupported small resumed chunks; P4 passed automatic staggered scheduling and slot reuse on 2026-09-15; P5–P8 remain pending. See [P4 evidence](tensorrt-edgellm/evidence/continuous-batching-p4-20260915/RESULTS.md) and [P3 evidence](tensorrt-edgellm/evidence/continuous-batching-p3-20260915/RESULTS.md). Raw manual short-tail numerical drift remains a retained negative control. See [P1 evidence](tensorrt-edgellm/evidence/continuous-batching-p1-20260914/RESULTS.md) and [P2 evidence](tensorrt-edgellm/evidence/continuous-batching-p2-20260914/RESULTS.md). Each phase produces a reviewable change, focused verification evidence and a journal entry. These are technical checkpoints, not requirements to ask for permission after every phase once implementation is authorized.
+Execution order: **P1 → P2 → P3 → P4 → P5 → P6 → P7 → P8**. **P1's bounded feasibility gate and P2's ownership/execution-preservation gate passed on 2026-09-14.** P3 passed on 2026-09-15 with a fixed 128-token policy that avoids unsupported small resumed chunks; P4 passed automatic staggered scheduling and slot reuse on 2026-09-15; P5 passed independent controls; P6 passed HTTP/SSE qualification; P7 passed graph and performance qualification; and P8 deployed the qualified candidate and passed restart, watchdog, and rollback recovery checks on 2026-09-16. See [P4 evidence](tensorrt-edgellm/evidence/continuous-batching-p4-20260915/RESULTS.md) and [P3 evidence](tensorrt-edgellm/evidence/continuous-batching-p3-20260915/RESULTS.md). Raw manual short-tail numerical drift remains a retained negative control. See [P1 evidence](tensorrt-edgellm/evidence/continuous-batching-p1-20260914/RESULTS.md) and [P2 evidence](tensorrt-edgellm/evidence/continuous-batching-p2-20260914/RESULTS.md). Each phase produces a reviewable change, focused verification evidence and a journal entry. These are technical checkpoints, not requirements to ask for permission after every phase once implementation is authorized.
 
 | Phase | Deliverable | Completion gate |
 | --- | --- | --- |
@@ -250,6 +250,8 @@ Depends on P7. Record the exact candidate revision, native library/bindings, eng
 Verify: health/models, streaming and non-streaming correctness, a short staggered-request smoke check, shutdown/restart behavior and watchdog behavior under normal queue load. Restore the intended service/watchdog state and document rollback.
 
 Done when: the qualified candidate is serving, operational checks pass and recovery artifacts/instructions are recorded. This phase is the production completion point.
+
+P8 result: the P7 `1496d34` candidate is the active Jetson service through a versioned systemd override. Health reports `max_num_seqs=2`, three graph captures and replays; live non-streaming and staggered SSE checks passed before and after restart. The original one-sequence service was started and verified during rollback, then the candidate was reactivated. The watchdog timer is active. Evidence is under `tensorrt-edgellm/evidence/continuous-batching-p8-20260916/`.
 
 The software dependencies above are sequential. CPU test fixtures and documentation can be prepared alongside the relevant implementation, but later phases cannot claim completion before their prerequisite gates pass. Runtime-only work reuses existing ONNX/engine artifacts. A model graph/export change requires separate export → build → inference verification.
 

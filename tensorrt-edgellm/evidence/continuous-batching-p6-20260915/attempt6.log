@@ -1,0 +1,57 @@
+{
+  "id": "openclaw",
+  "object": "model",
+  "created": 1789484566,
+  "owned_by": "tensorrt-edgellm",
+  "max_model_len": 8192
+}
+true
+2026-09-15T20:32:47+05:30
+7dbe1219ab15152d781a94001f3e4c964a4ec70c198082868cad0773db200d1d  /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/config.json
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7347          84           1         253         137
+Swap:          16383         708       15675
+MAINTENANCE model stopped; watchdog paused
+               total        used        free      shared  buff/cache   available
+Mem:            7485        1775        5649           1         261        5710
+Swap:          16383         549       15834
+BUILD available
+2026-09-15T20:32:49+05:30
+/home/ajmalrasi/continuous-batching-p6-20260915/build/_edgellm_runtime.cpython-312-aarch64-linux-gnu.so
+{"event": "ready", "seconds": 9.898253492021468, "health": {"status": "healthy", "model": "openclaw", "active_requests": 0, "queued_requests": 0, "capabilities": {"chat": true, "transcription": false, "speech": false, "input_modalities": ["text"], "output_modalities": ["text"], "max_model_len": 8192, "max_input_len": 6144, "max_batch_size": 2, "max_num_seqs": 2, "kv_cache_dtype": "fp16", "speculative_decoding": false, "speculative_method": "none", "context_reuse": false}}}
+{"event": "completion", "seconds": 22.939106325007742, "elapsed": 13.040029794006841, "result": {"id": "chatcmpl-d796e4ff4e0b45f3acf095ec362db370", "object": "chat.completion", "created": 1789484594, "model": "openclaw", "choices": [{"index": 0, "message": {"role": "assistant", "content": "\n\n", "tool_calls": [{"id": "call_f766f5a1ef0944f8bdaf0e39", "type": "function", "function": {"name": "get_weather", "arguments": "{\"city\": \"Paris\"}"}}]}, "finish_reason": "tool_calls"}], "usage": {"prompt_tokens": 281, "completion_tokens": 26, "total_tokens": 307}}}
+{"event": "P6_TOOL_GATE", "seconds": 22.943556252022972, "passed": true}
+{"event": "server_exit", "seconds": 27.220928769005695, "code": -15}
+Traceback (most recent call last):
+  File "/home/ajmalrasi/continuous-batching-p6-20260915/validate.py", line 126, in <module>
+    list(pool.map(lambda _: overload_client(), range(12)))
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/lib/python3.12/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ajmalrasi/continuous-batching-p6-20260915/validate.py", line 126, in <lambda>
+    list(pool.map(lambda _: overload_client(), range(12)))
+                            ^^^^^^^^^^^^^^^^^
+  File "/home/ajmalrasi/continuous-batching-p6-20260915/validate.py", line 119, in overload_client
+    body('overload', 128), stream=True, logit_bias={str(x_id):100})) as response:
+                                                        ^^^^
+NameError: name 'x_id' is not defined
+RESTORE begin task_exit=1
+true
+active
+active
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7398          98           1         181          86
+Swap:          16383         626       15757
+2026-09-15T20:33:31+05:30
+RESTORE healthy=true task_exit=1

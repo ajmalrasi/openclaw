@@ -1,0 +1,35 @@
+Sep 16 02:05:37 ajmalrasi systemd[2306]: Started continuous-batching-p8-rollout.service - /tmp/run-continuous-batching-p8.sh.
+Sep 16 02:05:37 ajmalrasi run-continuous-batching-p8.sh[799130]: 2026-09-16T02:05:37+05:30
+Sep 16 02:05:37 ajmalrasi run-continuous-batching-p8.sh[799130]: false
+Sep 16 02:05:37 ajmalrasi systemd[2306]: continuous-batching-p8-rollout.service: Main process exited, code=exited, status=1/FAILURE
+Sep 16 02:05:37 ajmalrasi systemd[2306]: continuous-batching-p8-rollout.service: Failed with result 'exit-code'.
+Sep 16 02:06:18 ajmalrasi systemd[2306]: Started continuous-batching-p8-rollout-2.service - /usr/bin/timeout --signal=TERM --kill-after=15s 300s /tmp/run-continuous-batching-p8.sh.
+Sep 16 02:06:18 ajmalrasi timeout[799417]: 2026-09-16T02:06:18+05:30
+Sep 16 02:06:18 ajmalrasi timeout[799417]: true
+Sep 16 02:08:01 ajmalrasi systemd[2306]: Stopping continuous-batching-p8-rollout-2.service - /usr/bin/timeout --signal=TERM --kill-after=15s 300s /tmp/run-continuous-batching-p8.sh...
+Sep 16 02:08:16 ajmalrasi systemd[2306]: continuous-batching-p8-rollout-2.service: Main process exited, code=killed, status=9/KILL
+Sep 16 02:08:16 ajmalrasi systemd[2306]: continuous-batching-p8-rollout-2.service: Failed with result 'signal'.
+Sep 16 02:08:16 ajmalrasi systemd[2306]: Stopped continuous-batching-p8-rollout-2.service - /usr/bin/timeout --signal=TERM --kill-after=15s 300s /tmp/run-continuous-batching-p8.sh.
+Sep 16 02:08:16 ajmalrasi systemd[2306]: continuous-batching-p8-rollout-2.service: Consumed 1.296s CPU time, 92.6M memory peak, 0B memory swap peak.
+Sep 16 02:08:16 ajmalrasi systemd[2306]: continuous-batching-p8-rollout-2.service: Failed to open /run/user/1000/systemd/transient/continuous-batching-p8-rollout-2.service: No such file or directory
+Sep 16 02:08:16 ajmalrasi systemd[2306]: continuous-batching-p8-rollout-2.service: Failed to open /run/user/1000/systemd/transient/continuous-batching-p8-rollout-2.service: No such file or directory
+Sep 16 02:08:21 ajmalrasi systemd[2306]: continuous-batching-p8-rollout-2.service: Failed to open /run/user/1000/systemd/transient/continuous-batching-p8-rollout-2.service: No such file or directory
+Sep 16 02:08:22 ajmalrasi systemd[2306]: continuous-batching-p8-rollout-2.service: Failed to open /run/user/1000/systemd/transient/continuous-batching-p8-rollout-2.service: No such file or directory
+Sep 16 02:08:39 ajmalrasi systemd[2306]: Started continuous-batching-p8-rollout-3.service - /usr/bin/timeout --signal=TERM --kill-after=20s 300s /tmp/run-continuous-batching-p8.sh.
+Sep 16 02:08:39 ajmalrasi timeout[800318]: 2026-09-16T02:08:39+05:30
+Sep 16 02:08:39 ajmalrasi timeout[800318]: true
+Sep 16 02:08:58 ajmalrasi timeout[800318]: true
+Sep 16 02:09:03 ajmalrasi timeout[800318]: {"P8_LIVE_GATE": "passed", "execution": {"captures": 3, "eager": 10, "profile_switches": 12, "replays": 78}, "first_ttft": 0.15484337200177833, "second_ttft": 0.19663110602414235, "single_usage": {"completion_tokens": 16, "prompt_tokens": 23, "total_tokens": 39}}
+Sep 16 02:09:21 ajmalrasi timeout[800318]: true
+Sep 16 02:09:26 ajmalrasi timeout[800318]: {"P8_LIVE_GATE": "passed", "execution": {"captures": 3, "eager": 10, "profile_switches": 12, "replays": 78}, "first_ttft": 0.1545039059710689, "second_ttft": 0.19536655297270045, "single_usage": {"completion_tokens": 16, "prompt_tokens": 23, "total_tokens": 39}}
+Sep 16 02:09:42 ajmalrasi timeout[800318]: true
+Sep 16 02:09:42 ajmalrasi timeout[800318]: P8_ROLLBACK_GATE passed
+Sep 16 02:09:59 ajmalrasi timeout[800318]: true
+Sep 16 02:10:04 ajmalrasi timeout[800318]: {"P8_LIVE_GATE": "passed", "execution": {"captures": 3, "eager": 10, "profile_switches": 12, "replays": 78}, "first_ttft": 0.1541367620229721, "second_ttft": 0.1969086939934641, "single_usage": {"completion_tokens": 16, "prompt_tokens": 23, "total_tokens": 39}}
+Sep 16 02:10:04 ajmalrasi timeout[800318]: active
+Sep 16 02:10:04 ajmalrasi timeout[800318]: inactive
+Sep 16 02:10:04 ajmalrasi timeout[800318]: true
+Sep 16 02:10:04 ajmalrasi timeout[800318]: 2026-09-16T02:10:04+05:30
+Sep 16 02:10:04 ajmalrasi timeout[800318]: P8_DEPLOYMENT_GATE passed
+Sep 16 02:10:04 ajmalrasi systemd[2306]: continuous-batching-p8-rollout-3.service: Consumed 3.077s CPU time, 95.5M memory peak, 396.0K memory swap peak.
+Sep 16 02:10:18 ajmalrasi systemd[2306]: continuous-batching-p8-rollout-3.service: Failed to open /run/user/1000/systemd/transient/continuous-batching-p8-rollout-3.service: No such file or directory

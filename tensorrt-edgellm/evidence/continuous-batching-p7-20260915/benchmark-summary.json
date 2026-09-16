@@ -1,0 +1,11 @@
+{
+  "singleton_latency_ratio": 1.0427374169231403,
+  "singleton_pass": true,
+  "aggregate_ratio": 1.5068084739492116,
+  "aggregate_pass": true,
+  "staggered_ttft_legacy": 2.04784044099506,
+  "staggered_ttft_candidate": 0.20197083096718416,
+  "median_gap": 0.05255243799183518,
+  "p95_gap": 0.05658304801909253,
+  "elapsed": 128.37759773398284
+}

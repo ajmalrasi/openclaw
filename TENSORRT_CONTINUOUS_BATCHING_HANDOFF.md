@@ -33,7 +33,7 @@ Phase 5 completion is recorded only in this handoff, as explicitly requested by 
 - TensorRT source checkout: `/Users/ajmalrasi/openclaw-tensorrt-concurrency-review`
 - Source repository: [ajmalrasi/TensorRT-Edge-LLM](https://github.com/ajmalrasi/TensorRT-Edge-LLM)
 - Implementation branch: `codex/continuous-batching-p1`
-- Latest local source commit: `711270f` (P5; not yet pushed).
+- Latest source commit: `1496d34` (P6/P7), pushed to `origin/codex/continuous-batching-p1`.
 - Previously pushed source commit: `cf57e1c` (P2).
 - Existing base: `e8b29522938901f6df19ebeedd4b69bc8edbcd97` (TensorRT Edge-LLM 0.10.1)
 
@@ -48,7 +48,8 @@ Do not work directly on the live deployment checkout. Preserve unrelated dirty f
 - Model alias: `openclaw`.
 - Engine: `/home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla`.
 - Engine: vanilla Qwen3.5-4B INT4 AWQ, batch capacity 2, max input 6144, max sequence 8192, FP16 KV, FP32 recurrent state, no MTP, no context reuse.
-- Current health honestly reports `max_batch_size=2` and `max_num_seqs=1`. Do not claim continuous batching until later phase gates pass.
+- P8 deployment is active through `/home/ajmalrasi/.config/systemd/user/openclaw-tensorrt-edgellm.service.d/continuous-batching-p8.conf`, using the versioned release `/home/ajmalrasi/continuous-batching-p8-20260916-attempt3/` and source commit `1496d34`.
+- Current health reports `max_batch_size=2`, `max_num_seqs=2`, three startup graph captures and replay counters. Continuous batching is deployed.
 - Preserve one resident model and unrelated API/database containers.
 - Watchdog: `openclaw-tensorrt-watchdog.timer`; pause it during controlled model maintenance and restore its prior state.
 - Total benchmark-session cap: five minutes, including warmup. Keep long jobs detached.
@@ -78,21 +79,17 @@ P4 adds `ContinuousScheduler` and `GreedySchedulerBackend`: one worker, bounded 
 | P3 | Correct chunked prefill and numerical qualification | 10/10 — complete for the fixed policy, not deployed |
 | P4 | Native continuous scheduler and slot reuse | 9/10 — complete, not deployed |
 | P5 | Independent sampling, limits, cancellation and failures | 9/10 — complete, native-only |
-| P6 | Pybind, HTTP and independent SSE streaming | 7/10 — next |
-| P7 | CUDA graphs, tuning, memory and performance qualification | 10/10 |
-| P8 | Deployment, watchdog and rollback verification | 5/10 |
+| P6 | Pybind, HTTP and independent SSE streaming | 7/10 — complete, candidate-only |
+| P7 | CUDA graphs, tuning, memory and performance qualification | 10/10 — complete, candidate-only |
+| P8 | Deployment, watchdog and rollback verification | 5/10 — complete and deployed |
 
 P3 qualified the fixed policy through 6144 tokens, all remainder boundaries, four formatted chat fixtures, all three state types, teacher-forced continuation and both slot orders. Raw short-tail numerical drift remains an unsupported diagnostic path; never loosen thresholds or substitute arbitrary manual spans in P4.
 
 P4 passed: A starts decoding, B arrives, A finishes, C reuses A’s slot while B continues, then B/C decode together. Preserve its single-owner and qualified chunking contract in P5.
 
-P5 passed independent temperature, top-p/top-k, seed/counter, output limits, EOS/thinking, stop strings, bias, logprobs, cancellation, deadlines and bounded output checks. A simulated reported corrupting error after a real GPU forward failed the scheduler and retained the poisoned parent lease. See the P5 completion record below. P6 may start.
+P5 passed independent temperature, top-p/top-k, seed/counter, output limits, EOS/thinking, stop strings, bias, logprobs, cancellation, deadlines and bounded output checks. P6 completed native pybind/HTTP ticket ownership and independent SSE. P7 qualified three startup-only decode graph views, graph replays, bounded allocations, singleton latency, staggered TTFT, aggregate throughput, near-capacity requests and reuse. P8 deployed that candidate, passed live non-streaming/SSE/staggered checks before and after restart, verified rollback to the original one-sequence service, then restored the candidate and watchdog.
 
-P6 must replace the HTTP single-generation lease with bounded native submission and independent result/SSE ownership. Test mixed clients, parameters, disconnect isolation, usage, overload and shutdown.
-
-P7 comes only after correctness: qualify finite graph views, chunk size, profile switching, allocations, memory, singleton regression, TTFT, inter-token gaps and aggregate throughput. Do not promise a 2x speedup.
-
-P8 deploys only a qualified candidate and verifies health/models, streaming/non-streaming, staggered requests, restart, watchdog and rollback.
+All eight phases are complete. Retain the original service unit and P8 override as the tested rollback path; long-duration reliability remains outside the bounded rollout session.
 
 ## Non-negotiable rules
 
@@ -100,8 +97,8 @@ P8 deploys only a qualified candidate and verifies health/models, streaming/non-
 - No state-sized copies, per-token heap allocation or per-request CUDA graph capture.
 - Keep physical slots stable; use selected-row views and generation tags.
 - PR #199 coalescing is not the final continuous-batching solution.
-- Preserve the legacy whole-request API until P6 migration is complete.
-- Use eager execution until P7 graph qualification.
+- Preserve the legacy whole-request API until P8 migration is complete.
+- Capture only the three verified startup decode views; never capture per request.
 - Update the experiment journal after every experiment, build, service change, benchmark or requested status check.
 - Never report an untested phase as complete. Distinguish implementation, mechanism verification, numerical qualification, performance qualification and deployment.
 
@@ -259,5 +256,6 @@ scratch. Efficient GPU sampling, performance, peak/long-term memory and graphs
 are P7 work. No throughput result is claimed. A full clean CMake build was not
 run; new sources compiled/linked on Jetson against the preserved pinned archive.
 P3's unsupported raw short-tail drift remains unchanged. HTTP/SSE, Python/GIL,
-tool/reasoning parsers and endpoint concurrency are **P6**, and production
-rollout remains **P8**. Current production still admits one active sequence.
+tool/reasoning parsers and endpoint concurrency were deferred to **P6**, and
+production rollout to **P8**. At P5 completion, production admitted one active
+sequence; see the current deployment record above for the deployed P8 state.

@@ -1,0 +1,1 @@
+{"P8_LIVE_GATE": "passed", "execution": {"captures": 3, "eager": 10, "profile_switches": 12, "replays": 78}, "first_ttft": 0.15484337200177833, "second_ttft": 0.19663110602414235, "single_usage": {"completion_tokens": 16, "prompt_tokens": 23, "total_tokens": 39}}

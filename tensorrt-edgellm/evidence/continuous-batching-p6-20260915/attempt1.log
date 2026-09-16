@@ -1,0 +1,29 @@
+{
+  "id": "openclaw",
+  "object": "model",
+  "created": 1789468506,
+  "owned_by": "tensorrt-edgellm",
+  "max_model_len": 8192
+}
+true
+2026-09-15T16:05:06+05:30
+7dbe1219ab15152d781a94001f3e4c964a4ec70c198082868cad0773db200d1d  /home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla/config.json
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7157         122           4         407         327
+Swap:          16383        1003       15380
+MAINTENANCE model stopped; watchdog paused
+               total        used        free      shared  buff/cache   available
+Mem:            7485        1739        5526           4         420        5745
+Swap:          16383         505       15878
+BUILD passed
+2026-09-15T16:06:24+05:30
+/home/ajmalrasi/continuous-batching-p6-20260915/build/_edgellm_runtime.cpython-312-aarch64-linux-gnu.so
+RESTORE begin task_exit=0
+true
+active
+active
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7400          79           4         208          84
+Swap:          16383         633       15750
+2026-09-15T16:06:37+05:30
+RESTORE healthy=true task_exit=0

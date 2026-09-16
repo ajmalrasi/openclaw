@@ -1,5 +1,37 @@
 # Benchmarks
 
+## 2026-09-16 — Jetson Orin TensorRT Edge-LLM final production configuration
+
+The Jetson production service runs Qwen3.5-4B INT4 AWQ through TensorRT
+Edge-LLM, using the `llm-b2-input6144-kv8192-vanilla` engine and the native
+continuous-batching scheduler. The service admits two active sequences and
+keeps the public OpenAI-compatible `openclaw` API.
+
+A direct native benchmark used two deterministic prompts, each forced to 512
+generated tokens. Both reached the requested limit successfully:
+
+| Metric | Batch two, 6,144 input / 8,192 KV |
+|---|---:|
+| Total generated tokens | 1,024 |
+| End-to-end prefill + generation | 24.74 s |
+| Aggregate output throughput | **41.4 tok/s** |
+| Average per active request | **20.7 tok/s** |
+| Decode-only aggregate throughput | 41.8 tok/s |
+
+The direct-native metric excludes cold engine/weight/tokenizer loading and
+HTTP/server overhead. A separate live API calibration measured 34.96 tok/s
+aggregate for two simultaneous short streaming requests, compared with 22.54
+tok/s for the earlier one-sequence path (1.55x). The selected batch-two engine
+is the validated balance of context capacity, per-request speed, and memory
+headroom on the 8 GB unified-memory Jetson.
+
+An experimental 2,048-input / 4,096-KV batch-four engine also completed four
+512-token native requests at 66.8 aggregate tok/s, but reduces average
+per-request throughput to about 16.7 tok/s and has not been qualified through
+the continuous HTTP scheduler. Larger batch-four 4,096-input / 6,144-KV and
+4,096-input / 4,608-KV runtime configurations failed initialization with OOM.
+They are not production configurations.
+
 ## 2026-09-09 — Qwen3.5-4B AWQ, 8K context / eight-way validation on `beast`
 
 `beast` was switched back to `QuantTrio/Qwen3.5-4B-AWQ` at revision
