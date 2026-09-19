@@ -1,17 +1,30 @@
 # OpenClaw backend for `beast` (RTX 3070 Ti Laptop, 8 GB, Ampere sm86).
-# vLLM serving language-only INT4-AWQ Qwen3.5-4B behind the OpenClaw contract:
-# OpenAI API on :11434, model name "openclaw". A drop-in replacement for the
-# Ollama openclaw service on this host — apps need no change.
+# vLLM serving the uncensored HauhauCS Qwen3.5-4B-VL checkpoint, W4A16
+# quantized (RTN, no calibration), behind the OpenClaw contract: OpenAI API
+# on :11434, model name "openclaw". A drop-in replacement for the Ollama
+# openclaw service on this host — apps need no change.
 #
 # WHY vLLM here (not Ollama, not TensorRT-LLM): on consumer Ampere the modern
 # TensorRT-LLM pytorch backend cannot serve a working quantized model — INT4
 # (W4A16-AWQ) loads fast but miscomputes into garbage, INT8 (W8A8) is
 # "unsupported quant mode", and FP8/FP4 need newer GPUs. vLLM's Marlin W4A16
-# kernels run correctly on this GPU. Full story: ../TRTLLM_MIGRATION.md and
-# ../BENCHMARKS.md.
+# kernels run correctly on this GPU. Full story: ../TRTLLM_MIGRATION.md,
+# ../BENCHMARKS.md, and ../UNCENSORED_VL_W4A16_EXPERIMENT_LOG.md.
+#
+# WHY this checkpoint (not AWQ): self-quantizing this model with AWQ via
+# llmcompressor crashes (a library bug replaying the Gated DeltaNet
+# linear-attention module during smoothing). The checkpoint here uses plain
+# RTN W4A16 instead — no calibration data, no smoothing step, no crash — with
+# the vision tower, lm_head, and linear-attention layers left in bf16. See
+# ../UNCENSORED_VL_W4A16_EXPERIMENT_LOG.md for the full story, including the
+# `max_pixels` fix required to keep it fully GPU-resident with vision enabled.
 #
 # The Jetson uses MLC-LLM (see mlc/openclaw-mlc.service), while this host uses
 # vLLM. Each host runs one backend behind the same OpenAI-compatible contract.
+#
+# CONFLICTS WITH: openclaw-ollama.service (same port). Keep that service
+# disabled while this one is enabled — see vllm/openclaw-ollama.service for
+# the reverse switch-back instructions.
 #
 # Runs the vLLM container in the foreground under systemd (Type=simple): systemd
 # tracks the `docker run` client and forwards SIGTERM on stop. Requires the
@@ -22,25 +35,27 @@
 #   loginctl enable-linger "$USER"
 
 [Unit]
-Description=OpenClaw shared local LLM (vLLM, INT4-AWQ Qwen3.5-4B, LAN :11434)
+Description=OpenClaw shared local LLM (vLLM, uncensored Qwen3.5-4B-VL W4A16, LAN :11434)
 After=network-online.target docker.service
 Wants=network-online.target
 
 [Service]
 Type=simple
 # Swap OPENCLAW_MODEL to change the model for every app at once (mirrors the
-# Modelfile's role on the Ollama hosts). Must be an AWQ / compressed-tensors
-# checkpoint that fits ~8 GB.
-Environment=OPENCLAW_MODEL=QuantTrio/Qwen3.5-4B-AWQ
+# Modelfile's role on the Ollama hosts). Must be a local path or HF repo vLLM
+# can load; a local W4A16/compressed-tensors checkpoint fits ~8 GB with vision.
+Environment=OPENCLAW_MODEL=/model
+Environment=OPENCLAW_MODEL_HOST_DIR=%h/.cache/openclaw-models/hauhaucs-w4a16
 Environment=OPENCLAW_PORT=11434
 Environment=VLLM_IMAGE=vllm/vllm-openai:latest
-# Qwen3.5's GDN/FLA execution requires transient workspace beyond the explicit
-# KV cache. On Beast's 8 GB GPU, admit four active sequences, use a 6,144-token
-# total sequence limit, reserve 1.2 GB for FP8 KV, and prefill in 1,024-token
-# waves so GDN/FLA workspace retains headroom; additional requests queue safely.
+# max_pixels caps per-frame/image resolution so the multimodal profiling pass
+# doesn't blow past the 8 GB card before KV cache is even allocated; this is
+# what makes the model fully GPU-resident (zero --cpu-offload-gb). Validated:
+# 3 concurrent sequences, 8192-token context, ~3.4x KV-cache headroom, one
+# video OR up to 4 images per request. See the experiment log for numbers.
 # Clear any stale container left by a hard crash before (re)starting.
 ExecStartPre=-/usr/bin/docker rm -f openclaw-vllm
-ExecStart=/usr/bin/docker run --rm --name openclaw-vllm --gpus all --ipc=host -p ${OPENCLAW_PORT}:8000 -e PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True -v %h/.cache/huggingface:/root/.cache/huggingface ${VLLM_IMAGE} ${OPENCLAW_MODEL} --revision 32c292e3a73afe1138518180b1b6d2868c980ee2 --served-model-name openclaw --language-model-only --default-chat-template-kwargs '{"enable_thinking":false}' --max-model-len 6144 --max-num-seqs 4 --max-num-batched-tokens 1024 --gpu-memory-utilization 0.95 --kv-cache-dtype fp8 --kv-cache-memory 1200000000 --enforce-eager --enable-auto-tool-choice --tool-call-parser qwen3_coder
+ExecStart=/usr/bin/docker run --rm --name openclaw-vllm --gpus all --ipc=host -p ${OPENCLAW_PORT}:8000 -e PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True -v %h/.cache/huggingface:/root/.cache/huggingface -v ${OPENCLAW_MODEL_HOST_DIR}:/model ${VLLM_IMAGE} --model ${OPENCLAW_MODEL} --served-model-name openclaw --max-model-len 8192 --max-num-seqs 3 --gpu-memory-utilization 0.90 --mm-processor-kwargs '{"max_pixels": 200704}' --limit-mm-per-prompt '{"video":1,"image":4}' --enforce-eager --trust-remote-code
 ExecStop=/usr/bin/docker stop openclaw-vllm
 ExecStopPost=-/usr/bin/docker rm -f openclaw-vllm
 Restart=always
