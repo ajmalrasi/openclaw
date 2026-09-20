@@ -55,7 +55,7 @@ Environment=VLLM_IMAGE=vllm/vllm-openai:latest
 # video OR up to 4 images per request. See the experiment log for numbers.
 # Clear any stale container left by a hard crash before (re)starting.
 ExecStartPre=-/usr/bin/docker rm -f openclaw-vllm
-ExecStart=/usr/bin/docker run --rm --name openclaw-vllm --gpus all --ipc=host -p ${OPENCLAW_PORT}:8000 -e PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True -v %h/.cache/huggingface:/root/.cache/huggingface -v ${OPENCLAW_MODEL_HOST_DIR}:/model ${VLLM_IMAGE} --model ${OPENCLAW_MODEL} --served-model-name openclaw --default-chat-template-kwargs '{"enable_thinking": false}' --max-model-len 6144 --max-num-seqs 8 --gpu-memory-utilization 0.95 --mm-processor-kwargs '{"max_pixels": 200704}' --limit-mm-per-prompt '{"video":1,"image":4}' --enforce-eager --trust-remote-code
+ExecStart=/usr/bin/docker run --rm --name openclaw-vllm --gpus all --ipc=host -p ${OPENCLAW_PORT}:8000 -e PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True -v %h/.cache/huggingface:/root/.cache/huggingface -v ${OPENCLAW_MODEL_HOST_DIR}:/model ${VLLM_IMAGE} --model ${OPENCLAW_MODEL} --served-model-name openclaw --default-chat-template-kwargs '{"enable_thinking": false}' --max-model-len 8192 --max-num-seqs 8 --gpu-memory-utilization 0.95 --mm-processor-kwargs '{"max_pixels": 200704}' --limit-mm-per-prompt '{"video":1,"image":4}' --enforce-eager --trust-remote-code
 ExecStop=/usr/bin/docker stop openclaw-vllm
 ExecStopPost=-/usr/bin/docker rm -f openclaw-vllm
 Restart=always
