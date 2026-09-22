@@ -1,0 +1,23 @@
+{
+  "tokenizer_class": "Qwen2Tokenizer",
+  "tokenizer_vocab_size": 248044,
+  "tokenizer_len": 248077,
+  "model_vocab_size": 248320,
+  "eos_token_id": 248046,
+  "special_token_ids": [
+    248046,
+    248044,
+    248070,
+    248071,
+    248076,
+    248056,
+    248057,
+    248053,
+    248054
+  ],
+  "fixture_token_counts": {
+    "valid_primary": 16,
+    "valid_secondary": 13,
+    "invalid_primary": 12
+  }
+}

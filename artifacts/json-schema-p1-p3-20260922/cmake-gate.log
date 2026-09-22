@@ -1,0 +1,862 @@
+2026-09-22T20:28:12+05:30
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- The CUDA compiler identification is unknown
+CMake Error at /usr/share/cmake-3.28/Modules/CMakeDetermineCUDACompiler.cmake:270 (message):
+  Failed to detect a default CUDA architecture.
+
+
+
+  Compiler output:
+
+Call Stack (most recent call first):
+  CMakeLists.txt:26 (project)
+
+
+-- Configuring incomplete, errors occurred!
+2026-09-22T20:28:58+05:30
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- The CUDA compiler identification is unknown
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+CMake Error at CMakeLists.txt:26 (project):
+  No CMAKE_CUDA_COMPILER could be found.
+
+  Tell CMake where to find the compiler by setting either the environment
+  variable "CUDACXX" or the CMake cache entry CMAKE_CUDA_COMPILER to the full
+  path to the compiler, or to the compiler name if it is in the PATH.
+
+
+-- Configuring incomplete, errors occurred!
+2026-09-23T00:10:39+05:30
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- The CUDA compiler identification is NVIDIA 13.2.86
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Detecting CUDA compiler ABI info
+-- Detecting CUDA compiler ABI info - done
+-- Check for working CUDA compiler: /usr/local/cuda/bin/nvcc - skipped
+-- Detecting CUDA compile features
+-- Detecting CUDA compile features - done
+CMake Error at CMakeLists.txt:73 (include):
+  include could not find requested file:
+
+    /home/ajmalrasi/json-schema-p1-p3-20260922/source/cmake/CodeCoverage.cmake
+
+
+-- Configurable variable CUDA_CTK_VERSION set to 12.8
+-- Configurable variable CUDA_DIR set to /usr/local/cuda-12.8
+CMake Error at CMakeLists.txt:173 (include):
+  include could not find requested file:
+
+    /home/ajmalrasi/json-schema-p1-p3-20260922/source/cmake/FindNVRTC.cmake
+
+
+-- NVTX profiling DISABLED (use -DENABLE_NVTX_PROFILING=ON to enable)
+CMake Error at CMakeLists.txt:202 (find_package):
+  By not providing "FindTensorRT.cmake" in CMAKE_MODULE_PATH this project has
+  asked CMake to find a package configuration file provided by "TensorRT",
+  but CMake did not find one.
+
+  Could not find a package configuration file provided by "TensorRT" with any
+  of the following names:
+
+    TensorRTConfig.cmake
+    tensorrt-config.cmake
+
+  Add the installation prefix of "TensorRT" to CMAKE_PREFIX_PATH or set
+  "TensorRT_DIR" to a directory containing one of the above files.  If
+  "TensorRT" provides a separate development package or SDK, be sure it has
+  been installed.
+
+
+-- Configuring incomplete, errors occurred!
+2026-09-23T00:11:21+05:30
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- The CUDA compiler identification is NVIDIA 13.2.86
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Detecting CUDA compiler ABI info
+-- Detecting CUDA compiler ABI info - done
+-- Check for working CUDA compiler: /usr/local/cuda/bin/nvcc - skipped
+-- Detecting CUDA compile features
+-- Detecting CUDA compile features - done
+-- Configurable variable CUDA_CTK_VERSION set to 12.8
+-- Configurable variable CUDA_DIR set to /usr/local/cuda-12.8
+-- Plugin NVRTC JIT ENABLED (dynamic): /usr/local/cuda/lib64/libnvrtc.so
+-- NVTX profiling DISABLED (use -DENABLE_NVTX_PROFILING=ON to enable)
+-- Found TensorRT: /usr/lib/aarch64-linux-gnu/libnvinfer.so  found components: OnnxParser 
+-- TensorRT: linking TensorRT (libnvinfer.so) -> /usr/lib/aarch64-linux-gnu/libnvinfer.so
+-- FMHA Kernels: Excluding SM architectures: EXCLUDE_SM_87;EXCLUDE_SM_101;EXCLUDE_SM_121
+-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+-- CuTe DSL: inferred artifact tag 'sm_87' from /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp/kernels/cuteDSLArtifact/aarch64
+-- CuTe DSL: f16_moe Ampere grouped GEMM found — CUTE_DSL_F16_MOE_AMPERE_ENABLED set
+-- CuTe DSL: gemm_ampere_decode_fp16 variant found — CUTE_DSL_GEMM_AMPERE_DECODE_ENABLED set
+-- CuTe DSL: gemm_ampere_small_prefill_fp16 variant found — CUTE_DSL_GEMM_AMPERE_SMALL_PREFILL_ENABLED set
+-- CuTe DSL: gemm_ampere_medium_prefill_fp16 variant found — CUTE_DSL_GEMM_AMPERE_MEDIUM_PREFILL_ENABLED set
+-- CuTe DSL: gemm_ampere_large_prefill_fp16 variant found — CUTE_DSL_GEMM_AMPERE_LARGE_PREFILL_ENABLED set
+-- CuTe DSL: gemm_ampere_splitk4_fp16 — CUTE_DSL_GEMM_AMPERE_SPLITK4_ENABLED set
+-- CuTe DSL: gemm_ampere_splitk2_fp16 — CUTE_DSL_GEMM_AMPERE_SPLITK2_ENABLED set
+-- CuTe DSL: gemm_ampere_medium_bias_silu_fp16 — CUTE_DSL_GEMM_AMPERE_MEDIUM_BIAS_SILU_ENABLED set
+-- CuTe DSL: gemm_ampere_medium_bias_fp16 — CUTE_DSL_GEMM_AMPERE_MEDIUM_BIAS_ENABLED set
+-- CuTe DSL: CUTE_DSL_GEMM_ENABLED set (GEMM variants found)
+-- CuTe DSL: arch=aarch64  artifact_tag=sm_87  groups=[fmha]  lib=/home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp/kernels/cuteDSLArtifact/aarch64/sm_87/libcutedsl_aarch64.a
+-- Configuring done (5.1s)
+CMake Error: The following variables are used in this project, but they are set to NOTFOUND.
+Please set them or make sure they are set and tested correctly in the CMake files:
+CUDART_LIB
+    linked by target "NvInfer_edgellm_plugin" in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+    linked by target "edgellmPluginJit" in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+CUDA_RUNTIME_API_INCLUDE_DIR
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/utils
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/utils
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/utils
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/llm
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/llm
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/llm
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/llm
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/llm
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/llm
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/multimodal
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/multimodal
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/multimodal
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/multimodal
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/multimodal
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/multimodal
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/omni
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/omni
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/omni
+CURAND_KERNEL_INCLUDE_DIR
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/utils
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/utils
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/utils
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/llm
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/llm
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/llm
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/llm
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/llm
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/llm
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/multimodal
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/multimodal
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/multimodal
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/multimodal
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/multimodal
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/multimodal
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/omni
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/omni
+   used as include directory in directory /home/ajmalrasi/json-schema-p1-p3-20260922/source/examples/omni
+
+CMake Error in cpp/CMakeLists.txt:
+  Found relative path while evaluating include directories of
+  "edgellmPluginJit":
+
+    "CUDA_RUNTIME_API_INCLUDE_DIR-NOTFOUND"
+
+
+
+CMake Error in cpp/CMakeLists.txt:
+  Found relative path while evaluating include directories of
+  "edgellmKernels":
+
+    "CUDA_RUNTIME_API_INCLUDE_DIR-NOTFOUND"
+
+
+
+CMake Error in cpp/CMakeLists.txt:
+  Found relative path while evaluating include directories of
+  "edgellmKernels":
+
+    "CUDA_RUNTIME_API_INCLUDE_DIR-NOTFOUND"
+
+
+
+CMake Error in cpp/CMakeLists.txt:
+  Found relative path while evaluating include directories of
+  "edgellmXGrammar":
+
+    "CUDA_RUNTIME_API_INCLUDE_DIR-NOTFOUND"
+
+
+
+CMake Error in cpp/CMakeLists.txt:
+  Found relative path while evaluating include directories of "edgellmCore":
+
+    "CUDA_RUNTIME_API_INCLUDE_DIR-NOTFOUND"
+
+
+
+CMake Error in cpp/CMakeLists.txt:
+  Found relative path while evaluating include directories of "edgellmCore":
+
+    "CUDA_RUNTIME_API_INCLUDE_DIR-NOTFOUND"
+
+
+
+CMake Error in cpp/CMakeLists.txt:
+  Found relative path while evaluating include directories of
+  "edgellmBuilder":
+
+    "CUDA_RUNTIME_API_INCLUDE_DIR-NOTFOUND"
+
+
+
+CMake Error in cpp/CMakeLists.txt:
+  Found relative path while evaluating include directories of
+  "NvInfer_edgellm_plugin":
+
+    "CUDA_RUNTIME_API_INCLUDE_DIR-NOTFOUND"
+
+
+
+CMake Error in examples/utils/CMakeLists.txt:
+  Found relative path while evaluating include directories of "exampleUtils":
+
+    "CUDA_RUNTIME_API_INCLUDE_DIR-NOTFOUND"
+
+
+
+CMake Error in examples/llm/CMakeLists.txt:
+  Found relative path while evaluating include directories of "llm_build":
+
+    "CUDA_RUNTIME_API_INCLUDE_DIR-NOTFOUND"
+
+
+
+CMake Error in examples/llm/CMakeLists.txt:
+  Found relative path while evaluating include directories of
+  "llm_inference":
+
+    "CUDA_RUNTIME_API_INCLUDE_DIR-NOTFOUND"
+
+
+
+CMake Error in examples/llm/CMakeLists.txt:
+  Found relative path while evaluating include directories of "llm_stream":
+
+    "CUDA_RUNTIME_API_INCLUDE_DIR-NOTFOUND"
+
+
+
+CMake Error in examples/llm/CMakeLists.txt:
+  Found relative path while evaluating include directories of "llm_bench":
+
+    "CUDA_RUNTIME_API_INCLUDE_DIR-NOTFOUND"
+
+
+
+CMake Error in examples/multimodal/CMakeLists.txt:
+  Found relative path while evaluating include directories of "visual_build":
+
+    "CUDA_RUNTIME_API_INCLUDE_DIR-NOTFOUND"
+
+
+
+CMake Error in examples/multimodal/CMakeLists.txt:
+  Found relative path while evaluating include directories of "audio_build":
+
+    "CUDA_RUNTIME_API_INCLUDE_DIR-NOTFOUND"
+
+
+
+CMake Error in examples/multimodal/CMakeLists.txt:
+  Found relative path while evaluating include directories of "action_build":
+
+    "CUDA_RUNTIME_API_INCLUDE_DIR-NOTFOUND"
+
+
+
+CMake Error in examples/multimodal/CMakeLists.txt:
+  Found relative path while evaluating include directories of
+  "action_inference":
+
+    "CUDA_RUNTIME_API_INCLUDE_DIR-NOTFOUND"
+
+
+
+CMake Error in examples/omni/CMakeLists.txt:
+  Found relative path while evaluating include directories of
+  "qwen3_tts_inference":
+
+    "CUDA_RUNTIME_API_INCLUDE_DIR-NOTFOUND"
+
+
+
+-- Generating done (0.1s)
+CMake Generate step failed.  Build files cannot be regenerated correctly.
+2026-09-23T00:16:31+05:30
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- The CUDA compiler identification is NVIDIA 13.2.86
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Detecting CUDA compiler ABI info
+-- Detecting CUDA compiler ABI info - done
+-- Check for working CUDA compiler: /usr/local/cuda/bin/nvcc - skipped
+-- Detecting CUDA compile features
+-- Detecting CUDA compile features - done
+-- Configurable variable CUDA_CTK_VERSION set to 13.2
+-- Configurable variable CUDA_DIR set to /usr/local/cuda/targets/sbsa-linux
+-- Plugin NVRTC JIT ENABLED (dynamic): /usr/local/cuda/targets/sbsa-linux/lib/libnvrtc.so
+-- NVTX profiling DISABLED (use -DENABLE_NVTX_PROFILING=ON to enable)
+-- Found TensorRT: /usr/lib/aarch64-linux-gnu/libnvinfer.so  found components: OnnxParser 
+-- TensorRT: linking TensorRT (libnvinfer.so) -> /usr/lib/aarch64-linux-gnu/libnvinfer.so
+-- FMHA Kernels: Excluding SM architectures: EXCLUDE_SM_87;EXCLUDE_SM_101;EXCLUDE_SM_121
+-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+-- CuTe DSL: inferred artifact tag 'sm_87' from /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp/kernels/cuteDSLArtifact/aarch64
+-- CuTe DSL: f16_moe Ampere grouped GEMM found — CUTE_DSL_F16_MOE_AMPERE_ENABLED set
+-- CuTe DSL: gemm_ampere_decode_fp16 variant found — CUTE_DSL_GEMM_AMPERE_DECODE_ENABLED set
+-- CuTe DSL: gemm_ampere_small_prefill_fp16 variant found — CUTE_DSL_GEMM_AMPERE_SMALL_PREFILL_ENABLED set
+-- CuTe DSL: gemm_ampere_medium_prefill_fp16 variant found — CUTE_DSL_GEMM_AMPERE_MEDIUM_PREFILL_ENABLED set
+-- CuTe DSL: gemm_ampere_large_prefill_fp16 variant found — CUTE_DSL_GEMM_AMPERE_LARGE_PREFILL_ENABLED set
+-- CuTe DSL: gemm_ampere_splitk4_fp16 — CUTE_DSL_GEMM_AMPERE_SPLITK4_ENABLED set
+-- CuTe DSL: gemm_ampere_splitk2_fp16 — CUTE_DSL_GEMM_AMPERE_SPLITK2_ENABLED set
+-- CuTe DSL: gemm_ampere_medium_bias_silu_fp16 — CUTE_DSL_GEMM_AMPERE_MEDIUM_BIAS_SILU_ENABLED set
+-- CuTe DSL: gemm_ampere_medium_bias_fp16 — CUTE_DSL_GEMM_AMPERE_MEDIUM_BIAS_ENABLED set
+-- CuTe DSL: CUTE_DSL_GEMM_ENABLED set (GEMM variants found)
+-- CuTe DSL: arch=aarch64  artifact_tag=sm_87  groups=[fmha]  lib=/home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp/kernels/cuteDSLArtifact/aarch64/sm_87/libcutedsl_aarch64.a
+-- Configuring done (4.8s)
+-- Generating done (0.1s)
+-- Build files have been written to: /home/ajmalrasi/json-schema-p1-p3-20260922/cmake-check
+[ 14%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/config.cc.o
+[ 14%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/compiled_grammar.cc.o
+[ 14%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/earley_parser.cc.o
+In file included from /home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/dynamic_bitset.h:22,
+                 from /home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/compiled_grammar_impl.h:19,
+                 from /home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/compiled_grammar.cc:12:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::AdaptiveTokenMask>(xgrammar::AdaptiveTokenMask*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = xgrammar::AdaptiveTokenMask::StoreType xgrammar::AdaptiveTokenMask::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::AdaptiveTokenMask, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::AdaptiveTokenMask>(xgrammar::AdaptiveTokenMask*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = AdaptiveTokenMask; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::AdaptiveTokenMask>(xgrammar::AdaptiveTokenMask*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::AdaptiveTokenMask; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = AdaptiveTokenMask; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:607:50:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = std::unordered_map<ParserState, AdaptiveTokenMask, StateHashForCache, StateEqualForCache>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/compiled_grammar.cc:212:44:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+  280 |       visit_config<T>([&](auto ptr, const char* name, std::size_t idx) {
+      |                                                       ~~~~~~~~~~~~^~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::AdaptiveTokenMask>(xgrammar::AdaptiveTokenMask*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = std::vector<int> xgrammar::AdaptiveTokenMask::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::AdaptiveTokenMask, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::AdaptiveTokenMask>(xgrammar::AdaptiveTokenMask*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = AdaptiveTokenMask; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::AdaptiveTokenMask>(xgrammar::AdaptiveTokenMask*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::AdaptiveTokenMask; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = AdaptiveTokenMask; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:607:50:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = std::unordered_map<ParserState, AdaptiveTokenMask, StateHashForCache, StateEqualForCache>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/compiled_grammar.cc:212:44:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::AdaptiveTokenMask>(xgrammar::AdaptiveTokenMask*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = xgrammar::DynamicBitset xgrammar::AdaptiveTokenMask::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::AdaptiveTokenMask, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::AdaptiveTokenMask>(xgrammar::AdaptiveTokenMask*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = AdaptiveTokenMask; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::AdaptiveTokenMask>(xgrammar::AdaptiveTokenMask*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::AdaptiveTokenMask; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = AdaptiveTokenMask; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:607:50:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = std::unordered_map<ParserState, AdaptiveTokenMask, StateHashForCache, StateEqualForCache>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/compiled_grammar.cc:212:44:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = std::vector<xgrammar::Grammar::Impl::Rule> xgrammar::Grammar::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::Grammar::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7, 8}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7, 8>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = Grammar::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::Grammar, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/compiled_grammar.cc:193:44:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = std::vector<xgrammar::Grammar::Impl::SuffixStopInfo> xgrammar::Grammar::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::Grammar::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7, 8}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7, 8>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = Grammar::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::Grammar, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/compiled_grammar.cc:193:44:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = std::vector<int> xgrammar::Grammar::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::Grammar::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7, 8}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7, 8>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = Grammar::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::Grammar, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/compiled_grammar.cc:193:44:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = int xgrammar::Grammar::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::Grammar::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7, 8}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7, 8>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = Grammar::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::Grammar, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/compiled_grammar.cc:193:44:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = xgrammar::CompactFSM xgrammar::Grammar::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::Grammar::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7, 8}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7, 8>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = Grammar::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::Grammar, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/compiled_grammar.cc:193:44:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = std::vector<std::optional<xgrammar::CompactFSMWithStartEndWithSize> > xgrammar::Grammar::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::Grammar::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7, 8}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7, 8>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = Grammar::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::Grammar, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/compiled_grammar.cc:193:44:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = bool xgrammar::Grammar::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::Grammar::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7, 8}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7, 8>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = Grammar::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::Grammar, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/compiled_grammar.cc:193:44:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+[ 28%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/fsm.cc.o
+[ 28%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/fsm_builder.cc.o
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/fsm.cc: In static member function ‘static xgrammar::Result<xgrammar::FSMWithStartEnd> xgrammar::FSMWithStartEnd::Intersect(const xgrammar::FSMWithStartEnd&, const xgrammar::FSMWithStartEnd&, int)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/fsm.cc:1197:65: warning: unused parameter ‘max_result_num_states’ [-Wunused-parameter]
+ 1197 |     const FSMWithStartEnd& lhs, const FSMWithStartEnd& rhs, int max_result_num_states
+      |                                                             ~~~~^~~~~~~~~~~~~~~~~~~~~
+In file included from /home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/fsm.cc:29:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::CompactFSM::Impl>(xgrammar::CompactFSM::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = xgrammar::Compact2DArray<xgrammar::FSMEdge> xgrammar::FSMImplBase<xgrammar::Compact2DArray<xgrammar::FSMEdge> >::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::CompactFSM::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::CompactFSM::Impl>(xgrammar::CompactFSM::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = CompactFSM::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::CompactFSM::Impl>(xgrammar::CompactFSM::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::CompactFSM::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = CompactFSM::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::CompactFSM; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::CompactFSM, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/fsm.cc:866:64:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+  280 |       visit_config<T>([&](auto ptr, const char* name, std::size_t idx) {
+      |                                                       ~~~~~~~~~~~~^~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::CompactFSM::Impl>(xgrammar::CompactFSM::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = std::vector<int> xgrammar::FSMImplBase<xgrammar::Compact2DArray<xgrammar::FSMEdge> >::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::CompactFSM::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::CompactFSM::Impl>(xgrammar::CompactFSM::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = CompactFSM::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::CompactFSM::Impl>(xgrammar::CompactFSM::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::CompactFSM::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = CompactFSM::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::CompactFSM; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::CompactFSM, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/fsm.cc:866:64:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::CompactFSM::Impl>(xgrammar::CompactFSM::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = long unsigned int xgrammar::CompactFSM::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::CompactFSM::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::CompactFSM::Impl>(xgrammar::CompactFSM::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = CompactFSM::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::CompactFSM::Impl>(xgrammar::CompactFSM::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::CompactFSM::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = CompactFSM::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::CompactFSM; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::CompactFSM, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/fsm.cc:866:64:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Compact2DArray<xgrammar::FSMEdge> >(xgrammar::Compact2DArray<xgrammar::FSMEdge>*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = std::vector<xgrammar::FSMEdge> xgrammar::Compact2DArray<xgrammar::FSMEdge>::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::Compact2DArray<xgrammar::FSMEdge>, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Compact2DArray<xgrammar::FSMEdge> >(xgrammar::Compact2DArray<xgrammar::FSMEdge>*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = Compact2DArray<FSMEdge>; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Compact2DArray<xgrammar::FSMEdge> >(xgrammar::Compact2DArray<xgrammar::FSMEdge>*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::Compact2DArray<xgrammar::FSMEdge>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Compact2DArray<FSMEdge>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:285:53:   required from ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::CompactFSM::Impl>(xgrammar::CompactFSM::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = xgrammar::Compact2DArray<xgrammar::FSMEdge> xgrammar::FSMImplBase<xgrammar::Compact2DArray<xgrammar::FSMEdge> >::*; std::size_t = long unsigned int]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::CompactFSM::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::CompactFSM::Impl>(xgrammar::CompactFSM::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = CompactFSM::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::CompactFSM::Impl>(xgrammar::CompactFSM::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::CompactFSM::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = CompactFSM::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::CompactFSM; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::CompactFSM, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/fsm.cc:866:64:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Compact2DArray<xgrammar::FSMEdge> >(xgrammar::Compact2DArray<xgrammar::FSMEdge>*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = std::vector<int> xgrammar::Compact2DArray<xgrammar::FSMEdge>::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::Compact2DArray<xgrammar::FSMEdge>, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Compact2DArray<xgrammar::FSMEdge> >(xgrammar::Compact2DArray<xgrammar::FSMEdge>*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = Compact2DArray<FSMEdge>; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Compact2DArray<xgrammar::FSMEdge> >(xgrammar::Compact2DArray<xgrammar::FSMEdge>*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::Compact2DArray<xgrammar::FSMEdge>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Compact2DArray<FSMEdge>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:285:53:   required from ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::CompactFSM::Impl>(xgrammar::CompactFSM::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = xgrammar::Compact2DArray<xgrammar::FSMEdge> xgrammar::FSMImplBase<xgrammar::Compact2DArray<xgrammar::FSMEdge> >::*; std::size_t = long unsigned int]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::CompactFSM::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::CompactFSM::Impl>(xgrammar::CompactFSM::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = CompactFSM::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::CompactFSM::Impl>(xgrammar::CompactFSM::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::CompactFSM::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = CompactFSM::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::CompactFSM; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::CompactFSM, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/fsm.cc:866:64:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+[ 28%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar.cc.o
+In file included from /home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/dynamic_bitset.h:22,
+                 from /home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/compiled_grammar_impl.h:19,
+                 from /home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_functor.h:17,
+                 from /home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar.cc:13:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = std::vector<xgrammar::Grammar::Impl::Rule> xgrammar::Grammar::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::Grammar::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7, 8}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7, 8>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = Grammar::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::Grammar, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:635:34:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSON(T*, const std::string&, bool, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar.cc:353:37:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+  280 |       visit_config<T>([&](auto ptr, const char* name, std::size_t idx) {
+      |                                                       ~~~~~~~~~~~~^~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = std::vector<xgrammar::Grammar::Impl::SuffixStopInfo> xgrammar::Grammar::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::Grammar::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7, 8}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7, 8>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = Grammar::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::Grammar, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:635:34:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSON(T*, const std::string&, bool, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar.cc:353:37:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = std::vector<int> xgrammar::Grammar::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::Grammar::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7, 8}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7, 8>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = Grammar::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::Grammar, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:635:34:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSON(T*, const std::string&, bool, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar.cc:353:37:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = int xgrammar::Grammar::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::Grammar::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7, 8}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7, 8>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = Grammar::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::Grammar, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:635:34:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSON(T*, const std::string&, bool, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar.cc:353:37:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = xgrammar::CompactFSM xgrammar::Grammar::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::Grammar::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7, 8}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7, 8>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = Grammar::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::Grammar, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:635:34:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSON(T*, const std::string&, bool, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar.cc:353:37:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = std::vector<std::optional<xgrammar::CompactFSMWithStartEndWithSize> > xgrammar::Grammar::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::Grammar::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7, 8}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7, 8>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = Grammar::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::Grammar, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:635:34:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSON(T*, const std::string&, bool, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar.cc:353:37:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)> [with auto:33 = bool xgrammar::Grammar::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::Grammar::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7, 8}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7, 8>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = Grammar::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::Grammar::Impl>(xgrammar::Grammar::Impl*, const picojson::value&, const std::string&)::<lambda(auto:33, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::Grammar; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::Grammar, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:635:34:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSON(T*, const std::string&, bool, const std::string&) [with T = Grammar; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar.cc:353:37:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+[ 28%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_builder.cc.o
+[ 42%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_compiler.cc.o
+[ 42%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_functor.cc.o
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_functor.cc: In member function ‘virtual xgrammar::Grammar xgrammar::GrammarUnionFunctorImpl::Apply(const xgrammar::Grammar&)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_functor.cc:156:32: warning: unused parameter ‘grammar’ [-Wunused-parameter]
+  156 |   Grammar Apply(const Grammar& grammar) final {
+      |                 ~~~~~~~~~~~~~~~^~~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_functor.cc: In member function ‘virtual xgrammar::Grammar xgrammar::GrammarConcatFunctorImpl::Apply(const xgrammar::Grammar&)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_functor.cc:194:32: warning: unused parameter ‘grammar’ [-Wunused-parameter]
+  194 |   Grammar Apply(const Grammar& grammar) final {
+      |                 ~~~~~~~~~~~~~~~^~~~~~~
+In file included from /home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/fsm.h:25,
+                 from /home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_impl.h:17,
+                 from /home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/earley_parser.h:19,
+                 from /home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/compiled_grammar_impl.h:18,
+                 from /home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_compiler.cc:21:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_compiler.cc: In function ‘bool xgrammar::operator==(const GrammarCompilerCacheKeys::BuiltinJSONGrammarKey&, const GrammarCompilerCacheKeys::BuiltinJSONGrammarKey&)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/utils.h:413:38: warning: unused parameter ‘lhs’ [-Wunused-parameter]
+  413 |   friend bool operator==(const Type& lhs, const Type& rhs) noexcept { return true; } \
+      |                          ~~~~~~~~~~~~^~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_compiler.cc:1353:5: note: in expansion of macro ‘XGRAMMAR_EQUAL_BY_MEMBERS_EMPTY’
+ 1353 |     XGRAMMAR_EQUAL_BY_MEMBERS_EMPTY(BuiltinJSONGrammarKey);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/utils.h:413:55: warning: unused parameter ‘rhs’ [-Wunused-parameter]
+  413 |   friend bool operator==(const Type& lhs, const Type& rhs) noexcept { return true; } \
+      |                                           ~~~~~~~~~~~~^~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_compiler.cc:1353:5: note: in expansion of macro ‘XGRAMMAR_EQUAL_BY_MEMBERS_EMPTY’
+ 1353 |     XGRAMMAR_EQUAL_BY_MEMBERS_EMPTY(BuiltinJSONGrammarKey);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_compiler.cc: In function ‘bool xgrammar::operator!=(const GrammarCompilerCacheKeys::BuiltinJSONGrammarKey&, const GrammarCompilerCacheKeys::BuiltinJSONGrammarKey&)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/utils.h:414:38: warning: unused parameter ‘lhs’ [-Wunused-parameter]
+  414 |   friend bool operator!=(const Type& lhs, const Type& rhs) noexcept { return false; }
+      |                          ~~~~~~~~~~~~^~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_compiler.cc:1353:5: note: in expansion of macro ‘XGRAMMAR_EQUAL_BY_MEMBERS_EMPTY’
+ 1353 |     XGRAMMAR_EQUAL_BY_MEMBERS_EMPTY(BuiltinJSONGrammarKey);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/utils.h:414:55: warning: unused parameter ‘rhs’ [-Wunused-parameter]
+  414 |   friend bool operator!=(const Type& lhs, const Type& rhs) noexcept { return false; }
+      |                                           ~~~~~~~~~~~~^~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_compiler.cc:1353:5: note: in expansion of macro ‘XGRAMMAR_EQUAL_BY_MEMBERS_EMPTY’
+ 1353 |     XGRAMMAR_EQUAL_BY_MEMBERS_EMPTY(BuiltinJSONGrammarKey);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[ 42%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_matcher.cc.o
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_matcher.cc: In constructor ‘xgrammar::GrammarMatcher::Impl::Impl(const xgrammar::CompiledGrammar&, std::optional<std::vector<int> >, bool, int, std::optional<float>)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_matcher.cc:474:11: warning: unused parameter ‘max_rollback_tokens’ [-Wunused-parameter]
+  474 |       int max_rollback_tokens = -1,
+      |       ~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+[ 57%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_parser.cc.o
+[ 57%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_printer.cc.o
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_printer.cc: In member function ‘std::string xgrammar::GrammarPrinter::PrintEmptyStr(const GrammarExpr&)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/grammar_printer.cc:157:62: warning: unused parameter ‘grammar_expr’ [-Wunused-parameter]
+  157 | std::string GrammarPrinter::PrintEmptyStr(const GrammarExpr& grammar_expr) { return "\"\""; }
+      |                                           ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+[ 57%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc.o
+[ 57%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc.o
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc: In member function ‘xgrammar::Result<std::shared_ptr<xgrammar::SchemaSpec>, xgrammar::TypedError<xgrammar::{anonymous}::SchemaErrorType> > xgrammar::{anonymous}::SchemaParser::ResolveRef(const std::string&, const std::string&)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc:1465:48: warning: unused parameter ‘rule_name_hint’ [-Wunused-parameter]
+ 1465 |     const std::string& uri, const std::string& rule_name_hint
+      |                             ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc: In member function ‘virtual int32_t xgrammar::JSONSchemaConverter::GenerateBoolean(const xgrammar::BooleanSpec&, const std::string&)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc:2402:24: warning: unused parameter ‘spec’ [-Wunused-parameter]
+ 2402 |     const BooleanSpec& spec, const std::string& rule_name
+      |     ~~~~~~~~~~~~~~~~~~~^~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc:2402:49: warning: unused parameter ‘rule_name’ [-Wunused-parameter]
+ 2402 |     const BooleanSpec& spec, const std::string& rule_name
+      |                              ~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc: In member function ‘virtual int32_t xgrammar::JSONSchemaConverter::GenerateNull(const xgrammar::NullSpec&, const std::string&)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc:2407:59: warning: unused parameter ‘spec’ [-Wunused-parameter]
+ 2407 | int32_t JSONSchemaConverter::GenerateNull(const NullSpec& spec, const std::string& rule_name) {
+      |                                           ~~~~~~~~~~~~~~~~^~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc:2407:84: warning: unused parameter ‘rule_name’ [-Wunused-parameter]
+ 2407 | int32_t JSONSchemaConverter::GenerateNull(const NullSpec& spec, const std::string& rule_name) {
+      |                                                                 ~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc: In member function ‘virtual int32_t xgrammar::JSONSchemaConverter::FormatPropertyKey(const std::string&, const xgrammar::SchemaSpecPtr&)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc:2507:50: warning: unused parameter ‘schema’ [-Wunused-parameter]
+ 2507 |     const std::string& key, const SchemaSpecPtr& schema
+      |                             ~~~~~~~~~~~~~~~~~~~~~^~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc: In member function ‘virtual int32_t xgrammar::JSONSchemaConverter::FormatProperty(const std::string&, int32_t, const std::string&, int64_t, const xgrammar::SchemaSpecPtr&)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc:2515:24: warning: unused parameter ‘rule_name’ [-Wunused-parameter]
+ 2515 |     const std::string& rule_name,
+      |     ~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc:2516:13: warning: unused parameter ‘idx’ [-Wunused-parameter]
+ 2516 |     int64_t idx,
+      |     ~~~~~~~~^~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc: In member function ‘virtual int32_t xgrammar::JSONSchemaConverter::FormatOtherProperty(int32_t, int32_t, const std::string&, const std::string&, const xgrammar::SchemaSpecPtr&)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc:2525:24: warning: unused parameter ‘rule_name’ [-Wunused-parameter]
+ 2525 |     const std::string& rule_name,
+      |     ~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc:2526:24: warning: unused parameter ‘rule_name_suffix’ [-Wunused-parameter]
+ 2526 |     const std::string& rule_name_suffix,
+      |     ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc:2527:26: warning: unused parameter ‘schema’ [-Wunused-parameter]
+ 2527 |     const SchemaSpecPtr& schema
+      |     ~~~~~~~~~~~~~~~~~~~~~^~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc: In member function ‘virtual int32_t xgrammar::JSONSchemaConverter::GenerateAny(const xgrammar::AnySpec&, const std::string&)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc:3107:57: warning: unused parameter ‘spec’ [-Wunused-parameter]
+ 3107 | int32_t JSONSchemaConverter::GenerateAny(const AnySpec& spec, const std::string& rule_name) {
+      |                                          ~~~~~~~~~~~~~~~^~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc:3107:82: warning: unused parameter ‘rule_name’ [-Wunused-parameter]
+ 3107 | int32_t JSONSchemaConverter::GenerateAny(const AnySpec& spec, const std::string& rule_name) {
+      |                                                               ~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc: In member function ‘virtual int32_t xgrammar::JSONSchemaConverter::GenerateConst(const xgrammar::ConstSpec&, const std::string&)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc:3118:86: warning: unused parameter ‘rule_name’ [-Wunused-parameter]
+ 3118 | int32_t JSONSchemaConverter::GenerateConst(const ConstSpec& spec, const std::string& rule_name) {
+      |                                                                   ~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc: In member function ‘virtual int32_t xgrammar::JSONSchemaConverter::GenerateRef(const xgrammar::RefSpec&, const std::string&)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc:3142:82: warning: unused parameter ‘rule_name’ [-Wunused-parameter]
+ 3142 | int32_t JSONSchemaConverter::GenerateRef(const RefSpec& spec, const std::string& rule_name) {
+      |                                                               ~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc: In member function ‘virtual int32_t xgrammar::MiniMaxM3XMLToolCallingConverter::GenerateString(const xgrammar::StringSpec&, const std::string&)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc:167:48: warning: unused parameter ‘rule_name’ [-Wunused-parameter]
+  167 |     const StringSpec& spec, const std::string& rule_name
+      |                             ~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc: In member function ‘virtual int32_t xgrammar::MiniMaxM3XMLToolCallingConverter::GenerateObject(const xgrammar::ObjectSpec&, const std::string&, bool)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc:287:64: warning: unused parameter ‘dummy_need_braces’ [-Wunused-parameter]
+  287 |     const ObjectSpec& spec, const std::string& rule_name, bool dummy_need_braces
+      |                                                           ~~~~~^~~~~~~~~~~~~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc: In member function ‘virtual int32_t xgrammar::MiniMaxM3XMLToolCallingConverter::GenerateAny(const xgrammar::AnySpec&, const std::string&)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc:298:20: warning: unused parameter ‘spec’ [-Wunused-parameter]
+  298 |     const AnySpec& spec, const std::string& rule_name
+      |     ~~~~~~~~~~~~~~~^~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc:298:45: warning: unused parameter ‘rule_name’ [-Wunused-parameter]
+  298 |     const AnySpec& spec, const std::string& rule_name
+      |                          ~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc: In member function ‘virtual int32_t xgrammar::MiniMaxM3XMLToolCallingConverter::GenerateConst(const xgrammar::ConstSpec&, const std::string&)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc:338:47: warning: unused parameter ‘rule_name’ [-Wunused-parameter]
+  338 |     const ConstSpec& spec, const std::string& rule_name
+      |                            ~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc: In member function ‘virtual int32_t xgrammar::MiniMaxM3XMLToolCallingConverter::FormatProperty(const std::string&, int32_t, const std::string&, int64_t, const xgrammar::SchemaSpecPtr&)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc:385:24: warning: unused parameter ‘rule_name’ [-Wunused-parameter]
+  385 |     const std::string& rule_name,
+      |     ~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc:386:13: warning: unused parameter ‘idx’ [-Wunused-parameter]
+  386 |     int64_t idx,
+      |     ~~~~~~~~^~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc:387:26: warning: unused parameter ‘schema’ [-Wunused-parameter]
+  387 |     const SchemaSpecPtr& schema
+      |     ~~~~~~~~~~~~~~~~~~~~~^~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc: In member function ‘virtual std::string xgrammar::MiniMaxM3XMLToolCallingConverter::NextSeparator(bool)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc:392:66: warning: unused parameter ‘is_end’ [-Wunused-parameter]
+  392 | std::string MiniMaxM3XMLToolCallingConverter::NextSeparator(bool is_end) {
+      |                                                             ~~~~~^~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc: In member function ‘virtual int32_t xgrammar::XMLToolCallingConverter::GenerateObject(const xgrammar::ObjectSpec&, const std::string&, bool)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc:877:64: warning: unused parameter ‘dummy_need_braces’ [-Wunused-parameter]
+  877 |     const ObjectSpec& spec, const std::string& rule_name, bool dummy_need_braces
+      |                                                           ~~~~~^~~~~~~~~~~~~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc: In member function ‘virtual int32_t xgrammar::CohereXMLToolCallingConverter::GenerateObject(const xgrammar::ObjectSpec&, const std::string&, bool)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter_ext.cc:1234:64: warning: unused parameter ‘dummy_need_braces’ [-Wunused-parameter]
+ 1234 |     const ObjectSpec& spec, const std::string& rule_name, bool dummy_need_braces
+      |                                                           ~~~~~^~~~~~~~~~~~~~~~~
+[ 71%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/lark_converter.cc.o
+[ 71%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/regex_converter.cc.o
+[ 71%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/structural_tag.cc.o
+[ 85%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/suffix_automata.cc.o
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/structural_tag.cc: In member function ‘std::optional<xgrammar::InvalidStructuralTagError> xgrammar::StructuralTagAnalyzer::VisitSub(xgrammar::ConstStringFormat*)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/structural_tag.cc:1651:76: warning: unused parameter ‘format’ [-Wunused-parameter]
+ 1651 | std::optional<ISTError> StructuralTagAnalyzer::VisitSub(ConstStringFormat* format) {
+      |                                                         ~~~~~~~~~~~~~~~~~~~^~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/structural_tag.cc: In member function ‘std::optional<xgrammar::InvalidStructuralTagError> xgrammar::StructuralTagAnalyzer::VisitSub(xgrammar::JSONSchemaFormat*)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/structural_tag.cc:1655:75: warning: unused parameter ‘format’ [-Wunused-parameter]
+ 1655 | std::optional<ISTError> StructuralTagAnalyzer::VisitSub(JSONSchemaFormat* format) {
+      |                                                         ~~~~~~~~~~~~~~~~~~^~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/structural_tag.cc: In member function ‘std::optional<xgrammar::InvalidStructuralTagError> xgrammar::StructuralTagAnalyzer::VisitSub(xgrammar::GrammarFormat*)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/structural_tag.cc:1664:72: warning: unused parameter ‘format’ [-Wunused-parameter]
+ 1664 | std::optional<ISTError> StructuralTagAnalyzer::VisitSub(GrammarFormat* format) {
+      |                                                         ~~~~~~~~~~~~~~~^~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/structural_tag.cc: In member function ‘std::optional<xgrammar::InvalidStructuralTagError> xgrammar::StructuralTagAnalyzer::VisitSub(xgrammar::RegexFormat*)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/structural_tag.cc:1668:70: warning: unused parameter ‘format’ [-Wunused-parameter]
+ 1668 | std::optional<ISTError> StructuralTagAnalyzer::VisitSub(RegexFormat* format) {
+      |                                                         ~~~~~~~~~~~~~^~~~~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/structural_tag.cc: In member function ‘std::optional<xgrammar::InvalidStructuralTagError> xgrammar::StructuralTagAnalyzer::VisitSub(xgrammar::TokenFormat*)’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/structural_tag.cc:1756:70: warning: unused parameter ‘format’ [-Wunused-parameter]
+ 1756 | std::optional<ISTError> StructuralTagAnalyzer::VisitSub(TokenFormat* format) {
+      |                                                         ~~~~~~~~~~~~~^~~~~~
+[ 85%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/logging.cc.o
+[ 85%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/recursion_guard.cc.o
+[ 85%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/testing.cc.o
+[100%] Building CXX object cpp/CMakeFiles/edgellmXGrammar.dir/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/tokenizer_info.cc.o
+In file included from /home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/tokenizer_info.cc:22:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::TokenizerInfo::Impl>(xgrammar::TokenizerInfo::Impl*, const picojson::value&, const std::string&)::<lambda(auto:32, const char*, std::size_t)> [with auto:32 = xgrammar::VocabType xgrammar::TokenizerInfo::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::TokenizerInfo::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::TokenizerInfo::Impl>(xgrammar::TokenizerInfo::Impl*, const picojson::value&, const std::string&)::<lambda(auto:32, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = TokenizerInfo::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::TokenizerInfo::Impl>(xgrammar::TokenizerInfo::Impl*, const picojson::value&, const std::string&)::<lambda(auto:32, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::TokenizerInfo::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = TokenizerInfo::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::TokenizerInfo; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::TokenizerInfo, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = TokenizerInfo; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:635:34:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSON(T*, const std::string&, bool, const std::string&) [with T = TokenizerInfo; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/tokenizer_info.cc:553:37:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+  280 |       visit_config<T>([&](auto ptr, const char* name, std::size_t idx) {
+      |                                                       ~~~~~~~~~~~~^~~
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::TokenizerInfo::Impl>(xgrammar::TokenizerInfo::Impl*, const picojson::value&, const std::string&)::<lambda(auto:32, const char*, std::size_t)> [with auto:32 = int xgrammar::TokenizerInfo::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::TokenizerInfo::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::TokenizerInfo::Impl>(xgrammar::TokenizerInfo::Impl*, const picojson::value&, const std::string&)::<lambda(auto:32, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = TokenizerInfo::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::TokenizerInfo::Impl>(xgrammar::TokenizerInfo::Impl*, const picojson::value&, const std::string&)::<lambda(auto:32, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::TokenizerInfo::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = TokenizerInfo::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::TokenizerInfo; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::TokenizerInfo, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = TokenizerInfo; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:635:34:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSON(T*, const std::string&, bool, const std::string&) [with T = TokenizerInfo; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/tokenizer_info.cc:553:37:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::TokenizerInfo::Impl>(xgrammar::TokenizerInfo::Impl*, const picojson::value&, const std::string&)::<lambda(auto:32, const char*, std::size_t)> [with auto:32 = bool xgrammar::TokenizerInfo::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::TokenizerInfo::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::TokenizerInfo::Impl>(xgrammar::TokenizerInfo::Impl*, const picojson::value&, const std::string&)::<lambda(auto:32, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = TokenizerInfo::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::TokenizerInfo::Impl>(xgrammar::TokenizerInfo::Impl*, const picojson::value&, const std::string&)::<lambda(auto:32, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::TokenizerInfo::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = TokenizerInfo::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::TokenizerInfo; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::TokenizerInfo, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = TokenizerInfo; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:635:34:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSON(T*, const std::string&, bool, const std::string&) [with T = TokenizerInfo; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/tokenizer_info.cc:553:37:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::TokenizerInfo::Impl>(xgrammar::TokenizerInfo::Impl*, const picojson::value&, const std::string&)::<lambda(auto:32, const char*, std::size_t)> [with auto:32 = std::vector<int> xgrammar::TokenizerInfo::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::TokenizerInfo::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::TokenizerInfo::Impl>(xgrammar::TokenizerInfo::Impl*, const picojson::value&, const std::string&)::<lambda(auto:32, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = TokenizerInfo::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::TokenizerInfo::Impl>(xgrammar::TokenizerInfo::Impl*, const picojson::value&, const std::string&)::<lambda(auto:32, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::TokenizerInfo::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = TokenizerInfo::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::TokenizerInfo; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::TokenizerInfo, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = TokenizerInfo; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:635:34:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSON(T*, const std::string&, bool, const std::string&) [with T = TokenizerInfo; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/tokenizer_info.cc:553:37:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::TokenizerInfo::Impl>(xgrammar::TokenizerInfo::Impl*, const picojson::value&, const std::string&)::<lambda(auto:32, const char*, std::size_t)> [with auto:32 = std::vector<std::__cxx11::basic_string<char> > xgrammar::TokenizerInfo::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::TokenizerInfo::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::TokenizerInfo::Impl>(xgrammar::TokenizerInfo::Impl*, const picojson::value&, const std::string&)::<lambda(auto:32, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = TokenizerInfo::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::TokenizerInfo::Impl>(xgrammar::TokenizerInfo::Impl*, const picojson::value&, const std::string&)::<lambda(auto:32, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::TokenizerInfo::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = TokenizerInfo::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::TokenizerInfo; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::TokenizerInfo, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = TokenizerInfo; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:635:34:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSON(T*, const std::string&, bool, const std::string&) [with T = TokenizerInfo; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/tokenizer_info.cc:553:37:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h: In instantiation of ‘xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::TokenizerInfo::Impl>(xgrammar::TokenizerInfo::Impl*, const picojson::value&, const std::string&)::<lambda(auto:32, const char*, std::size_t)> [with auto:32 = std::vector<std::pair<int, std::__cxx11::basic_string<char> > > xgrammar::TokenizerInfo::Impl::*; std::size_t = long unsigned int]’:
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:159:13:   required from ‘void xgrammar::detail::reflection::visit_config_impl(Fn&&, std::index_sequence<_Idx ...>) [with Ftor = xgrammar::member_functor<xgrammar::TokenizerInfo::Impl, xgrammar::member_type::kConfig>; Fn = xgrammar::detail::json_serializer::TraitDeserializeJSONValue<xgrammar::TokenizerInfo::Impl>(xgrammar::TokenizerInfo::Impl*, const picojson::value&, const std::string&)::<lambda(auto:32, const char*, std::size_t)>&; long unsigned int ...Idx = {0, 1, 2, 3, 4, 5, 6, 7}; std::index_sequence<_Idx ...> = std::integer_sequence<long unsigned int, 0, 1, 2, 3, 4, 5, 6, 7>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/reflection.h:226:53:   required from ‘void xgrammar::visit_config(Fn&&) [with T = TokenizerInfo::Impl; Fn = detail::json_serializer::TraitDeserializeJSONValue<xgrammar::TokenizerInfo::Impl>(xgrammar::TokenizerInfo::Impl*, const picojson::value&, const std::string&)::<lambda(auto:32, const char*, std::size_t)>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:22:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::TraitDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = xgrammar::TokenizerInfo::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:471:72:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = TokenizerInfo::Impl; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:342:44:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::detail::json_serializer::AutoDeserializeJSONValuePImpl(T*, const picojson::value&, const std::string&) [with T = xgrammar::TokenizerInfo; <template-parameter-1-2> = xgrammar::is_pimpl_class<xgrammar::TokenizerInfo, void>; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:469:66:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSONValue(T*, const picojson::value&, const std::string&) [with T = TokenizerInfo; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:635:34:   required from ‘std::optional<std::variant<xgrammar::DeserializeVersionError, xgrammar::InvalidJSONError, xgrammar::DeserializeFormatError> > xgrammar::AutoDeserializeJSON(T*, const std::string&, bool, const std::string&) [with T = TokenizerInfo; std::string = std::__cxx11::basic_string<char>]’
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/tokenizer_info.cc:553:37:   required from here
+/home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/support/json_serializer.h:280:67: warning: unused parameter ‘idx’ [-Wunused-parameter]
+[100%] Linking CXX static library libedgellmXGrammar.a
+[100%] Built target edgellmXGrammar
+CMAKE_XGRAMMAR_GATE=passed
+2026-09-23T00:18:20+05:30

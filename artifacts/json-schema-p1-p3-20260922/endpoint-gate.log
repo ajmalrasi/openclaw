@@ -1,0 +1,106 @@
+2026-09-22T20:21:39+05:30
+2026-09-22T20:23:36+05:30
+true
+Traceback (most recent call last):
+  File "/home/ajmalrasi/TensorRT-Edge-LLM/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/home/ajmalrasi/TensorRT-Edge-LLM/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ajmalrasi/TensorRT-Edge-LLM/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 207, in handle_request
+    raise UnsupportedProtocol(
+httpcore.UnsupportedProtocol: Request URL is missing an 'http://' or 'https://' protocol.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ajmalrasi/json-schema-p1-p3-20260922/endpoint_gate.py", line 154, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/ajmalrasi/json-schema-p1-p3-20260922/endpoint_gate.py", line 105, in main
+    payload, value = complete(OBJECT_SCHEMA, "Return one weather record as JSON.")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ajmalrasi/json-schema-p1-p3-20260922/endpoint_gate.py", line 55, in complete
+    response = CLIENT.post("/v1/chat/completions", json=request(schema, prompt))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ajmalrasi/TensorRT-Edge-LLM/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1144, in post
+    return self.request(
+           ^^^^^^^^^^^^^
+  File "/home/ajmalrasi/TensorRT-Edge-LLM/.venv/lib/python3.12/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ajmalrasi/TensorRT-Edge-LLM/.venv/lib/python3.12/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ajmalrasi/TensorRT-Edge-LLM/.venv/lib/python3.12/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ajmalrasi/TensorRT-Edge-LLM/.venv/lib/python3.12/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ajmalrasi/TensorRT-Edge-LLM/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ajmalrasi/TensorRT-Edge-LLM/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+  File "/usr/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/home/ajmalrasi/TensorRT-Edge-LLM/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.UnsupportedProtocol: Request URL is missing an 'http://' or 'https://' protocol.
+ENDPOINT_GATE_EXIT=1
+               total        used        free      shared  buff/cache   available
+Mem:            7485        1981        5193          13         558        5503
+Swap:          16383         462       15921
+2026-09-22T20:23:50+05:30
+2026-09-22T20:24:18+05:30
+true
+Traceback (most recent call last):
+  File "/home/ajmalrasi/json-schema-p1-p3-20260922/endpoint_gate.py", line 154, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/ajmalrasi/json-schema-p1-p3-20260922/endpoint_gate.py", line 105, in main
+    payload, value = complete(OBJECT_SCHEMA, "Return one weather record as JSON.")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ajmalrasi/json-schema-p1-p3-20260922/endpoint_gate.py", line 56, in complete
+    response.raise_for_status()
+  File "/home/ajmalrasi/TensorRT-Edge-LLM/.venv/lib/python3.12/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Server error '500 Internal Server Error' for url 'http://127.0.0.1:11435/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+ENDPOINT_GATE_EXIT=1
+               total        used        free      shared  buff/cache   available
+Mem:            7485        1990        5123          13         596        5494
+Swap:          16383         491       15892
+2026-09-22T20:24:32+05:30
+2026-09-22T20:27:18+05:30
+true
+SINGLE_OBJECT {"city": "Paris", "ok": false, "temperature": 12}
+STREAM_OBJECT {"city": "Paris", "ok": false, "temperature": 12}
+HTTP_400_GATE passed=1
+BATCH_TWO_GATE {"city": "Paris", "ok": false, "temperature": 12} [1, 2, 3]
+CANCEL_REUSE_GATE passed=1
+PHASE1_3_ENDPOINT_GATE passed=1 elapsed_seconds=9.046
+{"status":"healthy","model":"openclaw-json-candidate","execution":{"captures":0,"replays":0,"eager":104,"profile_switches":12},"active_requests":1,"queued_requests":0,"capabilities":{"chat":true,"transcription":false,"speech":false,"input_modalities":["text"],"output_modalities":["text"],"max_model_len":4608,"max_input_len":4096,"max_batch_size":2,"max_num_seqs":2,"kv_cache_dtype":"fp16","speculative_decoding":false,"speculative_method":"none","context_reuse":false}}ENDPOINT_GATE=passed
+/home/ajmalrasi/json-schema-p1-p3-20260922/run-endpoint-gate.sh: line 27: 795711 Killed                  timeout --signal=TERM --kill-after=5s 300s "$reference_dir/.venv/bin/python" -m experimental.server "$checkpoint_dir" --engine-dir "$engine_dir" --host 127.0.0.1 --port 11435 --served-model-name openclaw-json-candidate --reasoning-parser qwen3 --tool-call-parser qwen3_xml --enable-auto-tool-choice --max-queued-requests 8 --queue-timeout 30 > "$task_dir/candidate-server.log" 2>&1
+ENDPOINT_GATE_EXIT=0
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7128         114          12         463         356
+Swap:          16383         509       15874
+2026-09-22T20:27:44+05:30
+2026-09-23T00:18:41+05:30
+true
+SINGLE_OBJECT {"city": "Paris", "ok": false, "temperature": 12}
+STREAM_OBJECT {"city": "Paris", "ok": false, "temperature": 12}
+NESTED_UNICODE_GATE passed=1
+HTTP_400_GATE passed=1
+INCOMPLETE_GATE passed=1
+BATCH_TWO_GATE {"city": "Paris", "ok": false, "temperature": 12} [1, 2, 3]
+CANCEL_REUSE_GATE passed=1
+PHASE1_3_ENDPOINT_GATE passed=1 elapsed_seconds=11.087
+{"status":"healthy","model":"openclaw-json-candidate","execution":{"captures":0,"replays":0,"eager":126,"profile_switches":12},"active_requests":0,"queued_requests":0,"capabilities":{"chat":true,"transcription":false,"speech":false,"input_modalities":["text"],"output_modalities":["text"],"max_model_len":4608,"max_input_len":4096,"max_batch_size":2,"max_num_seqs":2,"kv_cache_dtype":"fp16","speculative_decoding":false,"speculative_method":"none","context_reuse":false}}ENDPOINT_GATE=passed
+ENDPOINT_GATE_EXIT=0
+               total        used        free      shared  buff/cache   available
+Mem:            7485        1774        5548          13         382        5710
+Swap:          16383         531       15852
+2026-09-23T00:19:06+05:30

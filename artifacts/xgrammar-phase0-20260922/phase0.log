@@ -1,0 +1,235 @@
+START 2026-09-22T18:21:32+05:30
+SOURCE_COMMIT 82505d0d987c36a4209fb3d8571cf6b0f28b5acd
+ARCH aarch64
+KERNEL 6.8.12-1021-tegra
+MEMORY_BEFORE
+               total        used        free      shared  buff/cache   available
+Mem:      7849050112  1438760960   534749184    14503936  6126227456  6410289152
+Swap:    17179865088   205258752 16974606336
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{"eos_token_id": 248046, "fixture_token_counts": {"invalid_primary": 12, "valid_primary": 16, "valid_secondary": 13}, "model_vocab_size": 248320, "special_token_ids": [248046, 248044, 248070, 248071, 248076, 248056, 248057, 248053, 248054], "tokenizer_class": "Qwen2Tokenizer", "tokenizer_len": 248077, "tokenizer_vocab_size": 248044}
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Config file: /home/ajmalrasi/xgrammar-phase0-20260922/build/config.cmake
+-- Build type: Release
+-- Build Python bindings: OFF
+-- Build C++ tests: ON
+-- CUDA architectures: native
+-- Enable C++ trace: OFF
+-- The C compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+-- Configuring done (0.9s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/ajmalrasi/xgrammar-phase0-20260922/build
+[  4%] Building CXX object 3rdparty/googletest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o
+[  4%] Building CXX object CMakeFiles/xgrammar.dir/cpp/compiled_grammar.cc.o
+[  7%] Building CXX object CMakeFiles/xgrammar.dir/cpp/config.cc.o
+[  9%] Linking CXX static library ../../../lib/libgtest.a
+[  9%] Built target gtest
+[ 12%] Building CXX object CMakeFiles/xgrammar.dir/cpp/earley_parser.cc.o
+[ 14%] Building CXX object CMakeFiles/xgrammar.dir/cpp/fsm.cc.o
+[ 17%] Building CXX object CMakeFiles/xgrammar.dir/cpp/fsm_builder.cc.o
+[ 19%] Building CXX object CMakeFiles/xgrammar.dir/cpp/grammar.cc.o
+[ 21%] Building CXX object CMakeFiles/xgrammar.dir/cpp/grammar_builder.cc.o
+[ 24%] Building CXX object CMakeFiles/xgrammar.dir/cpp/grammar_compiler.cc.o
+[ 26%] Building CXX object CMakeFiles/xgrammar.dir/cpp/grammar_functor.cc.o
+[ 29%] Building CXX object CMakeFiles/xgrammar.dir/cpp/grammar_matcher.cc.o
+[ 31%] Building CXX object 3rdparty/googletest/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o
+[ 34%] Linking CXX static library ../../../lib/libgtest_main.a
+[ 34%] Built target gtest_main
+[ 36%] Building CXX object 3rdparty/googletest/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o
+[ 39%] Linking CXX static library ../../../lib/libgmock.a
+[ 39%] Built target gmock
+[ 41%] Building CXX object CMakeFiles/xgrammar.dir/cpp/grammar_parser.cc.o
+[ 43%] Building CXX object CMakeFiles/xgrammar.dir/cpp/grammar_printer.cc.o
+[ 46%] Building CXX object CMakeFiles/xgrammar.dir/cpp/json_schema_converter.cc.o
+[ 48%] Building CXX object CMakeFiles/xgrammar.dir/cpp/json_schema_converter_ext.cc.o
+[ 51%] Building CXX object CMakeFiles/xgrammar.dir/cpp/lark_converter.cc.o
+[ 53%] Building CXX object CMakeFiles/xgrammar.dir/cpp/regex_converter.cc.o
+[ 56%] Building CXX object CMakeFiles/xgrammar.dir/cpp/structural_tag.cc.o
+[ 58%] Building CXX object CMakeFiles/xgrammar.dir/cpp/suffix_automata.cc.o
+[ 60%] Building CXX object CMakeFiles/xgrammar.dir/cpp/support/logging.cc.o
+[ 63%] Building CXX object CMakeFiles/xgrammar.dir/cpp/support/recursion_guard.cc.o
+[ 65%] Building CXX object CMakeFiles/xgrammar.dir/cpp/testing.cc.o
+[ 68%] Building CXX object CMakeFiles/xgrammar.dir/cpp/tokenizer_info.cc.o
+[ 70%] Building CXX object 3rdparty/googletest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o
+[ 73%] Linking CXX static library libxgrammar.a
+[ 73%] Built target xgrammar
+[ 75%] Building CXX object CMakeFiles/xgrammar_test.dir/tests/cpp/test_fsm.cc.o
+[ 78%] Linking CXX static library ../../../lib/libgmock_main.a
+[ 78%] Built target gmock_main
+[ 80%] Building CXX object CMakeFiles/xgrammar_test.dir/tests/cpp/test_fsm_builder.cc.o
+[ 82%] Building CXX object CMakeFiles/xgrammar_test.dir/tests/cpp/test_json.cc.o
+[ 85%] Building CXX object CMakeFiles/xgrammar_test.dir/tests/cpp/test_lark_converter.cc.o
+[ 87%] Building CXX object CMakeFiles/xgrammar_test.dir/tests/cpp/test_parser.cc.o
+[ 90%] Building CXX object CMakeFiles/xgrammar_test.dir/tests/cpp/test_repetition_range.cc.o
+[ 92%] Building CXX object CMakeFiles/xgrammar_test.dir/tests/cpp/test_serialization.cc.o
+[ 95%] Building CXX object CMakeFiles/xgrammar_test.dir/tests/cpp/test_thread_pool.cc.o
+[ 97%] Building CXX object CMakeFiles/xgrammar_test.dir/tests/cpp/test_thread_safe_cache.cc.o
+[100%] Linking CXX executable xgrammar_test
+[100%] Built target xgrammar_test
+Internal ctest changing into directory: /home/ajmalrasi/xgrammar-phase0-20260922/build
+Test project /home/ajmalrasi/xgrammar-phase0-20260922/build
+      Start  1: XGramamrThreadPoolTest.FunctionalTest
+ 1/73 Test  #1: XGramamrThreadPoolTest.FunctionalTest ...........................................   Passed    0.31 sec
+      Start  2: XGrammarSerializationTest.TestSTLAndBuiltinTypes
+ 2/73 Test  #2: XGrammarSerializationTest.TestSTLAndBuiltinTypes ................................   Passed    0.01 sec
+      Start  3: XGrammarSerializationTest.TestString
+ 3/73 Test  #3: XGrammarSerializationTest.TestString ............................................   Passed    0.00 sec
+      Start  4: XGrammarSerializationTest.TestTokenizerInfoRoundtripPreservesDerivedData
+ 4/73 Test  #4: XGrammarSerializationTest.TestTokenizerInfoRoundtripPreservesDerivedData ........   Passed    0.00 sec
+      Start  5: XGrammarSerializationTest.TestFSMEdge
+ 5/73 Test  #5: XGrammarSerializationTest.TestFSMEdge ...........................................   Passed    0.00 sec
+      Start  6: XGrammarSerializationTest.TestCompact2DArray
+ 6/73 Test  #6: XGrammarSerializationTest.TestCompact2DArray ....................................   Passed    0.00 sec
+      Start  7: XGrammarSerializationTest.TestCompact2DArrayRejectsUnrepresentableSize
+ 7/73 Test  #7: XGrammarSerializationTest.TestCompact2DArrayRejectsUnrepresentableSize ..........   Passed    0.01 sec
+      Start  8: XGrammarSerializationTest.TestDynamicBitset
+ 8/73 Test  #8: XGrammarSerializationTest.TestDynamicBitset .....................................   Passed    0.00 sec
+      Start  9: XGrammarSerializationTest.TestCompactFSM
+ 9/73 Test  #9: XGrammarSerializationTest.TestCompactFSM ........................................   Passed    0.00 sec
+      Start 10: XGrammarSerializationTest.TestCompactFSMWithStartEnd
+10/73 Test #10: XGrammarSerializationTest.TestCompactFSMWithStartEnd ............................   Passed    0.00 sec
+      Start 11: XGrammarSerializationTest.TestComplexStructures
+11/73 Test #11: XGrammarSerializationTest.TestComplexStructures .................................   Passed    0.00 sec
+      Start 12: RepetitionRangeExpanderTest.UnboundedRepetitionAboveThresholdDoesNotCrash
+12/73 Test #12: RepetitionRangeExpanderTest.UnboundedRepetitionAboveThresholdDoesNotCrash .......   Passed    0.00 sec
+      Start 13: XGrammarLexerTest.BasicTokenization
+13/73 Test #13: XGrammarLexerTest.BasicTokenization .............................................   Passed    0.00 sec
+      Start 14: XGrammarLexerTest.CommentsAndWhitespace
+14/73 Test #14: XGrammarLexerTest.CommentsAndWhitespace .........................................   Passed    0.00 sec
+      Start 15: XGrammarLexerTest.StringLiterals
+15/73 Test #15: XGrammarLexerTest.StringLiterals ................................................   Passed    0.00 sec
+      Start 16: XGrammarLexerTest.CharacterClasses
+16/73 Test #16: XGrammarLexerTest.CharacterClasses ..............................................   Passed    0.00 sec
+      Start 17: XGrammarLexerTest.BooleanValues
+17/73 Test #17: XGrammarLexerTest.BooleanValues .................................................   Passed    0.00 sec
+      Start 18: XGrammarLexerTest.LookaheadAssertion
+18/73 Test #18: XGrammarLexerTest.LookaheadAssertion ............................................   Passed    0.00 sec
+      Start 19: XGrammarLexerTest.LineAndColumnTracking
+19/73 Test #19: XGrammarLexerTest.LineAndColumnTracking .........................................   Passed    0.00 sec
+      Start 20: XGrammarLexerTest.ComplexGrammar
+20/73 Test #20: XGrammarLexerTest.ComplexGrammar ................................................   Passed    0.00 sec
+      Start 21: XGrammarLexerTest.EdgeCases
+21/73 Test #21: XGrammarLexerTest.EdgeCases .....................................................   Passed    0.00 sec
+      Start 22: XGrammarLexerTest.QuantifierTokens
+22/73 Test #22: XGrammarLexerTest.QuantifierTokens ..............................................   Passed    0.00 sec
+      Start 23: XGrammarLexerTest.UTF8Handling
+23/73 Test #23: XGrammarLexerTest.UTF8Handling ..................................................   Passed    0.00 sec
+      Start 24: XGrammarLexerTest.LexerErrorCases
+24/73 Test #24: XGrammarLexerTest.LexerErrorCases ...............................................   Passed    0.01 sec
+      Start 25: LarkConverterTest.DefaultArguments
+25/73 Test #25: LarkConverterTest.DefaultArguments ..............................................   Passed    0.00 sec
+      Start 26: LarkConverterTest.CoreSyntaxAndImports
+26/73 Test #26: LarkConverterTest.CoreSyntaxAndImports ..........................................   Passed    0.00 sec
+      Start 27: LarkConverterTest.InlineAndNestedGrammar
+27/73 Test #27: LarkConverterTest.InlineAndNestedGrammar ........................................   Passed    0.00 sec
+      Start 28: LarkConverterTest.NamedGrammars
+28/73 Test #28: LarkConverterTest.NamedGrammars .................................................   Passed    0.00 sec
+      Start 29: LarkConverterTest.NamedGrammarSources
+29/73 Test #29: LarkConverterTest.NamedGrammarSources ...........................................   Passed    0.00 sec
+      Start 30: LarkConverterTest.GrammarCompilerCachesLarkSources
+30/73 Test #30: LarkConverterTest.GrammarCompilerCachesLarkSources ..............................   Passed    0.01 sec
+      Start 31: LarkConverterTest.DynamicToolCallLowersToTagDispatch
+31/73 Test #31: LarkConverterTest.DynamicToolCallLowersToTagDispatch ............................   Passed    0.00 sec
+      Start 32: LarkConverterTest.NumericAndNamedSpecialTokens
+32/73 Test #32: LarkConverterTest.NumericAndNamedSpecialTokens ..................................   Passed    0.00 sec
+      Start 33: LarkConverterTest.StringAndRegexFlags
+33/73 Test #33: LarkConverterTest.StringAndRegexFlags ...........................................   Passed    0.00 sec
+      Start 34: LarkConverterTest.DynamicRegexSuffixAndSuffixAttribute
+34/73 Test #34: LarkConverterTest.DynamicRegexSuffixAndSuffixAttribute ..........................   Passed    0.00 sec
+      Start 35: LarkConverterTest.ErrorsContainSourceLocations
+35/73 Test #35: LarkConverterTest.ErrorsContainSourceLocations ..................................   Passed    0.01 sec
+      Start 36: JSONTest.BuiltinGrammarAcceptsAllRFCWhitespace
+36/73 Test #36: JSONTest.BuiltinGrammarAcceptsAllRFCWhitespace ..................................   Passed    0.01 sec
+      Start 37: JSONTest.JSONSchemaCarriageReturnWhitespaceModes
+37/73 Test #37: JSONTest.JSONSchemaCarriageReturnWhitespaceModes ................................   Passed    0.01 sec
+      Start 38: XGrammarFSMBuilderTest.TestTrieFSMBuilder
+38/73 Test #38: XGrammarFSMBuilderTest.TestTrieFSMBuilder .......................................   Passed    0.00 sec
+      Start 39: XGrammarFSMBuilderTest.TestTagDispatchFSMBuilder1
+39/73 Test #39: XGrammarFSMBuilderTest.TestTagDispatchFSMBuilder1 ...............................   Passed    0.00 sec
+      Start 40: XGrammarFSMBuilderTest.TestTagDispatchFSMBuilder2
+40/73 Test #40: XGrammarFSMBuilderTest.TestTagDispatchFSMBuilder2 ...............................   Passed    0.00 sec
+      Start 41: XGrammarFSMBuilderTest.TestTagDispatchFSMBuilder3
+41/73 Test #41: XGrammarFSMBuilderTest.TestTagDispatchFSMBuilder3 ...............................   Passed    0.00 sec
+      Start 42: XGrammarFSMBuilderTest.TestTokenTagDispatchFSMBuilder
+42/73 Test #42: XGrammarFSMBuilderTest.TestTokenTagDispatchFSMBuilder ...........................   Passed    0.00 sec
+      Start 43: XGrammarFSMBuilderTest.TestByteStringFSMBuilder1
+43/73 Test #43: XGrammarFSMBuilderTest.TestByteStringFSMBuilder1 ................................   Passed    0.00 sec
+      Start 44: XGrammarFSMBuilderTest.TestByteStringFSMBuilder2
+44/73 Test #44: XGrammarFSMBuilderTest.TestByteStringFSMBuilder2 ................................   Passed    0.00 sec
+      Start 45: XGrammarFSMBuilderTest.TestRuleRefFSMBuilder
+45/73 Test #45: XGrammarFSMBuilderTest.TestRuleRefFSMBuilder ....................................   Passed    0.00 sec
+      Start 46: XGrammarFSMBuilderTest.TestCharacterClassFSMBuilder1
+46/73 Test #46: XGrammarFSMBuilderTest.TestCharacterClassFSMBuilder1 ............................   Passed    0.00 sec
+      Start 47: XGrammarFSMBuilderTest.TestCharacterClassFSMBuilder2
+47/73 Test #47: XGrammarFSMBuilderTest.TestCharacterClassFSMBuilder2 ............................   Passed    0.00 sec
+      Start 48: XGrammarFSMBuilderTest.TestCharacterClassFSMBuilder3
+48/73 Test #48: XGrammarFSMBuilderTest.TestCharacterClassFSMBuilder3 ............................   Passed    0.00 sec
+      Start 49: XGrammarFSMBuilderTest.TestCharacterClassFSMBuilder4
+49/73 Test #49: XGrammarFSMBuilderTest.TestCharacterClassFSMBuilder4 ............................   Passed    0.00 sec
+      Start 50: XGrammarFSMBuilderTest.TestSequenceFSMBuilder
+50/73 Test #50: XGrammarFSMBuilderTest.TestSequenceFSMBuilder ...................................   Passed    0.00 sec
+      Start 51: XGrammarFSMBuilderTest.TestChoicesFSMBuilder
+51/73 Test #51: XGrammarFSMBuilderTest.TestChoicesFSMBuilder ....................................   Passed    0.00 sec
+      Start 52: XGrammarFSMBuilderTest.TestRegexBuildWithForbiddenChars
+52/73 Test #52: XGrammarFSMBuilderTest.TestRegexBuildWithForbiddenChars .........................   Passed    0.00 sec
+      Start 53: XGrammarFSMBuilderTest.TestRegexBuildWithForbiddenCharsPreservesRepeatAuxData
+53/73 Test #53: XGrammarFSMBuilderTest.TestRegexBuildWithForbiddenCharsPreservesRepeatAuxData ...   Passed    0.00 sec
+      Start 54: XGrammarFSMBuilderTest.TestGrammarFSMBuilderRegex
+54/73 Test #54: XGrammarFSMBuilderTest.TestGrammarFSMBuilderRegex ...............................   Passed    0.00 sec
+      Start 55: XGrammarFSMBuilderTest.TestRegexRepeatZero
+55/73 Test #55: XGrammarFSMBuilderTest.TestRegexRepeatZero ......................................   Passed    0.00 sec
+      Start 56: XGrammarFSMBuilderTest.TestRegexCaseInsensitiveFlag
+56/73 Test #56: XGrammarFSMBuilderTest.TestRegexCaseInsensitiveFlag .............................   Passed    0.00 sec
+      Start 57: XGrammarFSMBuilderTest.TestRegexEscapes
+57/73 Test #57: XGrammarFSMBuilderTest.TestRegexEscapes .........................................   Passed    0.00 sec
+      Start 58: XGrammarFSMBuilderTest.TestRegexUnsupportedFeatures
+58/73 Test #58: XGrammarFSMBuilderTest.TestRegexUnsupportedFeatures .............................   Passed    0.00 sec
+      Start 59: XGrammarFSMBuilderTest.TestRegexErrorMessages
+59/73 Test #59: XGrammarFSMBuilderTest.TestRegexErrorMessages ...................................   Passed    0.00 sec
+      Start 60: XGrammarFSMBuilderTest.TestRegexMatchesEmpty
+60/73 Test #60: XGrammarFSMBuilderTest.TestRegexMatchesEmpty ....................................   Passed    0.00 sec
+      Start 61: XGrammarFSMBuilderTest.TestRegexLargeRepeatWithoutBuilder
+61/73 Test #61: XGrammarFSMBuilderTest.TestRegexLargeRepeatWithoutBuilder .......................   Passed    0.01 sec
+      Start 62: XGrammarFSMTest.BasicBuildTest
+62/73 Test #62: XGrammarFSMTest.BasicBuildTest ..................................................   Passed    0.00 sec
+      Start 63: XGrammarFSMTest.ConnectionTest
+63/73 Test #63: XGrammarFSMTest.ConnectionTest ..................................................   Passed    0.00 sec
+      Start 64: XGrammarFSMTest.SymbolTest
+64/73 Test #64: XGrammarFSMTest.SymbolTest ......................................................   Passed    0.00 sec
+      Start 65: XGrammarFSMTest.IntegratedTest
+65/73 Test #65: XGrammarFSMTest.IntegratedTest ..................................................   Passed    0.00 sec
+      Start 66: XGrammarFSMTest.FunctionTest
+66/73 Test #66: XGrammarFSMTest.FunctionTest ....................................................   Passed    0.00 sec
+      Start 67: XGrammarFSMTest.EfficiencyTest
+67/73 Test #67: XGrammarFSMTest.EfficiencyTest ..................................................   Passed    0.03 sec
+      Start 68: XGrammarFSMTest.TestEmail
+68/73 Test #68: XGrammarFSMTest.TestEmail .......................................................   Passed    0.00 sec
+      Start 69: XGrammarFSMTest.TestTime
+69/73 Test #69: XGrammarFSMTest.TestTime ........................................................   Passed    0.00 sec
+      Start 70: XGrammarFSMTest.MergingNodesTest
+70/73 Test #70: XGrammarFSMTest.MergingNodesTest ................................................   Passed    0.00 sec
+      Start 71: XGrammarFSMTest.MergeEquivalentStatesNoCrossRuleChaining
+71/73 Test #71: XGrammarFSMTest.MergeEquivalentStatesNoCrossRuleChaining ........................   Passed    0.00 sec
+      Start 72: XGrammarFSMTest.SimplifyEpsilonPreservesAcceptance
+72/73 Test #72: XGrammarFSMTest.SimplifyEpsilonPreservesAcceptance ..............................   Passed    0.00 sec
+      Start 73: XGrammarFSMTest.EpsilonSimplificationTest
+73/73 Test #73: XGrammarFSMTest.EpsilonSimplificationTest .......................................   Passed    0.00 sec
+
+100% tests passed, 0 tests failed out of 73
+
+Total Test time (real) =   0.71 sec
+/home/ajmalrasi/xgrammar-phase0-20260922/run_phase0_detached.sh: line 37: /usr/bin/time: No such file or directory
+EXIT_STATUS 127 2026-09-22T18:23:40+05:30

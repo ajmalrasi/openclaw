@@ -67,6 +67,22 @@ Implement guided decoding in TensorRT Edge-LLM. Prefer integrating a maintained 
 | 3. Batch-two lifecycle | Independent guides work through concurrent admission and slot reuse. | Concurrent/cancelled requests cannot leak or corrupt guide state. |
 | 4. Qualification | Performance, memory, reliability, and rollback validation. | Meets agreed Jetson acceptance targets with retained evidence. |
 
+Phase 0 completed on 2026-09-22. XGrammar 0.2.7 built on the Jetson, all 73
+upstream C++ tests passed, and the exact Qwen3.5 tokenizer/schema matcher gate
+passed. The dependency is feasible with a material approximately 104 MiB
+standalone peak-RSS caution. See
+[`TENSORRT_EDGE_LLM_JSON_SCHEMA_PHASE0_RESULTS.md`](./TENSORRT_EDGE_LLM_JSON_SCHEMA_PHASE0_RESULTS.md).
+
+Phases 1–3 completed on 2026-09-23 in signed-off local commit `2cb8bb8` on
+the isolated `feature/json-schema-guided-decoding` branch. The candidate masks the logits
+in the scheduler's **existing CPU sampling row**; it adds no new full-logits
+device-to-host transfer, but it does not yet implement the GPU mask described
+in workstream 4. GPU-side masking, full-build qualification, overhead/memory
+measurement, production-sized engine fit, rollback verification, and any
+deployment remain Phase 4 work. Passing functional Phases 1–3 must not be
+read as production acceptance. See
+[`TENSORRT_EDGE_LLM_JSON_SCHEMA_PHASE1_3_RESULTS.md`](./TENSORRT_EDGE_LLM_JSON_SCHEMA_PHASE1_3_RESULTS.md).
+
 ## Scale and constraints
 
 - A proof of concept is roughly 1–2 engineer-weeks.

@@ -1,0 +1,21 @@
+START 2026-09-22T18:27:19+05:30
+MEMORY_BEFORE
+               total        used        free      shared  buff/cache   available
+Mem:      7849050112  1364348928   768716800    14491648  5966659584  6484701184
+Swap:    17179865088   205258752 16974606336
+TOKENIZER vocab_entries=248320 xgrammar_vocab_size=248320 metadata={"vocab_type":2,"add_prefix_space":false}
+MATCH valid_accepted=1 valid_completed=1 valid_rejected_at=-1 invalid_accepted=0 invalid_rejected_at=3
+BITMASK required=1 words=7760 bytes=31040 valid_first_token=4754 first_allowed=1
+SCHEMA_CASE name=nested_enum_unicode result=accepted compile_ms=1 memory_bytes=56192
+SCHEMA_CASE name=unions_const result=accepted compile_ms=1 memory_bytes=30376
+SCHEMA_CASE name=string_pattern result=accepted compile_ms=0 memory_bytes=4556
+SCHEMA_CASE name=numeric_range result=accepted compile_ms=0 memory_bytes=848
+[18:27:20] /home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/cpp/json_schema_converter.cc:1480: Warning: URI should either be '#' or start with '#/' but got https://example.com/schema.json
+SCHEMA_CASE name=external_ref result=accepted compile_ms=2 memory_bytes=242140
+PHASE0_GATE passed=1 compiler_cache_bytes=982000 process_max_rss_kib=106624
+MEMORY_AFTER
+               total        used        free      shared  buff/cache   available
+Mem:      7849050112  1361969152   770297856    14487552  5967450112  6487080960
+Swap:    17179865088   205258752 16974606336
+END 2026-09-22T18:27:20+05:30
+EXIT_STATUS 0 2026-09-22T18:27:20+05:30

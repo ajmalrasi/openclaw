@@ -1,0 +1,362 @@
+2026-09-22T20:14:07+05:30
+inactive
+cc1plus: fatal error: /home/ajmalrasi/json-schema-p1-p3-20260922/source/cpp/runtime/state/prefillChunk.cpp: No such file or directory
+compilation terminated.
+2026-09-22T20:16:44+05:30
+inactive
+Running main() from /home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/3rdparty/googletest/googletest/src/gtest_main.cc
+[==========] Running 23 tests from 3 test suites.
+[----------] Global test environment set-up.
+[----------] 14 tests from ContinuousScheduler
+[ RUN      ] ContinuousScheduler.StaggeredReuseAndDecodeFirst
+[       OK ] ContinuousScheduler.StaggeredReuseAndDecodeFirst (0 ms)
+[ RUN      ] ContinuousScheduler.QueueBoundsCancellationAndShutdown
+[       OK ] ContinuousScheduler.QueueBoundsCancellationAndShutdown (0 ms)
+[ RUN      ] ContinuousScheduler.ByteBoundAndValidation
+[       OK ] ContinuousScheduler.ByteBoundAndValidation (0 ms)
+[ RUN      ] ContinuousScheduler.FaultSettlesActiveAndQueued
+[       OK ] ContinuousScheduler.FaultSettlesActiveAndQueued (0 ms)
+[ RUN      ] ContinuousScheduler.RequestLocalCompletionFailureDoesNotPoisonPeerOrReuse
+[       OK ] ContinuousScheduler.RequestLocalCompletionFailureDoesNotPoisonPeerOrReuse (0 ms)
+[ RUN      ] ContinuousScheduler.IdleWaitAndWake
+[       OK ] ContinuousScheduler.IdleWaitAndWake (60 ms)
+[ RUN      ] ContinuousScheduler.TwoPrefillsFairnessAndActiveCancellation
+[       OK ] ContinuousScheduler.TwoPrefillsFairnessAndActiveCancellation (0 ms)
+[ RUN      ] ContinuousScheduler.CloseSettlesAllTickets
+[       OK ] ContinuousScheduler.CloseSettlesAllTickets (0 ms)
+[ RUN      ] ContinuousScheduler.CancelledQueueHeadDoesNotDelayAdmission
+[       OK ] ContinuousScheduler.CancelledQueueHeadDoesNotDelayAdmission (0 ms)
+[ RUN      ] ContinuousScheduler.ConcurrentProducersAndRepeatedReuse
+[       OK ] ContinuousScheduler.ConcurrentProducersAndRepeatedReuse (1 ms)
+[ RUN      ] ContinuousScheduler.SlowConsumerDoesNotBlockPartner
+[       OK ] ContinuousScheduler.SlowConsumerDoesNotBlockPartner (0 ms)
+[ RUN      ] ContinuousScheduler.QueuedCancellationWhileBothSlotsOccupied
+[       OK ] ContinuousScheduler.QueuedCancellationWhileBothSlotsOccupied (0 ms)
+[ RUN      ] ContinuousScheduler.QueueAndActiveDeadlines
+[       OK ] ContinuousScheduler.QueueAndActiveDeadlines (30 ms)
+[ RUN      ] ContinuousScheduler.DecodeCancellationAndStartupFailure
+[       OK ] ContinuousScheduler.DecodeCancellationAndStartupFailure (10 ms)
+[----------] 14 tests from ContinuousScheduler (105 ms total)
+
+[----------] 8 tests from SequencePolicy
+[ RUN      ] SequencePolicy.BiasedUnscaledLogprobsAndTopK
+[       OK ] SequencePolicy.BiasedUnscaledLogprobsAndTopK (0 ms)
+[ RUN      ] SequencePolicy.RngIndependentOfOtherRowsAndSeed
+[       OK ] SequencePolicy.RngIndependentOfOtherRowsAndSeed (0 ms)
+[ RUN      ] SequencePolicy.NucleusRetainsMinimalProbabilityPrefix
+[       OK ] SequencePolicy.NucleusRetainsMinimalProbabilityPrefix (0 ms)
+[ RUN      ] SequencePolicy.StopAcrossTokensDoesNotLeakPrefix
+[       OK ] SequencePolicy.StopAcrossTokensDoesNotLeakPrefix (0 ms)
+[ RUN      ] SequencePolicy.UnicodeBoundariesAndReset
+[       OK ] SequencePolicy.UnicodeBoundariesAndReset (0 ms)
+[ RUN      ] SequencePolicy.IndependentThinkingAndEos
+[       OK ] SequencePolicy.IndependentThinkingAndEos (0 ms)
+[ RUN      ] SequencePolicy.ValidatesMetadataBeforeAdmission
+[       OK ] SequencePolicy.ValidatesMetadataBeforeAdmission (0 ms)
+[ RUN      ] SequencePolicy.FinalUtf8ReplacementParticipatesInStopMatch
+[       OK ] SequencePolicy.FinalUtf8ReplacementParticipatesInStopMatch (0 ms)
+[----------] 8 tests from SequencePolicy (0 ms total)
+
+[----------] 1 test from SequenceChannel
+[ RUN      ] SequenceChannel.WraparoundByteLimitAndTerminalOnFull
+[       OK ] SequenceChannel.WraparoundByteLimitAndTerminalOnFull (0 ms)
+[----------] 1 test from SequenceChannel (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 23 tests from 3 test suites ran. (113 ms total)
+[  PASSED  ] 23 tests.
+/home/ajmalrasi/json-schema-p1-p3-20260922/build/_edgellm_runtime.cpython-312-aarch64-linux-gnu.so
+ERROR: file or directory not found: tests/python-unittests/test_server_requests.py
+
+
+- generated xml file: /home/ajmalrasi/json-schema-p1-p3-20260922/python-tests.xml -
+no tests ran in 0.00s
+2026-09-22T20:19:17+05:30
+inactive
+Running main() from /home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/3rdparty/googletest/googletest/src/gtest_main.cc
+[==========] Running 23 tests from 3 test suites.
+[----------] Global test environment set-up.
+[----------] 14 tests from ContinuousScheduler
+[ RUN      ] ContinuousScheduler.StaggeredReuseAndDecodeFirst
+[       OK ] ContinuousScheduler.StaggeredReuseAndDecodeFirst (0 ms)
+[ RUN      ] ContinuousScheduler.QueueBoundsCancellationAndShutdown
+[       OK ] ContinuousScheduler.QueueBoundsCancellationAndShutdown (0 ms)
+[ RUN      ] ContinuousScheduler.ByteBoundAndValidation
+[       OK ] ContinuousScheduler.ByteBoundAndValidation (0 ms)
+[ RUN      ] ContinuousScheduler.FaultSettlesActiveAndQueued
+[       OK ] ContinuousScheduler.FaultSettlesActiveAndQueued (0 ms)
+[ RUN      ] ContinuousScheduler.RequestLocalCompletionFailureDoesNotPoisonPeerOrReuse
+[       OK ] ContinuousScheduler.RequestLocalCompletionFailureDoesNotPoisonPeerOrReuse (0 ms)
+[ RUN      ] ContinuousScheduler.IdleWaitAndWake
+[       OK ] ContinuousScheduler.IdleWaitAndWake (60 ms)
+[ RUN      ] ContinuousScheduler.TwoPrefillsFairnessAndActiveCancellation
+[       OK ] ContinuousScheduler.TwoPrefillsFairnessAndActiveCancellation (0 ms)
+[ RUN      ] ContinuousScheduler.CloseSettlesAllTickets
+[       OK ] ContinuousScheduler.CloseSettlesAllTickets (0 ms)
+[ RUN      ] ContinuousScheduler.CancelledQueueHeadDoesNotDelayAdmission
+[       OK ] ContinuousScheduler.CancelledQueueHeadDoesNotDelayAdmission (0 ms)
+[ RUN      ] ContinuousScheduler.ConcurrentProducersAndRepeatedReuse
+[       OK ] ContinuousScheduler.ConcurrentProducersAndRepeatedReuse (1 ms)
+[ RUN      ] ContinuousScheduler.SlowConsumerDoesNotBlockPartner
+[       OK ] ContinuousScheduler.SlowConsumerDoesNotBlockPartner (0 ms)
+[ RUN      ] ContinuousScheduler.QueuedCancellationWhileBothSlotsOccupied
+[       OK ] ContinuousScheduler.QueuedCancellationWhileBothSlotsOccupied (0 ms)
+[ RUN      ] ContinuousScheduler.QueueAndActiveDeadlines
+[       OK ] ContinuousScheduler.QueueAndActiveDeadlines (30 ms)
+[ RUN      ] ContinuousScheduler.DecodeCancellationAndStartupFailure
+[       OK ] ContinuousScheduler.DecodeCancellationAndStartupFailure (10 ms)
+[----------] 14 tests from ContinuousScheduler (105 ms total)
+
+[----------] 8 tests from SequencePolicy
+[ RUN      ] SequencePolicy.BiasedUnscaledLogprobsAndTopK
+[       OK ] SequencePolicy.BiasedUnscaledLogprobsAndTopK (0 ms)
+[ RUN      ] SequencePolicy.RngIndependentOfOtherRowsAndSeed
+[       OK ] SequencePolicy.RngIndependentOfOtherRowsAndSeed (0 ms)
+[ RUN      ] SequencePolicy.NucleusRetainsMinimalProbabilityPrefix
+[       OK ] SequencePolicy.NucleusRetainsMinimalProbabilityPrefix (0 ms)
+[ RUN      ] SequencePolicy.StopAcrossTokensDoesNotLeakPrefix
+[       OK ] SequencePolicy.StopAcrossTokensDoesNotLeakPrefix (0 ms)
+[ RUN      ] SequencePolicy.UnicodeBoundariesAndReset
+[       OK ] SequencePolicy.UnicodeBoundariesAndReset (0 ms)
+[ RUN      ] SequencePolicy.IndependentThinkingAndEos
+[       OK ] SequencePolicy.IndependentThinkingAndEos (0 ms)
+[ RUN      ] SequencePolicy.ValidatesMetadataBeforeAdmission
+[       OK ] SequencePolicy.ValidatesMetadataBeforeAdmission (0 ms)
+[ RUN      ] SequencePolicy.FinalUtf8ReplacementParticipatesInStopMatch
+[       OK ] SequencePolicy.FinalUtf8ReplacementParticipatesInStopMatch (0 ms)
+[----------] 8 tests from SequencePolicy (0 ms total)
+
+[----------] 1 test from SequenceChannel
+[ RUN      ] SequenceChannel.WraparoundByteLimitAndTerminalOnFull
+[       OK ] SequenceChannel.WraparoundByteLimitAndTerminalOnFull (0 ms)
+[----------] 1 test from SequenceChannel (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 23 tests from 3 test suites ran. (106 ms total)
+[  PASSED  ] 23 tests.
+/home/ajmalrasi/json-schema-p1-p3-20260922/build/_edgellm_runtime.cpython-312-aarch64-linux-gnu.so
+..........ssss.......................................................... [ 64%]
+........................................                                 [100%]
+=============================== warnings summary ===============================
+tests/python-unittests/test_continuous_http.py:88
+  /home/ajmalrasi/json-schema-p1-p3-20260922/source/tests/python-unittests/test_continuous_http.py:88: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/python-unittests/test_continuous_http.py:101
+  /home/ajmalrasi/json-schema-p1-p3-20260922/source/tests/python-unittests/test_continuous_http.py:101: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/python-unittests/test_continuous_http.py:122
+  /home/ajmalrasi/json-schema-p1-p3-20260922/source/tests/python-unittests/test_continuous_http.py:122: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/python-unittests/test_continuous_http.py::test_prepared_requests_overlap_and_use_native_tickets
+tests/python-unittests/test_continuous_http.py::test_nonstream_disconnect_cancels_owned_ticket
+tests/python-unittests/test_continuous_http.py::test_native_rejection_releases_preparation[Scheduler queue full-ServerOverloadedError]
+tests/python-unittests/test_continuous_http.py::test_native_rejection_releases_preparation[failed-ServerUnavailableError]
+  /usr/lib/python3/dist-packages/_pytest/python.py:183: PytestUnhandledCoroutineWarning: async def functions are not natively supported and have been skipped.
+  You need to install a suitable plugin for your async framework, for example:
+    - anyio
+    - pytest-asyncio
+    - pytest-tornasync
+    - pytest-trio
+    - pytest-twisted
+    warnings.warn(PytestUnhandledCoroutineWarning(msg.format(nodeid)))
+
+tests/python-unittests/test_server_requests.py::test_app_shutdown_closes_runtime_exactly_once
+  /home/ajmalrasi/TensorRT-Edge-LLM/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/python-unittests/test_server_requests.py::test_app_shutdown_closes_runtime_exactly_once
+  /home/ajmalrasi/TensorRT-Edge-LLM/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: /home/ajmalrasi/json-schema-p1-p3-20260922/python-tests.xml -
+108 passed, 4 skipped, 9 warnings in 3.10s
+BUILD_GATE=passed
+2026-09-22T20:21:23+05:30
+2026-09-22T20:24:57+05:30
+inactive
+Running main() from /home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/3rdparty/googletest/googletest/src/gtest_main.cc
+[==========] Running 23 tests from 3 test suites.
+[----------] Global test environment set-up.
+[----------] 14 tests from ContinuousScheduler
+[ RUN      ] ContinuousScheduler.StaggeredReuseAndDecodeFirst
+[       OK ] ContinuousScheduler.StaggeredReuseAndDecodeFirst (0 ms)
+[ RUN      ] ContinuousScheduler.QueueBoundsCancellationAndShutdown
+[       OK ] ContinuousScheduler.QueueBoundsCancellationAndShutdown (0 ms)
+[ RUN      ] ContinuousScheduler.ByteBoundAndValidation
+[       OK ] ContinuousScheduler.ByteBoundAndValidation (0 ms)
+[ RUN      ] ContinuousScheduler.FaultSettlesActiveAndQueued
+[       OK ] ContinuousScheduler.FaultSettlesActiveAndQueued (0 ms)
+[ RUN      ] ContinuousScheduler.RequestLocalCompletionFailureDoesNotPoisonPeerOrReuse
+[       OK ] ContinuousScheduler.RequestLocalCompletionFailureDoesNotPoisonPeerOrReuse (0 ms)
+[ RUN      ] ContinuousScheduler.IdleWaitAndWake
+[       OK ] ContinuousScheduler.IdleWaitAndWake (60 ms)
+[ RUN      ] ContinuousScheduler.TwoPrefillsFairnessAndActiveCancellation
+[       OK ] ContinuousScheduler.TwoPrefillsFairnessAndActiveCancellation (0 ms)
+[ RUN      ] ContinuousScheduler.CloseSettlesAllTickets
+[       OK ] ContinuousScheduler.CloseSettlesAllTickets (0 ms)
+[ RUN      ] ContinuousScheduler.CancelledQueueHeadDoesNotDelayAdmission
+[       OK ] ContinuousScheduler.CancelledQueueHeadDoesNotDelayAdmission (0 ms)
+[ RUN      ] ContinuousScheduler.ConcurrentProducersAndRepeatedReuse
+[       OK ] ContinuousScheduler.ConcurrentProducersAndRepeatedReuse (1 ms)
+[ RUN      ] ContinuousScheduler.SlowConsumerDoesNotBlockPartner
+[       OK ] ContinuousScheduler.SlowConsumerDoesNotBlockPartner (0 ms)
+[ RUN      ] ContinuousScheduler.QueuedCancellationWhileBothSlotsOccupied
+[       OK ] ContinuousScheduler.QueuedCancellationWhileBothSlotsOccupied (0 ms)
+[ RUN      ] ContinuousScheduler.QueueAndActiveDeadlines
+[       OK ] ContinuousScheduler.QueueAndActiveDeadlines (30 ms)
+[ RUN      ] ContinuousScheduler.DecodeCancellationAndStartupFailure
+[       OK ] ContinuousScheduler.DecodeCancellationAndStartupFailure (10 ms)
+[----------] 14 tests from ContinuousScheduler (105 ms total)
+
+[----------] 8 tests from SequencePolicy
+[ RUN      ] SequencePolicy.BiasedUnscaledLogprobsAndTopK
+[       OK ] SequencePolicy.BiasedUnscaledLogprobsAndTopK (0 ms)
+[ RUN      ] SequencePolicy.RngIndependentOfOtherRowsAndSeed
+[       OK ] SequencePolicy.RngIndependentOfOtherRowsAndSeed (0 ms)
+[ RUN      ] SequencePolicy.NucleusRetainsMinimalProbabilityPrefix
+[       OK ] SequencePolicy.NucleusRetainsMinimalProbabilityPrefix (0 ms)
+[ RUN      ] SequencePolicy.StopAcrossTokensDoesNotLeakPrefix
+[       OK ] SequencePolicy.StopAcrossTokensDoesNotLeakPrefix (0 ms)
+[ RUN      ] SequencePolicy.UnicodeBoundariesAndReset
+[       OK ] SequencePolicy.UnicodeBoundariesAndReset (0 ms)
+[ RUN      ] SequencePolicy.IndependentThinkingAndEos
+[       OK ] SequencePolicy.IndependentThinkingAndEos (0 ms)
+[ RUN      ] SequencePolicy.ValidatesMetadataBeforeAdmission
+[       OK ] SequencePolicy.ValidatesMetadataBeforeAdmission (0 ms)
+[ RUN      ] SequencePolicy.FinalUtf8ReplacementParticipatesInStopMatch
+[       OK ] SequencePolicy.FinalUtf8ReplacementParticipatesInStopMatch (0 ms)
+[----------] 8 tests from SequencePolicy (0 ms total)
+
+[----------] 1 test from SequenceChannel
+[ RUN      ] SequenceChannel.WraparoundByteLimitAndTerminalOnFull
+[       OK ] SequenceChannel.WraparoundByteLimitAndTerminalOnFull (0 ms)
+[----------] 1 test from SequenceChannel (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 23 tests from 3 test suites ran. (105 ms total)
+[  PASSED  ] 23 tests.
+/home/ajmalrasi/json-schema-p1-p3-20260922/build/_edgellm_runtime.cpython-312-aarch64-linux-gnu.so
+..........ssss.......................................................... [ 64%]
+........................................                                 [100%]
+=============================== warnings summary ===============================
+tests/python-unittests/test_continuous_http.py:88
+  /home/ajmalrasi/json-schema-p1-p3-20260922/source/tests/python-unittests/test_continuous_http.py:88: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/python-unittests/test_continuous_http.py:101
+  /home/ajmalrasi/json-schema-p1-p3-20260922/source/tests/python-unittests/test_continuous_http.py:101: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/python-unittests/test_continuous_http.py:122
+  /home/ajmalrasi/json-schema-p1-p3-20260922/source/tests/python-unittests/test_continuous_http.py:122: PytestUnknownMarkWarning: Unknown pytest.mark.asyncio - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.asyncio
+
+tests/python-unittests/test_continuous_http.py::test_prepared_requests_overlap_and_use_native_tickets
+tests/python-unittests/test_continuous_http.py::test_nonstream_disconnect_cancels_owned_ticket
+tests/python-unittests/test_continuous_http.py::test_native_rejection_releases_preparation[Scheduler queue full-ServerOverloadedError]
+tests/python-unittests/test_continuous_http.py::test_native_rejection_releases_preparation[failed-ServerUnavailableError]
+  /usr/lib/python3/dist-packages/_pytest/python.py:183: PytestUnhandledCoroutineWarning: async def functions are not natively supported and have been skipped.
+  You need to install a suitable plugin for your async framework, for example:
+    - anyio
+    - pytest-asyncio
+    - pytest-tornasync
+    - pytest-trio
+    - pytest-twisted
+    warnings.warn(PytestUnhandledCoroutineWarning(msg.format(nodeid)))
+
+tests/python-unittests/test_server_requests.py::test_app_shutdown_closes_runtime_exactly_once
+  /home/ajmalrasi/TensorRT-Edge-LLM/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/python-unittests/test_server_requests.py::test_app_shutdown_closes_runtime_exactly_once
+  /home/ajmalrasi/TensorRT-Edge-LLM/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: /home/ajmalrasi/json-schema-p1-p3-20260922/python-tests.xml -
+108 passed, 4 skipped, 9 warnings in 2.87s
+BUILD_GATE=passed
+2026-09-22T20:27:02+05:30
+2026-09-23T00:14:48+05:30
+inactive
+Running main() from /home/ajmalrasi/xgrammar-phase0-20260922/xgrammar/3rdparty/googletest/googletest/src/gtest_main.cc
+[==========] Running 23 tests from 3 test suites.
+[----------] Global test environment set-up.
+[----------] 14 tests from ContinuousScheduler
+[ RUN      ] ContinuousScheduler.StaggeredReuseAndDecodeFirst
+[       OK ] ContinuousScheduler.StaggeredReuseAndDecodeFirst (0 ms)
+[ RUN      ] ContinuousScheduler.QueueBoundsCancellationAndShutdown
+[       OK ] ContinuousScheduler.QueueBoundsCancellationAndShutdown (8 ms)
+[ RUN      ] ContinuousScheduler.ByteBoundAndValidation
+[       OK ] ContinuousScheduler.ByteBoundAndValidation (0 ms)
+[ RUN      ] ContinuousScheduler.FaultSettlesActiveAndQueued
+[       OK ] ContinuousScheduler.FaultSettlesActiveAndQueued (0 ms)
+[ RUN      ] ContinuousScheduler.RequestLocalCompletionFailureDoesNotPoisonPeerOrReuse
+[       OK ] ContinuousScheduler.RequestLocalCompletionFailureDoesNotPoisonPeerOrReuse (0 ms)
+[ RUN      ] ContinuousScheduler.IdleWaitAndWake
+[       OK ] ContinuousScheduler.IdleWaitAndWake (60 ms)
+[ RUN      ] ContinuousScheduler.TwoPrefillsFairnessAndActiveCancellation
+[       OK ] ContinuousScheduler.TwoPrefillsFairnessAndActiveCancellation (0 ms)
+[ RUN      ] ContinuousScheduler.CloseSettlesAllTickets
+[       OK ] ContinuousScheduler.CloseSettlesAllTickets (0 ms)
+[ RUN      ] ContinuousScheduler.CancelledQueueHeadDoesNotDelayAdmission
+[       OK ] ContinuousScheduler.CancelledQueueHeadDoesNotDelayAdmission (0 ms)
+[ RUN      ] ContinuousScheduler.ConcurrentProducersAndRepeatedReuse
+[       OK ] ContinuousScheduler.ConcurrentProducersAndRepeatedReuse (1 ms)
+[ RUN      ] ContinuousScheduler.SlowConsumerDoesNotBlockPartner
+[       OK ] ContinuousScheduler.SlowConsumerDoesNotBlockPartner (0 ms)
+[ RUN      ] ContinuousScheduler.QueuedCancellationWhileBothSlotsOccupied
+[       OK ] ContinuousScheduler.QueuedCancellationWhileBothSlotsOccupied (0 ms)
+[ RUN      ] ContinuousScheduler.QueueAndActiveDeadlines
+[       OK ] ContinuousScheduler.QueueAndActiveDeadlines (30 ms)
+[ RUN      ] ContinuousScheduler.DecodeCancellationAndStartupFailure
+[       OK ] ContinuousScheduler.DecodeCancellationAndStartupFailure (10 ms)
+[----------] 14 tests from ContinuousScheduler (113 ms total)
+
+[----------] 8 tests from SequencePolicy
+[ RUN      ] SequencePolicy.BiasedUnscaledLogprobsAndTopK
+[       OK ] SequencePolicy.BiasedUnscaledLogprobsAndTopK (0 ms)
+[ RUN      ] SequencePolicy.RngIndependentOfOtherRowsAndSeed
+[       OK ] SequencePolicy.RngIndependentOfOtherRowsAndSeed (0 ms)
+[ RUN      ] SequencePolicy.NucleusRetainsMinimalProbabilityPrefix
+[       OK ] SequencePolicy.NucleusRetainsMinimalProbabilityPrefix (0 ms)
+[ RUN      ] SequencePolicy.StopAcrossTokensDoesNotLeakPrefix
+[       OK ] SequencePolicy.StopAcrossTokensDoesNotLeakPrefix (0 ms)
+[ RUN      ] SequencePolicy.UnicodeBoundariesAndReset
+[       OK ] SequencePolicy.UnicodeBoundariesAndReset (0 ms)
+[ RUN      ] SequencePolicy.IndependentThinkingAndEos
+[       OK ] SequencePolicy.IndependentThinkingAndEos (0 ms)
+[ RUN      ] SequencePolicy.ValidatesMetadataBeforeAdmission
+[       OK ] SequencePolicy.ValidatesMetadataBeforeAdmission (0 ms)
+[ RUN      ] SequencePolicy.FinalUtf8ReplacementParticipatesInStopMatch
+[       OK ] SequencePolicy.FinalUtf8ReplacementParticipatesInStopMatch (0 ms)
+[----------] 8 tests from SequencePolicy (0 ms total)
+
+[----------] 1 test from SequenceChannel
+[ RUN      ] SequenceChannel.WraparoundByteLimitAndTerminalOnFull
+[       OK ] SequenceChannel.WraparoundByteLimitAndTerminalOnFull (0 ms)
+[----------] 1 test from SequenceChannel (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 23 tests from 3 test suites ran. (113 ms total)
+[  PASSED  ] 23 tests.
+/home/ajmalrasi/json-schema-p1-p3-20260922/build/_edgellm_runtime.cpython-312-aarch64-linux-gnu.so
+[1m============================= test session starts ==============================[0m
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /home/ajmalrasi/json-schema-p1-p3-20260922/source/tests
+configfile: pytest.ini
+plugins: anyio-4.15.1
+collected 108 items / 1 error
+
+==================================== ERRORS ====================================
+[31m[1m__________ ERROR collecting python-unittests/test_continuous_http.py ___________[0m
+[33m'[39;49;00m[33masyncio[39;49;00m[33m'[39;49;00m [95mnot[39;49;00m found [95min[39;49;00m [04m[91m`[39;49;00mmarkers[04m[91m`[39;49;00m configuration option[90m[39;49;00m
+- generated xml file: /home/ajmalrasi/json-schema-p1-p3-20260922/python-tests.xml -
+[36m[1m=========================== short test summary info ============================[0m
+[31mERROR[0m tests/python-unittests/test_continuous_http.py - Failed: 'asyncio' not found in `markers` configuration option
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+[31m=============================== [31m[1m1 error[0m[31m in 0.29s[0m[31m ===============================[0m
