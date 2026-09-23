@@ -1,0 +1,50 @@
+2026-09-23T02:18:44+05:30
+GPU_MASK_AB_SCOPE=same-engine-same-workload
+true
+GPU_MASK_MODE=cpu SERVER_PID=10628
+{"event": "ready_memory", "memory": {"process_kib": {"VmHWM": 6802020, "VmRSS": 6788452, "VmSwap": 12}, "system_kib": {"MemAvailable": 216408, "SwapFree": 16553468}}}
+{"event": "post_warmup_memory", "memory": {"process_kib": {"VmHWM": 6909040, "VmRSS": 6866720, "VmSwap": 158604}, "system_kib": {"MemAvailable": 94604, "SwapFree": 16365564}}}
+{"event": "sample", "mode": "plain", "latency_s": 2.143152612999984, "ttft_s": 0.16682529199988494, "decode_s": 1.976327321000099, "completion_tokens": 45, "decode_tokens_per_s": 22.263518564189194, "chunk_count": 44, "finish_reason": "stop", "output": "```json\n{\"numbers\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2]}\n```"}
+{"event": "sample", "mode": "guided", "latency_s": 1.9381090069998663, "ttft_s": 0.16424521899989486, "decode_s": 1.7738637879999715, "completion_tokens": 39, "decode_tokens_per_s": 21.422163447422836, "chunk_count": 39, "finish_reason": "stop", "output": "{\"numbers\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2]}"}
+{"event": "sample", "mode": "guided", "latency_s": 1.9288914340002066, "ttft_s": 0.1645712330000606, "decode_s": 1.764320201000146, "completion_tokens": 39, "decode_tokens_per_s": 21.53804053167833, "chunk_count": 39, "finish_reason": "stop", "output": "{\"numbers\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2]}"}
+{"event": "sample", "mode": "plain", "latency_s": 2.153266874999872, "ttft_s": 0.1609782030000133, "decode_s": 1.9922886719998587, "completion_tokens": 45, "decode_tokens_per_s": 22.085152929084728, "chunk_count": 44, "finish_reason": "stop", "output": "```json\n{\"numbers\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2]}\n```"}
+{"event": "sample", "mode": "plain", "latency_s": 2.137438874000054, "ttft_s": 0.1618560689998958, "decode_s": 1.9755828050001583, "completion_tokens": 45, "decode_tokens_per_s": 22.271908769724526, "chunk_count": 44, "finish_reason": "stop", "output": "```json\n{\"numbers\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2]}\n```"}
+{"event": "sample", "mode": "guided", "latency_s": 1.9216650339999433, "ttft_s": 0.16123186899994835, "decode_s": 1.760433164999995, "completion_tokens": 39, "decode_tokens_per_s": 21.585596519933837, "chunk_count": 39, "finish_reason": "stop", "output": "{\"numbers\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2]}"}
+{"event": "guided_pair", "results": [{"mode": "guided", "latency_s": 2.5679465700000037, "ttft_s": 0.38355871499993555, "decode_s": 2.184387855000068, "completion_tokens": 39, "decode_tokens_per_s": 17.396178024437337, "chunk_count": 39, "finish_reason": "stop", "output": "{\"numbers\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2]}"}, {"mode": "guided", "latency_s": 2.52080712399993, "ttft_s": 0.22533806199999162, "decode_s": 2.2954690619999383, "completion_tokens": 39, "decode_tokens_per_s": 16.554350755175207, "chunk_count": 39, "finish_reason": "stop", "output": "{\"numbers\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2]}"}]}
+{"event": "final_memory", "memory": {"process_kib": {"VmHWM": 6909040, "VmRSS": 6817620, "VmSwap": 204780}, "system_kib": {"MemAvailable": 130552, "SwapFree": 16316924}}}
+{"event": "summary", "mode": "plain", "n": 3, "median_latency_s": 2.143152612999984, "median_ttft_s": 0.1618560689998958, "median_decode_tokens_per_s": 22.263518564189194, "median_completion_tokens": 45}
+{"event": "summary", "mode": "guided", "n": 3, "median_latency_s": 1.9288914340002066, "median_ttft_s": 0.16424521899989486, "median_decode_tokens_per_s": 21.53804053167833, "median_completion_tokens": 39}
+{"event": "PHASE4D_CALIBRATION", "passed": true, "elapsed_s": 20.737851833999912}
+true
+GPU_MASK_MODE=gpu SERVER_PID=10915
+SINGLE_OBJECT {"city": "Paris", "ok": false, "temperature": 12}
+STREAM_OBJECT {"city": "Paris", "ok": false, "temperature": 12}
+NESTED_UNICODE_GATE passed=1
+HTTP_400_GATE passed=1
+INCOMPLETE_GATE passed=1
+BATCH_TWO_GATE {"city": "Paris", "ok": false, "temperature": 12} [1, 2, 3]
+CANCEL_REUSE_GATE passed=1
+PHASE1_3_ENDPOINT_GATE passed=1 elapsed_seconds=10.819
+{"event": "ready_memory", "memory": {"process_kib": {"VmHWM": 6961236, "VmRSS": 6863516, "VmSwap": 179956}, "system_kib": {"MemAvailable": 119620, "SwapFree": 16331516}}}
+{"event": "post_warmup_memory", "memory": {"process_kib": {"VmHWM": 6961236, "VmRSS": 6839752, "VmSwap": 202128}, "system_kib": {"MemAvailable": 123252, "SwapFree": 16309756}}}
+{"event": "sample", "mode": "plain", "latency_s": 2.152307191000091, "ttft_s": 0.1685531489999903, "decode_s": 1.9837540420001005, "completion_tokens": 45, "decode_tokens_per_s": 22.180169047387263, "chunk_count": 44, "finish_reason": "stop", "output": "```json\n{\"numbers\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2]}\n```"}
+{"event": "sample", "mode": "guided", "latency_s": 1.904732001999946, "ttft_s": 0.16158427599998504, "decode_s": 1.743147725999961, "completion_tokens": 39, "decode_tokens_per_s": 21.799644076752706, "chunk_count": 39, "finish_reason": "stop", "output": "{\"numbers\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2]}"}
+{"event": "sample", "mode": "guided", "latency_s": 1.9064078979999977, "ttft_s": 0.16181390699989606, "decode_s": 1.7445939910001016, "completion_tokens": 39, "decode_tokens_per_s": 21.781572214527813, "chunk_count": 39, "finish_reason": "stop", "output": "{\"numbers\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2]}"}
+{"event": "sample", "mode": "plain", "latency_s": 2.1498782310000024, "ttft_s": 0.16287220300000627, "decode_s": 1.9870060279999961, "completion_tokens": 45, "decode_tokens_per_s": 22.143868403000177, "chunk_count": 44, "finish_reason": "stop", "output": "```json\n{\"numbers\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2]}\n```"}
+{"event": "sample", "mode": "plain", "latency_s": 2.141775587999973, "ttft_s": 0.16154437199998029, "decode_s": 1.9802312159999929, "completion_tokens": 45, "decode_tokens_per_s": 22.21962750838696, "chunk_count": 44, "finish_reason": "stop", "output": "```json\n{\"numbers\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2]}\n```"}
+{"event": "sample", "mode": "guided", "latency_s": 1.9115809190000164, "ttft_s": 0.16647599899988563, "decode_s": 1.7451049200001307, "completion_tokens": 39, "decode_tokens_per_s": 21.77519504099338, "chunk_count": 39, "finish_reason": "stop", "output": "{\"numbers\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2]}"}
+{"event": "guided_pair", "results": [{"mode": "guided", "latency_s": 2.475006341999915, "ttft_s": 0.22153134099994531, "decode_s": 2.25347500099997, "completion_tokens": 39, "decode_tokens_per_s": 16.862845153879082, "chunk_count": 39, "finish_reason": "stop", "output": "{\"numbers\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2]}"}, {"mode": "guided", "latency_s": 2.5203040479998435, "ttft_s": 0.3779154669998661, "decode_s": 2.1423885809999774, "completion_tokens": 39, "decode_tokens_per_s": 17.737211791085624, "chunk_count": 39, "finish_reason": "stop", "output": "{\"numbers\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2]}"}]}
+{"event": "final_memory", "memory": {"process_kib": {"VmHWM": 6961236, "VmRSS": 6828136, "VmSwap": 212212}, "system_kib": {"MemAvailable": 125352, "SwapFree": 16299772}}}
+{"event": "summary", "mode": "plain", "n": 3, "median_latency_s": 2.1498782310000024, "median_ttft_s": 0.16287220300000627, "median_decode_tokens_per_s": 22.180169047387263, "median_completion_tokens": 45}
+{"event": "summary", "mode": "guided", "n": 3, "median_latency_s": 1.9064078979999977, "median_ttft_s": 0.16181390699989606, "median_decode_tokens_per_s": 21.781572214527813, "median_completion_tokens": 39}
+{"event": "PHASE4D_CALIBRATION", "passed": true, "elapsed_s": 18.871354450000126}
+true
+GPU_MASK_AB_GATE=passed
+MainPID=11178
+ActiveState=active
+ActiveState=active
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7188         103           2         398         297
+Swap:          16383         255       16128
+GPU_MASK_AB_EXIT=0
+2026-09-23T02:20:19+05:30

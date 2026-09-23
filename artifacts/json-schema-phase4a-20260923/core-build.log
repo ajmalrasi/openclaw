@@ -1,0 +1,56 @@
+2026-09-23T00:36:43+05:30
+SOURCE_COMMIT=2cb8bb85086b6eb26bfa6fbb7f7703730d66abac
+PHASE4A_SCOPE=isolated-core-build-only
+               total        used        free      shared  buff/cache   available
+Mem:            7485        1773        5388          13         544        5712
+Swap:          16383         529       15854
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- The CUDA compiler identification is NVIDIA 13.2.86
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Detecting CUDA compiler ABI info
+-- Detecting CUDA compiler ABI info - done
+-- Check for working CUDA compiler: /usr/local/cuda/bin/nvcc - skipped
+-- Detecting CUDA compile features
+-- Detecting CUDA compile features - done
+-- Configurable variable CUDA_CTK_VERSION set to 13.2
+-- Configurable variable CUDA_DIR set to /usr/local/cuda/targets/sbsa-linux
+-- Plugin NVRTC JIT ENABLED (dynamic): /usr/local/cuda/targets/sbsa-linux/lib/libnvrtc.so
+-- NVTX profiling DISABLED (use -DENABLE_NVTX_PROFILING=ON to enable)
+-- Found TensorRT: /usr/lib/aarch64-linux-gnu/libnvinfer.so  found components: OnnxParser 
+-- TensorRT: linking TensorRT (libnvinfer.so) -> /usr/lib/aarch64-linux-gnu/libnvinfer.so
+-- FMHA Kernels: Excluding SM architectures: EXCLUDE_SM_87;EXCLUDE_SM_101;EXCLUDE_SM_121
+-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+CMake Error at cmake/CuteDsl.cmake:280 (message):
+  Prebuilt CuTe DSL library not found:
+
+    /home/ajmalrasi/json-schema-phase4a-20260923/source/cpp/kernels/cuteDSLArtifact/aarch64/libcutedsl_aarch64.a
+
+  Expected prebuilt tarball:
+
+    /home/ajmalrasi/json-schema-phase4a-20260923/source/kernelSrcs/cuteDSLPrebuilt/cutedsl_aarch64__cuda13.tar.gz
+
+  Generate it with:
+
+    python kernelSrcs/build_cutedsl.py --gpu_arch  --arch aarch64
+
+  Artifacts are generated locally under:
+
+    cpp/kernels/cuteDSLArtifact/<arch>/<artifact_tag>/
+Call Stack (most recent call first):
+  cpp/CMakeLists.txt:299 (cute_dsl_setup)
+
+
+-- Configuring incomplete, errors occurred!

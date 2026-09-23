@@ -1,0 +1,20 @@
+2026-09-23T01:43:20+05:30
+PHASE4H_SCOPE=existing-binding-memory-baseline
+{"event": "ready_memory", "memory": {"process_kib": {"VmHWM": 6956112, "VmRSS": 6878196, "VmSwap": 87992}, "system_kib": {"MemAvailable": 61960, "SwapFree": 16020476}}}
+{"event": "request", "index": 0, "memory": {"process_kib": {"VmHWM": 6956112, "VmRSS": 6863412, "VmSwap": 131212}, "system_kib": {"MemAvailable": 90052, "SwapFree": 15947772}}, "completion_tokens": 45}
+{"event": "request", "index": 1, "memory": {"process_kib": {"VmHWM": 6956112, "VmRSS": 6863452, "VmSwap": 131212}, "system_kib": {"MemAvailable": 90612, "SwapFree": 15947772}}, "completion_tokens": 45}
+{"event": "request", "index": 2, "memory": {"process_kib": {"VmHWM": 6956112, "VmRSS": 6863476, "VmSwap": 131212}, "system_kib": {"MemAvailable": 86388, "SwapFree": 15947772}}, "completion_tokens": 45}
+{"event": "request", "index": 3, "memory": {"process_kib": {"VmHWM": 6956112, "VmRSS": 6839928, "VmSwap": 153940}, "system_kib": {"MemAvailable": 93692, "SwapFree": 15923452}}, "completion_tokens": 45}
+{"event": "request", "index": 4, "memory": {"process_kib": {"VmHWM": 6956112, "VmRSS": 6839944, "VmSwap": 153936}, "system_kib": {"MemAvailable": 95548, "SwapFree": 15923452}}, "completion_tokens": 45}
+{"event": "request", "index": 5, "memory": {"process_kib": {"VmHWM": 6956112, "VmRSS": 6827256, "VmSwap": 166120}, "system_kib": {"MemAvailable": 117888, "SwapFree": 15910908}}, "completion_tokens": 45}
+{"event": "request", "index": 6, "memory": {"process_kib": {"VmHWM": 6956112, "VmRSS": 6827284, "VmSwap": 166116}, "system_kib": {"MemAvailable": 117984, "SwapFree": 15911164}}, "completion_tokens": 45}
+{"event": "request", "index": 7, "memory": {"process_kib": {"VmHWM": 6956112, "VmRSS": 6820444, "VmSwap": 172648}, "system_kib": {"MemAvailable": 112684, "SwapFree": 15908092}}, "completion_tokens": 45}
+{"event": "final_memory", "memory": {"process_kib": {"VmHWM": 6956112, "VmRSS": 6820444, "VmSwap": 172648}, "system_kib": {"MemAvailable": 113232, "SwapFree": 15908092}}}
+PHASE4H_BASELINE_MEMORY=passed
+true
+PHASE4H_BASELINE_GATE=passed
+PHASE4H_EXIT=0
+               total        used        free      shared  buff/cache   available
+Mem:            7485        1638        5801           2         245        5846
+Swap:          16383         638       15745
+2026-09-23T01:43:54+05:30

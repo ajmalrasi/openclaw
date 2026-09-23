@@ -1,0 +1,25 @@
+2026-09-23T02:20:43+05:30
+GPU_MASK_SCOPE=final-host-shape-rebuild
+true
+BUILD_JOBS=2 AVAILABLE_MIB=5896 CORES=6
+               total        used        free      shared  buff/cache   available
+Mem:            7485        1589        5690           2         403        5895
+Swap:          16383         250       16133
+[ 16%] Built target edgellmXGrammar
+[ 12%] Built target edgellmBuilder
+[ 16%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/runtime/greedySchedulerBackend.cpp.o
+[ 17%] Linking CXX static library libedgellmCore.a
+[ 98%] Built target edgellmCore
+[ 98%] Linking CUDA device code CMakeFiles/_edgellm_runtime.dir/cmake_device_link.o
+[100%] Linking CXX shared module ../../pybind/_edgellm_runtime.cpython-312-aarch64-linux-gnu.so
+[100%] Built target _edgellm_runtime
+GPU_MASK_BINDING_IMPORT=passed /home/ajmalrasi/json-schema-phase4a-20260923/build/pybind/_edgellm_runtime.cpython-312-aarch64-linux-gnu.so
+GPU_MASK_FINAL_BUILD=passed
+MainPID=11942
+ActiveState=active
+ActiveState=active
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7278         102           1         319         207
+Swap:          16383         265       16118
+GPU_MASK_FINAL_BUILD_EXIT=0
+2026-09-23T02:21:14+05:30

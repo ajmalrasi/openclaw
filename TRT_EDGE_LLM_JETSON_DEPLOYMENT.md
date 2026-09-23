@@ -2,17 +2,26 @@
 
 This document records the TensorRT Edge-LLM export and deployment investigation on Beast and the Jetson target. Failed attempts are preserved so that later work does not repeat them.
 
-> **Superseding deployment status (2026-09-12):** the Jetson deployment is now
+> **Superseding deployment status (2026-09-23):** the Jetson deployment is
 > TensorRT Edge-LLM, served by `openclaw-tensorrt-edgellm.service` on port
-> 11434 with model alias `openclaw`. It uses the existing
+> 11434 with model alias `openclaw`. JSON-Schema-guided decoding from release
+> `b921d36` is the persistent production runtime, selected by
+> `zz-json-schema-production.conf` and stored under
+> `/home/ajmalrasi/tensorrt-json-schema-release-b921d36/`. It uses the existing
 > `llm-b2-input6144-kv8192-vanilla` batch-two Qwen3.5-4B INT4 AWQ non-MTP
 > engine: 6,144-token maximum input and 8,192-token maximum total sequence.
-> The server currently admits one active sequence despite the engine's
-> batch-two capability. The vLLM service is rollback-only. The model may be
-> deliberately stopped for maintenance, so confirm the live backend through
+> The server admits two active sequences. CUDA graphs are disabled in the
+> qualified JSON-Schema configuration. The model service and watchdog timer
+> are enabled for boot with user linger on. A user-performed Jetson reboot
+> verified automatic startup of the prior release; the new GPU-mask release
+> passed a real service restart, full JSON-Schema live suite, non-greedy/SSE
+> checks and watchdog generation check, but has not itself been reboot-tested.
+> Memory remains tight on this 8 GB board after
+> serving requests, including with the prior binding.
+> The vLLM service is an older fallback. Always confirm the live backend via
 > `/v1/models` and the user-service state before operating on it.
 
-## Current state
+## Historical export investigation state
 
 - Beast repository: `/home/ajmalrasi/TensorRT-Edge-LLM`
 - User fork: `https://github.com/ajmalrasi/TensorRT-Edge-LLM`
@@ -23,7 +32,9 @@ This document records the TensorRT Edge-LLM export and deployment investigation 
 - Container virtual environment: `/workspace/venv`
 - Current model: `Qwen/Qwen3.5-4B`
 - Intended quantization: `int4_awq`
-- No valid quantized output has been confirmed yet.
+- At this early investigation point, no valid quantized output had yet been
+  confirmed; the current deployed engine is described in the superseding
+  status above.
 
 ## Timeline and findings
 

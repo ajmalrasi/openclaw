@@ -1,0 +1,34 @@
+2026-09-23T11:24:20+05:30
+RELEASE_BINDING_SHA256=00346d199043dd8ce967154ff2bb041c1aa9cf43d63bdb9bdc0fcb1a0c3221e5
+SINGLE_OBJECT {"city": "Paris", "ok": false, "temperature": 12}
+STREAM_OBJECT {"city": "Paris", "ok": false, "temperature": 12}
+NESTED_UNICODE_GATE passed=1
+HTTP_400_GATE passed=1
+INCOMPLETE_GATE passed=1
+BATCH_TWO_GATE {"city": "Paris", "ok": false, "temperature": 12} [1, 2, 3]
+CANCEL_REUSE_GATE passed=1
+PHASE1_3_ENDPOINT_GATE passed=1 elapsed_seconds=10.789
+NON_GREEDY 0 {'city': 'Tokyo', 'count': 1}
+NON_GREEDY 1 {'city': 'Tokyo', 'count': 1}
+NON_GREEDY 2 {'city': 'Tokyo', 'count': 1}
+NON_GREEDY 3 {'city': 'Tokyo', 'count': 1}
+NON_GREEDY 4 {'city': 'Tokyo', 'count': 1}
+NON_GREEDY 5 {'city': 'Tokyo', 'count': 1}
+NON_GREEDY 6 {'city': 'Tokyo', 'count': 1}
+NON_GREEDY 7 {'city': 'Tokyo', 'count': 1}
+NON_GREEDY_SSE {'city': 'Tokyo', 'count': 1}
+GPU_MASK_STOCHASTIC_GATE=passed
+VmHWM:	 6938580 kB
+VmRSS:	 6848076 kB
+VmSwap:	  188832 kB
+GPU_MASK_PERSISTENT_PRODUCTION=passed
+MainPID=108875
+ActiveState=active
+UnitFileState=enabled
+ActiveState=active
+UnitFileState=enabled
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7362         100           2         223         122
+Swap:          16383         507       15876
+GPU_MASK_PROMOTION_EXIT=0
+2026-09-23T11:24:53+05:30

@@ -1,0 +1,17 @@
+2026-09-23T01:33:23+05:30
+PHASE4C_SCOPE=isolated-full-binding-endpoint
+true
+SINGLE_OBJECT {"city": "Paris", "ok": false, "temperature": 12}
+STREAM_OBJECT {"city": "Paris", "ok": false, "temperature": 12}
+NESTED_UNICODE_GATE passed=1
+HTTP_400_GATE passed=1
+INCOMPLETE_GATE passed=1
+BATCH_TWO_GATE {"city": "Paris", "ok": false, "temperature": 12} [1, 2, 3]
+CANCEL_REUSE_GATE passed=1
+PHASE1_3_ENDPOINT_GATE passed=1 elapsed_seconds=10.599
+{"status":"healthy","model":"openclaw-json-candidate","execution":{"captures":0,"replays":0,"eager":126,"profile_switches":12},"active_requests":0,"queued_requests":0,"capabilities":{"chat":true,"transcription":false,"speech":false,"input_modalities":["text"],"output_modalities":["text"],"max_model_len":4608,"max_input_len":4096,"max_batch_size":2,"max_num_seqs":2,"kv_cache_dtype":"fp16","speculative_decoding":false,"speculative_method":"none","context_reuse":false}}PHASE4C_FULL_BINDING_ENDPOINT=passed
+PHASE4C_EXIT=0
+               total        used        free      shared  buff/cache   available
+Mem:            7485        1822        5487          12         432        5662
+Swap:          16383         506       15877
+2026-09-23T01:33:48+05:30

@@ -1,0 +1,25 @@
+2026-09-23T01:56:25+05:30
+JSON_SCHEMA_PROMOTION_SCOPE=persistent-production
+RELEASE_BINDING_SHA256=15d26b414191114c57efeef86eb59993c2f03328bde3ba2a5b97cf42760cdeb3
+SINGLE_OBJECT {"city": "Paris", "ok": false, "temperature": 12}
+STREAM_OBJECT {"city": "Paris", "ok": false, "temperature": 12}
+NESTED_UNICODE_GATE passed=1
+HTTP_400_GATE passed=1
+INCOMPLETE_GATE passed=1
+BATCH_TWO_GATE {"city": "Paris", "ok": false, "temperature": 12} [1, 2, 3]
+CANCEL_REUSE_GATE passed=1
+PHASE1_3_ENDPOINT_GATE passed=1 elapsed_seconds=10.808
+VmHWM:	 6926944 kB
+VmRSS:	 6867432 kB
+VmSwap:	  168776 kB
+JSON_SCHEMA_PERSISTENT_PRODUCTION=passed
+MainPID=864853
+ActiveState=active
+UnitFileState=enabled
+ActiveState=active
+UnitFileState=enabled
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7370          94           1         220         115
+Swap:          16383         818       15565
+JSON_SCHEMA_PROMOTION_EXIT=0
+2026-09-23T01:56:54+05:30

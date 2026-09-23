@@ -83,6 +83,25 @@ deployment remain Phase 4 work. Passing functional Phases 1–3 must not be
 read as production acceptance. See
 [`TENSORRT_EDGE_LLM_JSON_SCHEMA_PHASE1_3_RESULTS.md`](./TENSORRT_EDGE_LLM_JSON_SCHEMA_PHASE1_3_RESULTS.md).
 
+Phase 4 qualification has passed the full core/binding builds,
+full-binding endpoint gate, short performance/production-engine-fit gates,
+live cutover, persistent production promotion, post-reboot verification, and
+the new GPU-mask release's matched short A/B and 252-request bounded
+concurrent reliability check. The release is commit `b921d36`; its focused
+native CUDA unit test, full live endpoint suite, non-greedy/SSE checks,
+watchdog generation check, and persistent production promotion passed. The
+actual 6144/8192 engine has narrow memory headroom even
+with the older non-schema binding, so long-term memory stability remains
+unproven. GPU-side masking is implemented, but the scheduler's pre-existing
+full-logits transfer and CPU sampler remain; removal of that transfer and GPU
+sampling are an explicit architectural deviation from workstream 4. CUDA
+graphs remain disabled; the public alias/engine/port are unchanged. Boot
+enablement, user linger, and a real service restart passed on the current
+release. A user-performed Jetson reboot passed on the prior release, along
+with the post-reboot full schema suite and watchdog check; the new release
+has not itself been reboot-tested. See
+[`TENSORRT_EDGE_LLM_JSON_SCHEMA_PHASE4_RESULTS.md`](./TENSORRT_EDGE_LLM_JSON_SCHEMA_PHASE4_RESULTS.md).
+
 ## Scale and constraints
 
 - A proof of concept is roughly 1–2 engineer-weeks.

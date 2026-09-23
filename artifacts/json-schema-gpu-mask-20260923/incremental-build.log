@@ -1,0 +1,59 @@
+2026-09-23T02:14:40+05:30
+GPU_MASK_SCOPE=isolated-incremental-build
+true
+BUILD_JOBS=2 AVAILABLE_MIB=5852 CORES=6
+               total        used        free      shared  buff/cache   available
+Mem:            7485        1632        5580           5         472        5852
+Swap:          16383         205       16178
+[  9%] Built target edgellmXGrammar
+[ 16%] Built target edgellmBuilder
+[ 16%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/sampler/samplingUtils.cpp.o
+[ 16%] Building CUDA object cpp/CMakeFiles/edgellmCore.dir/sampler/sampling.cu.o
+nvcc warning : Resource usage is not shown as the final resource allocation is not done.
+[ 16%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/runtime/decoding/blockDiffusionDecoder.cpp.o
+[ 17%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/runtime/decoding/decoderRegistry.cpp.o
+[ 17%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/runtime/decoding/decoderUtils.cpp.o
+[ 19%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/runtime/decoding/dflashDecoder.cpp.o
+ptxas warning : Local memory used for function '_ZN3cub38_V_300200_SM_800_860_890_900_1000_12006detail10radix_sort30DeviceSegmentedRadixSortKernelINS1_5radix10policy_hubIfiiE10Policy1000ELb0ELNS0_9SortOrderE1EfiPiS9_iNS1_21identity_decomposer_tEEEvPKT2_PSB_PKT3_PSF_T4_T5_iiT7_', size of stack frame: 296 bytes
+ptxas warning : Registers are spilled to local memory in function '_ZN3cub38_V_300200_SM_800_860_890_900_1000_12006detail10radix_sort30DeviceSegmentedRadixSortKernelINS1_5radix10policy_hubIfiiE10Policy1000ELb0ELNS0_9SortOrderE1EfiPiS9_iNS1_21identity_decomposer_tEEEvPKT2_PSB_PKT3_PSF_T4_T5_iiT7_', 592 bytes spill stores, 460 bytes spill loads
+ptxas warning : Local memory used for function '_ZN11trt_edgellm12topPSamplingILi256EEEvPKfPKiPiS4_S4_immfi', size of stack frame: 48 bytes
+ptxas warning : Local memory used for function '_ZN11trt_edgellm18topKStage2SamplingILi256EEEvPKiPfPiNS_14SamplingParamsEmm', size of stack frame: 48 bytes
+ptxas warning : Local memory used for function '_ZN11trt_edgellm12topPSamplingILi256EEEvPKfPKiPiS4_S4_immfi', size of stack frame: 48 bytes
+ptxas warning : Local memory used for function '_ZN11trt_edgellm18topKStage2SamplingILi256EEEvPKiPfPiNS_14SamplingParamsEmm', size of stack frame: 48 bytes
+ptxas warning : Local memory used for function '_ZN3cub38_V_300200_SM_800_860_890_900_1000_12006detail10radix_sort30DeviceSegmentedRadixSortKernelINS1_5radix10policy_hubIfiiE10Policy1000ELb0ELNS0_9SortOrderE1EfiPiS9_iNS1_21identity_decomposer_tEEEvPKT2_PSB_PKT3_PSF_T4_T5_iiT7_', size of stack frame: 136 bytes
+ptxas warning : Registers are spilled to local memory in function '_ZN3cub38_V_300200_SM_800_860_890_900_1000_12006detail10radix_sort30DeviceSegmentedRadixSortKernelINS1_5radix10policy_hubIfiiE10Policy1000ELb0ELNS0_9SortOrderE1EfiPiS9_iNS1_21identity_decomposer_tEEEvPKT2_PSB_PKT3_PSF_T4_T5_iiT7_', 380 bytes spill stores, 272 bytes spill loads
+ptxas warning : Local memory used for function '_ZN11trt_edgellm12topPSamplingILi256EEEvPKfPKiPiS4_S4_immfi', size of stack frame: 48 bytes
+ptxas warning : Local memory used for function '_ZN11trt_edgellm18topKStage2SamplingILi256EEEvPKiPfPiNS_14SamplingParamsEmm', size of stack frame: 48 bytes
+ptxas warning : Local memory used for function '_ZN3cub38_V_300200_SM_800_860_890_900_1000_12006detail10radix_sort30DeviceSegmentedRadixSortKernelINS1_5radix10policy_hubIfiiE10Policy1000ELb0ELNS0_9SortOrderE1EfiPiS9_iNS1_21identity_decomposer_tEEEvPKT2_PSB_PKT3_PSF_T4_T5_iiT7_', size of stack frame: 136 bytes
+ptxas warning : Registers are spilled to local memory in function '_ZN3cub38_V_300200_SM_800_860_890_900_1000_12006detail10radix_sort30DeviceSegmentedRadixSortKernelINS1_5radix10policy_hubIfiiE10Policy1000ELb0ELNS0_9SortOrderE1EfiPiS9_iNS1_21identity_decomposer_tEEEvPKT2_PSB_PKT3_PSF_T4_T5_iiT7_', 380 bytes spill stores, 272 bytes spill loads
+ptxas warning : Local memory used for function '_ZN11trt_edgellm12topPSamplingILi256EEEvPKfPKiPiS4_S4_immfi', size of stack frame: 48 bytes
+ptxas warning : Local memory used for function '_ZN11trt_edgellm18topKStage2SamplingILi256EEEvPKiPfPiNS_14SamplingParamsEmm', size of stack frame: 48 bytes
+[ 19%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/runtime/decoding/dsparkDecoder.cpp.o
+[ 19%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/runtime/decoding/eagleDecoder.cpp.o
+[ 19%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/runtime/decoding/gemma4MTPDecoder.cpp.o
+[ 20%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/runtime/decoding/logitBias.cpp.o
+[ 20%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/runtime/decoding/mtpDecoder.cpp.o
+[ 22%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/runtime/decoding/vanillaDecoder.cpp.o
+[ 22%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/runtime/greedySchedulerBackend.cpp.o
+[ 24%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/runtime/guidedDecoding.cpp.o
+[ 25%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/runtime/llmInferenceRuntime.cpp.o
+[ 25%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/runtime/llmRankRuntime.cpp.o
+[ 25%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/runtime/modelArtifacts.cpp.o
+[ 25%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/runtime/multiDevice/runtimeCoordinator.cpp.o
+[ 25%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/runtime/qwen3OmniTTSRuntime.cpp.o
+[ 25%] Building CXX object cpp/CMakeFiles/edgellmCore.dir/runtime/sequenceStepRuntime.cpp.o
+[ 27%] Linking CXX static library libedgellmCore.a
+[ 98%] Built target edgellmCore
+[ 98%] Linking CUDA device code CMakeFiles/_edgellm_runtime.dir/cmake_device_link.o
+[100%] Linking CXX shared module ../../pybind/_edgellm_runtime.cpython-312-aarch64-linux-gnu.so
+[100%] Built target _edgellm_runtime
+GPU_MASK_BINDING_IMPORT=passed /home/ajmalrasi/json-schema-phase4a-20260923/build/pybind/_edgellm_runtime.cpython-312-aarch64-linux-gnu.so
+GPU_MASK_INCREMENTAL_BUILD=passed
+MainPID=10030
+ActiveState=active
+ActiveState=active
+               total        used        free      shared  buff/cache   available
+Mem:            7485        7265         219           4         208         220
+Swap:          16383         225       16158
+GPU_MASK_BUILD_EXIT=0
+2026-09-23T02:17:11+05:30
