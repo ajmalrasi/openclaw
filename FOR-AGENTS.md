@@ -76,10 +76,12 @@ curl -s http://192.168.3.30:11434/v1/chat/completions \
 This repo owns the service. On the Jetson, the deployed backend is
 `openclaw-tensorrt-edgellm.service`, sourced at
 [`tensorrt-edgellm/openclaw-tensorrt-edgellm.service`](./tensorrt-edgellm/openclaw-tensorrt-edgellm.service).
-The active Jetson JSON-Schema runtime is the versioned release
-`/home/ajmalrasi/tensorrt-json-schema-release-b921d36/`, selected by the
-`zz-json-schema-production.conf` user-systemd override; the base service file
-alone does not describe the full deployed runtime. The vLLM unit is an older
+The active Jetson runtime is currently the preserved pre-JSON-Schema P8
+binding at `/home/ajmalrasi/continuous-batching-p8-20260916-attempt3/`. The
+JSON-Schema release `/home/ajmalrasi/tensorrt-json-schema-release-b921d36/`
+is available for A/B testing with
+`tools/switch-jetson-json-schema-runtime.sh`. The base service file alone
+does not describe the full deployed runtime. The vLLM unit is an older
 fallback. Before stopping, restarting, or diagnosing the
 Jetson model, identify the live backend with `GET /v1/models` and
 `systemctl --user status openclaw-tensorrt-edgellm.service`; do not infer it

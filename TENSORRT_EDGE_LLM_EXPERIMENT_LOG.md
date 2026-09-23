@@ -119,19 +119,122 @@ Append an entry after every TensorRT Edge-LLM export, transfer, build, repair, e
 
 ## Current state
 
-- 2026-09-23: **JSON-Schema release `2cb8bb8` is the persistent production
-  runtime** for the public TensorRT `openclaw` service. Versioned source and
-  full binding are under `/home/ajmalrasi/tensorrt-json-schema-release-2cb8bb8/`;
-  the permanent JSON-Schema systemd drop-in selects them. Service and watchdog
-  timer are enabled/active with user linger; the service restart, full live
-  JSON-Schema suite, and watchdog real-generation check passed. The engine,
-  alias, port and batch-two scheduler are unchanged. The 8 GB device still has
-  little memory margin and uses swap even with the old binding (Phase 4H), so
-  long-duration reliability is unproven. CUDA graphs are off in this qualified
-  configuration. GPU-side masking remains unimplemented; the existing CPU
-  sampling logits row is used. A user-performed Jetson reboot directly verified
-  automatic startup, and the full live schema suite and watchdog passed after
-  boot.
+- 2026-09-23: The active public TensorRT `openclaw` service is the preserved
+  pre-JSON-Schema P8 runtime: WorkingDirectory
+  `/home/ajmalrasi/continuous-batching-p8-20260916-attempt3/release`, binding
+  `/home/ajmalrasi/continuous-batching-p8-20260916-attempt3/build`, continuous
+  batching and CUDA graphs enabled. The JSON-Schema GPU-mask release `b921d36`
+  and its full binding remain available under
+  `/home/ajmalrasi/tensorrt-json-schema-release-b921d36/`; the saved drop-in is
+  `/home/ajmalrasi/.local/state/openclaw/tensorrt-runtime-switch/zz-json-schema-production.conf`.
+  Both modes use the same `llm-b2-input6144-kv8192-vanilla` engine, alias,
+  port, and two-sequence capacity. Service and watchdog timer are enabled and
+  active with linger. The JSON-Schema release passed live schema and watchdog
+  gates before this temporary A/B switch. The 8 GB device has little memory
+  margin and uses swap even with the old binding (Phase 4H), so long-duration
+  reliability remains unproven. The JSON-Schema release itself has not been
+  reboot-tested; the older deployment did pass user-performed reboot startup.
+
+- 2026-09-23 12:43 IST, user requested an easy runtime switch for testing/A/B
+  and asked to switch to the old runtime. Preflight confirmed the active
+  `b921d36` JSON-Schema service was healthy/idle; the preserved P8 source,
+  binding, base unit and P8 drop-in were present. The P8 binding SHA-256 is
+  `23dedf6ed535e83876288e21ae1f162770af200aadc24e92bc281803af4f6381`. Added
+  `tools/switch-jetson-json-schema-runtime.sh`, copied to
+  `/home/ajmalrasi/bin/` on the Jetson, and ran it as a detached user unit
+  with target `legacy`. It backed up the JSON-Schema override under
+  `~/.local/state/openclaw/tensorrt-runtime-switch/`, disabled only that
+  override, and let the retained P8 drop-in select the old binding. Health,
+  `/v1/models`, and a real completion (`READY`, finish reason `stop`) passed;
+  the service is active on the P8 release and the watchdog timer is active and
+  enabled. Smoke evidence is
+  `artifacts/jetson-runtime-switch-20260923/smoke-legacy-20260923-124343.json`;
+  the preserved override copy is in the same directory. The runbook now
+  documents `legacy`/`json-schema` commands and A/B caveats. No engine,
+  checkpoint, unrelated service or binding was changed. Next: run matched
+  ordinary-prompt A/B samples if requested; schema-constrained calls are
+  available only in JSON-Schema mode, and the two saved configurations differ
+  in CUDA graph setting.
+
+- 2026-09-23 12:10–12:14 IST: user requested NVIDIA AIPerf comparison of the
+  live Jetson and `beast` OpenClaw endpoints. Read-only preflight confirmed
+  `/v1/models` returned `openclaw` on both; Beast's user vLLM service was
+  active. Reused Beast's existing AIPerf 0.12.0 environment
+  `/home/ajmalrasi/venv/bin/aiperf`; no install or server/service change.
+  Ran sequentially from Beast with the same profile against Jetson LAN URL
+  `http://192.168.3.30:11434` and Beast loopback `http://127.0.0.1:11434`:
+  chat streaming, Qwen/Qwen3.5-4B tokenizer, 6 requests, concurrency 2,
+  synthetic input 2,048 tokens, output cap 512, 90 s/request timeout. AIPerf
+  enabled GPU telemetry exporters, but no telemetry collector was reachable;
+  Beast's Prometheus `/metrics` was available and its server metrics export
+  was collected. Each run completed 6/6 without errors/cancellation.
+  Jetson completed in 105.918 s with 12,288 input and 2,682 output tokens
+  (mean 447, range 214–512): aggregate output throughput 25.320 tok/s,
+  per-user end-to-end throughput 16.410 tok/s, active decode throughput
+  27.051 tok/s, mean TTFT 5.171 s, mean ITL 61.760 ms, mean request latency
+  32.281 s, effective decode concurrency 1.537 (p50 2). Beast completed in
+  35.927 s with 12,288 input and 3,064 output tokens (mean 510.67, range
+  505–512): aggregate output throughput 85.278 tok/s, per-user end-to-end
+  throughput 42.690 tok/s, active decode throughput 90.876 tok/s, mean TTFT
+  1.017 s, mean ITL 21.487 ms, mean request latency 11.969 s, effective
+  decode concurrency 1.829 (p50 2). Thus Beast measured 3.37x aggregate output
+  throughput in this profile. This is a short endpoint comparison, not a
+  hardware-only/model-engine comparison: both use Qwen3.5-4B but deployment
+  checkpoints/backends differ, endpoints were run sequentially, and four
+  Jetson outputs ended early at EOS versus one Beast output (so output counts
+  and total durations differ). No GPU telemetry was captured. Artifacts,
+  raw records and logs are copied to
+  `artifacts/aiperf-endpoint-pair-20260923/openclaw-aiperf-pair-20260923/`;
+  primary files are each host's `profile_export_aiperf.json`,
+  `profile_export.jsonl`, `profile_export_console.txt`, and `logs/aiperf.log`;
+  Beast also has `server_metrics_export.json`. Both endpoints returned
+  `/v1/models` healthy after the run and Beast vLLM remained active. No service,
+  engine, model, source or configuration changed. Next unresolved item for a
+  tighter comparison is a verified EOS-control setting for this Edge-LLM
+  server plus collection of GPU telemetry on both hosts.
+
+- 2026-09-23 12:29–12:32 IST: user asked to rerun the short Jetson HTTP
+  concurrency calibration and repeat AIPerf to investigate the earlier
+  approximately 40 tok/s result. Inspected live `/openapi.json` from Beast's
+  route to Jetson: `ChatCompletionRequest` does not define `ignore_eos` or
+  `min_tokens`. Did not send either unsupported setting. First ran the saved
+  short workload directly against the production HTTP endpoint
+  `http://192.168.3.30:11434/v1/chat/completions`: one 8-token warmup, three
+  sequential 32-token requests, then simultaneous and staggered pairs of
+  48-token requests with the deterministic integer-list prompt. Session was
+  11.23 s. Sequential latency was 1.556–1.569 s and decode rate 22.09–22.17
+  tok/s. Simultaneous pair took 2.904 s for 96 output tokens (33.06 aggregate
+  tok/s); per-request decode rates 18.31/17.53 tok/s and TTFT 318/162 ms.
+  Staggered pair took 2.882 s (33.31 aggregate tok/s); per-request rates
+  17.53/18.28 tok/s and TTFT 152/157 ms. Compared with the 2026-09-16 short
+  calibration (34.96 simultaneous, 35.07 staggered), this is 5.4–5.0% lower,
+  while singleton decode is close to its earlier 23.63 tok/s. This small
+  sample does not establish a service regression; host state/load differs and
+  each pair is a single measurement. Evidence: `artifacts/jetson-short-api-rerun-20260923/result.json`.
+  Then repeated the same AIPerf 0.12.0 profile from Beast (streaming chat,
+  six requests, concurrency two, 2,048 synthetic input, 512 output cap,
+  90-second per-request timeout), output under
+  `/home/ajmalrasi/guidellm/artifacts/openclaw-aiperf-jetson-rerun-20260923/`
+  and copied to `artifacts/jetson-short-api-rerun-20260923/aiperf/`.
+  All six completed at exactly 512 tokens, with no errors or cancellation:
+  12,288 input / 3,072 output tokens, 107.592 s profile duration,
+  28.550 aggregate output tok/s, 17.389 end-to-end tok/s/user,
+  34.112 active decode tok/s, mean TTFT 6.441 s, mean ITL 57.513 ms,
+  mean request latency 35.830 s, and mean effective decode concurrency
+  1.639 (p50 2). No GPU telemetry was collected. Relative to the prior
+  variable-length AIPerf run at 25.320 tok/s aggregate, this repeat is 12.8%
+  higher; relative to the earlier 2026-09-16 AIPerf result at 28.399 tok/s,
+  it is 0.5% higher. The current run's outputs all reached the cap without
+  an EOS override, demonstrating that early EOS is workload-dependent, not
+  a guaranteed control. AIPerf samples are consistent with the previous
+  throughput range and do not explain the 41.4 tok/s direct-native number;
+  that comparison still differs in measurement path and prompt/output
+  workload. Post-run Jetson `/health` is healthy/idle (active=0, queued=0),
+  `/v1/models` still returns `openclaw`; Beast vLLM remains active. No service,
+  model, engine or configuration changed. Next: for a true like-for-like
+  comparison to the 41.4 tok/s native result, run the same deterministic
+  prompt/output workload through HTTP using a request pattern that the server
+  supports; do not assume AIPerf synthetic 2K prefill is equivalent.
 
 - 2026-09-23: JSON-Schema Phase 4A isolated full-core build passed and produced
   the 79,352,636-byte `libedgellmCore.a` under

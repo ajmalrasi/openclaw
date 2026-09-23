@@ -4,22 +4,59 @@ This document records the TensorRT Edge-LLM export and deployment investigation 
 
 > **Superseding deployment status (2026-09-23):** the Jetson deployment is
 > TensorRT Edge-LLM, served by `openclaw-tensorrt-edgellm.service` on port
-> 11434 with model alias `openclaw`. JSON-Schema-guided decoding from release
-> `b921d36` is the persistent production runtime, selected by
-> `zz-json-schema-production.conf` and stored under
-> `/home/ajmalrasi/tensorrt-json-schema-release-b921d36/`. It uses the existing
+> 11434 with model alias `openclaw`. The active runtime is now the preserved
+> pre-JSON-Schema P8 binding under
+> `/home/ajmalrasi/continuous-batching-p8-20260916-attempt3/`. The JSON-Schema
+> binding remains available under
+> `/home/ajmalrasi/tensorrt-json-schema-release-b921d36/` and can be selected
+> with the A/B helper below. Both use the existing
 > `llm-b2-input6144-kv8192-vanilla` batch-two Qwen3.5-4B INT4 AWQ non-MTP
 > engine: 6,144-token maximum input and 8,192-token maximum total sequence.
-> The server admits two active sequences. CUDA graphs are disabled in the
-> qualified JSON-Schema configuration. The model service and watchdog timer
+> The server admits two active sequences. P8 uses CUDA graphs; the qualified
+> JSON-Schema configuration disables them. The model service and watchdog timer
 > are enabled for boot with user linger on. A user-performed Jetson reboot
-> verified automatic startup of the prior release; the new GPU-mask release
-> passed a real service restart, full JSON-Schema live suite, non-greedy/SSE
-> checks and watchdog generation check, but has not itself been reboot-tested.
+> verified automatic startup of the prior release. The JSON-Schema release
+> previously passed a real service restart, full JSON-Schema live suite,
+> non-greedy/SSE checks and watchdog generation check, but has not itself been
+> reboot-tested. The switch helper recently restored P8 and passed health,
+> model-list and completion smoke checks.
 > Memory remains tight on this 8 GB board after
 > serving requests, including with the prior binding.
 > The vLLM service is an older fallback. Always confirm the live backend via
 > `/v1/models` and the user-service state before operating on it.
+
+## Switch runtimes for A/B testing
+
+The Jetson keeps both TensorRT Python bindings and uses the same Qwen3.5-4B
+6144/8192 engine for either runtime. To switch, SSH to the Jetson as
+`ajmalrasi` and run:
+
+```bash
+bash /home/ajmalrasi/bin/switch-jetson-json-schema-runtime.sh legacy
+# or, to switch back:
+bash /home/ajmalrasi/bin/switch-jetson-json-schema-runtime.sh json-schema
+```
+
+`legacy` selects the preserved pre-JSON-Schema P8 runtime under
+`/home/ajmalrasi/continuous-batching-p8-20260916-attempt3/`. `json-schema`
+selects release `b921d36` under
+`/home/ajmalrasi/tensorrt-json-schema-release-b921d36/`. The helper saves the
+JSON-Schema service drop-in on its first run, pauses the watchdog timer during
+the service restart, checks `/health`, `/v1/models`, and one short completion,
+then restores the timer. If startup or the completion check fails, it restores
+the runtime that was active before the switch. It does not rebuild or delete
+either runtime or the engine. Its source is tracked at
+[`tools/switch-jetson-json-schema-runtime.sh`](./tools/switch-jetson-json-schema-runtime.sh).
+
+For a fair A/B, use the same ordinary prompts, temperature, output limit, and
+one-request or two-request pattern on each runtime, and record the active
+runtime with each result. The engine and model are identical. The saved
+runtime configurations use different CUDA graph settings (P8 enables graphs;
+the JSON-Schema qualification disabled them), so raw throughput is an
+end-to-end configuration comparison, not an isolated measurement of schema
+masking overhead. `response_format: {"type":"json_schema", ...}` is only
+supported in `json-schema` mode. Keep each benchmark session within five
+minutes on the 8 GB Jetson.
 
 ## Historical export investigation state
 
