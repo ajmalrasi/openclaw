@@ -1,29 +1,51 @@
 # Beast vLLM runbook
 
 `beast` is the OpenClaw vLLM host: an RTX 3070 Ti Laptop GPU with 8 GB VRAM.
-It serves `QuantTrio/Qwen3.5-4B-AWQ` through the OpenAI-compatible endpoint on
-port 11434, using the public model alias `openclaw`.
+Its current model is HauhauCS Qwen3.5-4B-VL W4A16. A cached
+`QuantTrio/Qwen3.5-4B-AWQ` checkpoint is available as a temporary alternative.
+Both use the OpenAI-compatible endpoint on port 11434 and public model alias
+`openclaw`.
 
 This document is specific to Beast and vLLM. It is not a Jetson or MLC record.
 
-## Validated serving configuration
+## Current HauhauCS serving configuration
 
 The user-systemd service is `openclaw-vllm.service`. Its source is
 [`vllm/openclaw-vllm.service`](vllm/openclaw-vllm.service).
 
-| Setting | Value | Purpose |
-| --- | ---: | --- |
-| Model | `QuantTrio/Qwen3.5-4B-AWQ` | INT4 AWQ Qwen3.5 checkpoint |
-| Model alias | `openclaw` | Stable shared API contract |
-| Total sequence limit | 6,144 tokens | Input plus generated output per request |
-| Active sequences | 4 | Four requests execute simultaneously; later requests queue |
-| Prefill chunk limit | 1,024 tokens | Bounds GDN/FLA prefill workspace, not prompt length |
-| FP8 KV cache reservation | 1.2 GB | Leaves workspace headroom on the 8 GB GPU |
-| GPU-memory utilization guard | 0.95 | Avoids startup rejection seen at 0.97 |
-| Execution | eager | Required validated runtime mode |
+The live HauhauCS service source sets an 8,192-token total sequence limit and
+an eight-sequence scheduler cap, plus its multimodal memory settings. The
+previous QuantTrio service used a separately validated, more conservative
+6,144-token/four-sequence configuration. The HauhauCS settings and evidence
+are in [`vllm/openclaw-vllm.service`](vllm/openclaw-vllm.service) and
+[`UNCENSORED_VL_W4A16_EXPERIMENT_LOG.md`](UNCENSORED_VL_W4A16_EXPERIMENT_LOG.md).
 
-A 4K-token input is allowed. With the 6,144-token total sequence limit, it
-leaves approximately 2,144 tokens for output.
+## Temporary model switch
+
+Install the selector on Beast once, then use it whenever you want to change
+models:
+
+```bash
+mkdir -p ~/.local/bin
+install -m 0755 vllm/switch-beast-model.sh ~/.local/bin/openclaw-model
+```
+
+If the repo is not checked out on Beast, copy `vllm/switch-beast-model.sh`
+there first. Then run:
+
+```bash
+openclaw-model use quanttrio  # switch to QuantTrio Qwen3.5-4B-AWQ
+openclaw-model use hauhaucs   # restore HauhauCS Qwen3.5-4B-VL W4A16
+openclaw-model status         # show selection and endpoint status
+```
+
+The selector writes its own systemd drop-in, so the checked-in service file
+and unrelated overrides are left intact. Switching restarts the shared vLLM
+service; clients briefly lose the endpoint while the selected model loads.
+QuantTrio uses its previously validated 6,144-token, four-sequence language-
+only configuration and cached revision `32c292e3a73afe1138518180b1b6d2868c980ee2`.
+Choosing `hauhaucs` removes only the selector's drop-in and returns to the
+base service configuration. Both checkpoints are already cached on Beast.
 
 ## Why the previous eight-way configuration crashed
 

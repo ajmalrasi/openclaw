@@ -48,11 +48,14 @@ host*; the engine, generation, quant, and exact variant differ per hardware:
 | Host | Backend | What / quant | Speed | Context |
 |------|---------|--------------|-------|---------|
 | `jetson-orin` | **TensorRT Edge-LLM** | `Qwen/Qwen3.5-4B` INT4 AWQ, text-only non-MTP batch-two engine with JSON-Schema decoding | Live batch-two/JSON-Schema endpoint gates passed; long-term memory stability unproven | 6144 input / 8192 total |
-| `beast` (RTX 3070 Ti laptop) | **vLLM** | `QuantTrio/Qwen3.5-4B-AWQ` (INT4 AWQ, FP8 KV, language-only) | **47.31 tok/s** sequential; **46.57 tok/s** aggregate in the 8-way 7K stress test | 8192 |
+| `beast` (RTX 3070 Ti laptop) | **vLLM** | Current: HauhauCS Qwen3.5-4B-VL W4A16; temporary option: `QuantTrio/Qwen3.5-4B-AWQ` | QuantTrio historical result: **47.31 tok/s** sequential; **46.57 tok/s** aggregate in the 8-way 7K stress test | Current: 8192; QuantTrio switch: 6144 |
 | `aws-g6` (EC2 g6.xlarge, NVIDIA L4) | **vLLM** | `google/gemma-4-12B-it-qat-w4a16-ct` (QAT W4A16, FP8 KV cache, language-only) | Endpoint smoke-tested; no benchmark run | 16384 |
 
 All hosts return direct responses with no `<think>` blocks. On `beast`,
 `enable_thinking=false` is a server-wide chat-template default.
+Use `openclaw-model use quanttrio` or `openclaw-model use hauhaucs` on Beast to
+switch models; switching restarts the shared service. See
+[`BEAST_VLLM_RUNBOOK.md`](BEAST_VLLM_RUNBOOK.md).
 
 The EC2 vLLM port is bound only to `127.0.0.1`. It is available either through
 an SSH tunnel or through its Caddy HTTPS frontend. vLLM requires the same bearer
@@ -137,8 +140,9 @@ sudo journalctl -u openclaw-vllm-ec2.service -f
   for historical rollback.
 - `MLC_RUNBOOK.md` and `MLC_MIGRATION.md` — retired JetPack 6.2 backend history.
 - `vllm/openclaw-vllm.service` — the vLLM user service (beast): OpenAI API on
-  :11434, model name `openclaw`, language-only Qwen3.5-4B INT4 AWQ, 8K context,
-  and up to eight active sequences.
+  :11434, model name `openclaw`, currently HauhauCS Qwen3.5-4B-VL W4A16.
+- `vllm/switch-beast-model.sh` and `BEAST_VLLM_RUNBOOK.md` — reversible switch
+  between HauhauCS W4A16 and the cached QuantTrio Qwen3.5-4B-AWQ model.
 - `install-vllm.sh` — idempotent vLLM provisioner (retires Ollama on :11434).
 - `vllm/openclaw-vllm-ec2.service` — boot-persistent EC2 system service: pinned
   vLLM container, loopback-only API, Gemma 4 12B W4A16 on the NVIDIA L4.
