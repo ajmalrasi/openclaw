@@ -1,6 +1,75 @@
 # Benchmarks
 
+## Reproducing the NVIDIA AIPerf endpoint comparison
+
+Run the benchmark from `beast`, where the existing AIPerf 0.12.0 environment
+is `/home/ajmalrasi/venv/bin/aiperf`. Confirm each endpoint first with
+`GET /v1/models` and use the literal model alias `openclaw`. The Jetson URL is
+`http://192.168.3.30:11434`; from Beast itself, use
+`http://127.0.0.1:11434` for Beast. Both use the OpenAI-compatible chat API
+without LAN authentication.
+
+The saved profile uses six streamed chat requests at concurrency two, synthetic
+2,048-token inputs, a requested maximum of 512 output tokens, and a 90-second
+per-request timeout. Run targets sequentially so one endpoint's load does not
+affect the other's result. On Beast, for the Jetson target:
+
+```bash
+RUN_ID="$(date +%Y%m%d-%H%M%S)"
+OUT="/home/ajmalrasi/guidellm/artifacts/openclaw-aiperf-${RUN_ID}/jetson"
+/home/ajmalrasi/venv/bin/aiperf profile \
+  --model openclaw \
+  --url http://192.168.3.30:11434 \
+  --endpoint-type chat --streaming \
+  --tokenizer Qwen/Qwen3.5-4B \
+  --concurrency 2 --request-count 6 \
+  --synthetic-input-tokens-mean 2048 --output-tokens-mean 512 \
+  --request-timeout-seconds 90 \
+  --output-artifact-dir "$OUT"
+```
+
+For Beast, repeat with `--url http://127.0.0.1:11434` and a distinct output
+directory such as `"${OUT%/jetson}/beast"`. AIPerf warns that EOS may stop
+responses before the requested output length; the saved comparison intentionally
+kept that behavior to match the earlier profile. Do not pass
+`--extra-inputs ignore_eos:true` or `min_tokens` unless that setting has first
+been verified on the target server. Current Edge-LLM rejects unsupported
+request options, and unverified flags can turn the benchmark into an API error
+test. Check `profile_export_aiperf.json` for actual output lengths and
+`error_summary`, and retain `profile_export.jsonl`, `logs/aiperf.log`, and the
+console export alongside it. AIPerf attempts GPU telemetry automatically, but
+the 2026-09-23 run had no reachable collector on either host; Beast's server
+Prometheus metrics were available.
+
 ## 2026-09-16 — Jetson Orin TensorRT Edge-LLM final production configuration
+
+### 2026-09-23 — Matched NVIDIA AIPerf endpoint profile: Jetson vs `beast`
+
+Ran NVIDIA AIPerf 0.12.0 from Beast against both live `openclaw` APIs, one
+after the other. Both used streaming chat, six requests at concurrency two,
+Qwen/Qwen3.5-4B tokenizer, 2,048 synthetic input tokens and a 512-token output
+cap (90-second request timeout). Both completed 6/6 requests with no errors.
+
+| Metric | Jetson Orin TensorRT Edge-LLM | `beast` vLLM |
+|---|---:|---:|
+| Benchmark duration | 105.92 s | 35.93 s |
+| Input / output tokens | 12,288 / 2,682 | 12,288 / 3,064 |
+| Aggregate output throughput | **25.32 tok/s** | **85.28 tok/s** |
+| Per-user end-to-end output throughput | 16.41 tok/s | 42.69 tok/s |
+| Active decode throughput | 27.05 tok/s | 90.88 tok/s |
+| Mean TTFT | 5.17 s | 1.02 s |
+| Mean ITL | 61.76 ms | 21.49 ms |
+| Mean request latency | 32.28 s | 11.97 s |
+| Effective decode concurrency | 1.54 (p50 2) | 1.83 (p50 2) |
+| Actual output length | mean 447; range 214–512 | mean 510.67; range 505–512 |
+
+Beast measured 3.37x aggregate output throughput in this run. This is an
+endpoint comparison, not an isolated engine comparison: checkpoints/backends
+differ despite the shared Qwen3.5-4B family, the runs were sequential, and four
+Jetson requests ended at EOS early versus one Beast request. GPU telemetry was
+not collected on either host; Beast's Prometheus server metrics were captured.
+Raw AIPerf exports and logs are retained under
+[`artifacts/aiperf-endpoint-pair-20260923`](artifacts/aiperf-endpoint-pair-20260923).
 
 The Jetson production service runs Qwen3.5-4B INT4 AWQ through TensorRT
 Edge-LLM, using the `llm-b2-input6144-kv8192-vanilla` engine and the native
