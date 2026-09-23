@@ -4,12 +4,12 @@ This document records the TensorRT Edge-LLM export and deployment investigation 
 
 > **Superseding deployment status (2026-09-23):** the Jetson deployment is
 > TensorRT Edge-LLM, served by `openclaw-tensorrt-edgellm.service` on port
-> 11434 with model alias `openclaw`. The active runtime is now the preserved
-> pre-JSON-Schema P8 binding under
-> `/home/ajmalrasi/continuous-batching-p8-20260916-attempt3/`. The JSON-Schema
-> binding remains available under
-> `/home/ajmalrasi/tensorrt-json-schema-release-b921d36/` and can be selected
-> with the A/B helper below. Both use the existing
+> 11434 with model alias `openclaw`. The active runtime is JSON-Schema GPU-mask
+> release `b921d36` under
+> `/home/ajmalrasi/tensorrt-json-schema-release-b921d36/`. The preserved
+> pre-JSON-Schema P8 binding remains available under
+> `/home/ajmalrasi/continuous-batching-p8-20260916-attempt3/`; the A/B helper
+> below switches between them. Both use the existing
 > `llm-b2-input6144-kv8192-vanilla` batch-two Qwen3.5-4B INT4 AWQ non-MTP
 > engine: 6,144-token maximum input and 8,192-token maximum total sequence.
 > The server admits two active sequences. P8 uses CUDA graphs; the qualified
@@ -18,8 +18,9 @@ This document records the TensorRT Edge-LLM export and deployment investigation 
 > verified automatic startup of the prior release. The JSON-Schema release
 > previously passed a real service restart, full JSON-Schema live suite,
 > non-greedy/SSE checks and watchdog generation check, but has not itself been
-> reboot-tested. The switch helper recently restored P8 and passed health,
-> model-list and completion smoke checks.
+> reboot-tested. The switch helper has passed in both directions. After the
+> P8 test, JSON-Schema mode was restored and passed health, model-list,
+> completion, non-greedy JSON, and SSE checks.
 > Memory remains tight on this 8 GB board after
 > serving requests, including with the prior binding.
 > The vLLM service is an older fallback. Always confirm the live backend via

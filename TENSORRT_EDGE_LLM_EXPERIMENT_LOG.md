@@ -119,20 +119,18 @@ Append an entry after every TensorRT Edge-LLM export, transfer, build, repair, e
 
 ## Current state
 
-- 2026-09-23: The active public TensorRT `openclaw` service is the preserved
-  pre-JSON-Schema P8 runtime: WorkingDirectory
-  `/home/ajmalrasi/continuous-batching-p8-20260916-attempt3/release`, binding
-  `/home/ajmalrasi/continuous-batching-p8-20260916-attempt3/build`, continuous
-  batching and CUDA graphs enabled. The JSON-Schema GPU-mask release `b921d36`
-  and its full binding remain available under
-  `/home/ajmalrasi/tensorrt-json-schema-release-b921d36/`; the saved drop-in is
-  `/home/ajmalrasi/.local/state/openclaw/tensorrt-runtime-switch/zz-json-schema-production.conf`.
-  Both modes use the same `llm-b2-input6144-kv8192-vanilla` engine, alias,
-  port, and two-sequence capacity. Service and watchdog timer are enabled and
-  active with linger. The JSON-Schema release passed live schema and watchdog
-  gates before this temporary A/B switch. The 8 GB device has little memory
-  margin and uses swap even with the old binding (Phase 4H), so long-duration
-  reliability remains unproven. The JSON-Schema release itself has not been
+- 2026-09-23: The active public TensorRT `openclaw` service is JSON-Schema
+  GPU-mask release `b921d36`, under
+  `/home/ajmalrasi/tensorrt-json-schema-release-b921d36/`. The preserved
+  pre-JSON-Schema P8 runtime remains available at
+  `/home/ajmalrasi/continuous-batching-p8-20260916-attempt3/`. Both modes use
+  the same `llm-b2-input6144-kv8192-vanilla` engine, alias, port, and
+  two-sequence capacity. Service and watchdog timer are enabled and active
+  with linger. Both directions of the runtime switch helper have passed
+  health and completion checks; JSON-Schema mode also passed non-greedy JSON
+  and SSE schema checks. The 8 GB device has little memory margin and uses
+  swap even with the old binding (Phase 4H), so long-duration reliability
+  remains unproven. This new JSON-Schema release has not itself been
   reboot-tested; the older deployment did pass user-performed reboot startup.
 
 - 2026-09-23 12:43 IST, user requested an easy runtime switch for testing/A/B
@@ -155,6 +153,19 @@ Append an entry after every TensorRT Edge-LLM export, transfer, build, repair, e
   ordinary-prompt A/B samples if requested; schema-constrained calls are
   available only in JSON-Schema mode, and the two saved configurations differ
   in CUDA graph setting.
+
+- 2026-09-23 12:53 IST, user finished the legacy test and requested switching
+  back to JSON-Schema mode. Ran the same Jetson helper detached with target
+  `json-schema`; it restored the saved `b921d36` drop-in, restarted the model,
+  and passed health/model-list/completion smoke (`READY`, finish reason
+  `stop`). Then ran eight non-greedy strict JSON requests and one non-greedy
+  SSE request; all outputs matched the schema (`GPU_MASK_STOCHASTIC_GATE=passed`).
+  Final service WorkingDirectory is the versioned JSON-Schema release;
+  `/health` is healthy/idle and the watchdog timer is active/enabled. Evidence
+  is `artifacts/jetson-runtime-switch-20260923/smoke-json-schema-20260923-125347.json`
+  plus remote switch unit `openclaw-runtime-switch-json-schema-20260923` and
+  smoke output under `/home/ajmalrasi/.local/state/openclaw/tensorrt-runtime-switch/`.
+  No engine or unrelated service changed.
 
 - 2026-09-23 12:10–12:14 IST: user requested NVIDIA AIPerf comparison of the
   live Jetson and `beast` OpenClaw endpoints. Read-only preflight confirmed
@@ -235,6 +246,39 @@ Append an entry after every TensorRT Edge-LLM export, transfer, build, repair, e
   comparison to the 41.4 tok/s native result, run the same deterministic
   prompt/output workload through HTTP using a request pattern that the server
   supports; do not assume AIPerf synthetic 2K prefill is equivalent.
+
+- 2026-09-23 12:48–12:51 IST: user reported changing the Jetson runtime and
+  requested another run. Preflight confirmed `/v1/models` owner
+  `tensorrt-edgellm`; `/health` healthy/idle with the updated runtime showing
+  graph captures=3, replays=6, eager=9 and `max_num_seqs=2`. Repeated the same
+  short HTTP script and AIPerf 0.12.0 concurrency-two profile as the preceding
+  rerun, with no service/model/configuration changes. Short HTTP session:
+  8-token warmup, three sequential 32-token requests, simultaneous and
+  staggered pairs requesting 48 tokens. Sequential latency 1.502–1.564 s,
+  decode 22.27–22.96 tok/s. Simultaneous pair 34.53 aggregate tok/s over
+  2.780 s (per-request decode 18.34/19.18 tok/s; TTFT 156/312 ms); staggered
+  pair 34.68 aggregate tok/s over 2.768 s (18.29/19.13 tok/s; TTFT 154/156
+  ms). This is 4.4% and 4.1% above the 12:29 prior pair sample and close to
+  the 2026-09-16 results 34.96/35.07; single-pair samples remain noisy.
+  AIPerf ran from Beast against Jetson with the same six streamed synthetic
+  2,048-input / 512-output profile and 90 s/request cap. All six succeeded,
+  no cancellation/errors, 12,288 input and 3,048 output tokens (mean 508,
+  range 490–512), duration 103.441 s. Aggregate output 29.463 tok/s,
+  end-to-end per user 17.942 tok/s, active decode 33.838 tok/s, mean TTFT
+  5.952 s, mean ITL 55.894 ms, mean latency 34.298 s, effective decode
+  concurrency 1.645 (p50 2). Five reached 512; one ended at EOS at 490. No GPU
+  telemetry. Compared with immediately preceding runtime's 28.550 aggregate,
+  this is +3.2%, with output length slightly different; compared with the
+  earlier 25.320 variable-EOS run it is +16.4%. Evidence:
+  `artifacts/jetson-runtime-rerun-20260923-1248/` (AIPerf outputs copied from
+  `/home/ajmalrasi/guidellm/artifacts/openclaw-aiperf-jetson-runtime-20260923-1248/`).
+  Post-run Jetson health healthy/idle, active=0, queued=0, captures=3,
+  replays=1,754, eager=119, max sequences two; `/v1/models` continues to
+  report `openclaw`. This bounded sample suggests the changed runtime's short
+  pair throughput is near prior levels and AIPerf aggregate decode slightly
+  higher; it does not establish sustained gains or attribute them solely to
+  the runtime change. Next: use repeated paired trials under comparable
+  background load if a statistically useful runtime A/B is needed.
 
 - 2026-09-23: JSON-Schema Phase 4A isolated full-core build passed and produced
   the 79,352,636-byte `libedgellmCore.a` under

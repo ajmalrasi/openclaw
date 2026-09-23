@@ -73,15 +73,15 @@ ssh -i ~/.ssh/id_ed25519 -N \
 > `/home/ajmalrasi/Qwen3.5-4B/engines/llm-b2-input6144-kv8192-vanilla` on port
 > 11434. It is a text-only INT4 AWQ engine with 6,144-token input, 8,192-token
 > total sequence capacity and engine batch capacity two; the current server
-> admits two active sequences. The active runtime is the preserved pre-JSON-
-> Schema P8 binding. JSON-Schema GPU-mask release `b921d36` remains available
-> under `/home/ajmalrasi/tensorrt-json-schema-release-b921d36/`; a runbook
-> helper switches between them for A/B testing. The service and watchdog timer
-> are enabled for boot with user linger. The JSON-Schema release passed its
-> live schema/non-greedy/SSE and watchdog gates; P8 was restored and passed a
-> health and completion smoke check. Memory headroom remains tight. The
-> earlier release passed a user-performed reboot check; the GPU-mask release
-> itself has not been reboot-tested. The model
+> admits two active sequences. JSON-Schema GPU-mask release `b921d36` is
+> active under `/home/ajmalrasi/tensorrt-json-schema-release-b921d36/`; the
+> preserved pre-JSON-Schema P8 binding remains available for A/B tests. A
+> runbook helper switches between them. Both are selected on the same engine.
+> The service and watchdog timer are enabled for boot with user linger. The
+> JSON-Schema release passed live schema/non-greedy/SSE and watchdog gates,
+> and the switch helper has passed in both directions. Memory headroom remains
+> tight. The earlier release passed a user-performed reboot check; the
+> GPU-mask release itself has not been reboot-tested. The model
 > may be intentionally stopped for maintenance; check
 > `/v1/models` or the service state rather than assuming it is running.
 > See [TENSORRT_EDGE_LLM_EXPERIMENT_LOG.md](./TENSORRT_EDGE_LLM_EXPERIMENT_LOG.md).

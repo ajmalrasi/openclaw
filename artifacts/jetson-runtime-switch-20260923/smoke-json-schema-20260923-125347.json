@@ -1,0 +1,1 @@
+{"id":"chatcmpl-bf785eb9e6884944bb52b5f0b5a2552d","object":"chat.completion","created":1790148229,"model":"openclaw","choices":[{"index":0,"message":{"role":"assistant","content":"READY"},"finish_reason":"stop"}],"usage":{"prompt_tokens":17,"completion_tokens":2,"total_tokens":19}}
